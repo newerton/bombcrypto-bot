@@ -10,6 +10,7 @@ humanClicker = HumanClicker()
 heroes_clicked = 0
 heroes_clicked_total = 0
 
+
 class Heroes:
     def __init__(self):
         from src.config import Config
@@ -38,12 +39,13 @@ class Heroes:
 
         self.importLibs()
         self.log.console('Search for heroes to work', emoji='🏢')
-        
+
         self.goToHeroes()
 
         mode = self.config['heroes']['mode']
         if mode == "all":
-            self.log.console('Sending all heroes to work!', services=True, emoji='⚒️')
+            self.log.console('Sending all heroes to work!',
+                             services=True, emoji='⚒️')
         elif mode == "full":
             self.log.console(
                 'Sending heroes with full stamina bar to work!', emoji='⚒️')
@@ -122,7 +124,6 @@ class Heroes:
             self.actions.clickButton(treasure_hunt_banner)
         if currentScreen == "character":
             if self.actions.clickButton(close_button):
-                self.actions.sleep(1, 2)
                 self.actions.clickButton(treasure_hunt_banner)
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
@@ -136,7 +137,7 @@ class Heroes:
             self.config['time_intervals']['refresh_heroes_positions'][0],
             self.config['time_intervals']['refresh_heroes_positions'][1]
         )
-        
+
         currentScreen = self.recognition.currentScreen()
 
         back_button = self.images.image('back_button')
@@ -144,7 +145,8 @@ class Heroes:
 
         if currentScreen == "treasure_hunt":
             if self.actions.clickButton(back_button):
-                self.goToTreasureHunt()
+                self.actionsclickButton(treasure_hunt_banner)
+                return True
         if currentScreen == "main":
             if self.actionsclickButton(treasure_hunt_banner):
                 return True
@@ -246,7 +248,7 @@ class Heroes:
                 return
             self.actions.sleep(1, 2)
         self.log.console('Clicking in %d heroes detected.' %
-                         len(buttons), telegram=False, emoji='👆')
+                         len(buttons), emoji='👆')
         return len(buttons)
 
     def clickSendAllButtons(self):
@@ -254,7 +256,7 @@ class Heroes:
         threshold = self.config['threshold']
 
         send_all_heroes_button = self.images.image('send_all_heroes_button')
-        rest_all_heroes_button  = self.images.image('rest_all_heroes_button')
+        rest_all_heroes_button = self.images.image('rest_all_heroes_button')
 
         send_all = self.recognition.positions(
             send_all_heroes_button, threshold=threshold['heroes_send_all'])
@@ -264,7 +266,7 @@ class Heroes:
 
         self.actions.clickButton(send_all_heroes_button)
         self.recognition.waitForImage(rest_all_heroes_button)
-       
+
     def barButtons(self, bars_elements, offset, type):
         threshold = self.config['threshold']
 
@@ -288,7 +290,7 @@ class Heroes:
         if len(not_working_bars) > 0:
             message = 'Clicking in {} heroes with {} bar detected.'.format(
                 len(not_working_bars), type)
-            self.log.console(message, telegram=False, emoji='👆')
+            self.log.console(message, emoji='👆')
 
         for (x, y, w, h) in not_working_bars:
             offset_random = random.uniform(offset[0], offset[1])
