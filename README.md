@@ -25,6 +25,7 @@ My Features:
 * Refactored code
 * Add 3 captchas
 * Themes
+* Multi account with many windows side-by-side or many windows maximized
 ## 🎁 Wallet
 Wallet Smart Chain(BEP20): 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
@@ -62,6 +63,20 @@ Ele vai constantemente checar se você foi desconectado para realizar o login no
 O bot não interage diretamente com o jogo, ele somente tira print da tela do
 game para encontrar os botões e simula movimentos do mouse, isso faz com que
 diferenciar o bot de um humano seja muito difícil.
+
+### ⚠️ Algumas configurações podem ser mudadas no arquivo /config/config.yaml, não se esqueça de reiniciar o bot caso mude as configuraçoes.
+### ⚠️ Algumas alterações no arquivo /config/config.yaml, pode fazer o bot parar, como por exemplo ativar o telegram quando o bot estiver em execução.
+
+## 🧪 Testes
+**Desktop Medium Profile**  
+Intel i5-3570k @ 3.4Ghz, 24GB RAM  
+Windows 11, Resolution@1920x1080  
+Python 3.9.9  
+
+**Laptop Low Profile**  
+Laptop Samsumg RV411, Pentium P6200 @ 2.13Ghz, 2GB RAM  
+Windows 7, Resolution@1366x768  
+Python 3.8.10
 
 ## ⚠️ Ajustando o bot
 
@@ -128,10 +143,6 @@ exemplo na pasta "targets" para uma tirada no seu próprio computador:
 
 - Não enviando os heróis para trabalhar
 	- Pode ser um falso negativo na imagem "bar_green_stamina.png" caso a opção "heroes.mode" estiver como "green".
-
----
-### ⚠️ Algumas configurações podem ser mudadas no arquivo /config/config.yaml, não se esqueça de reiniciar o bot caso mude as configuraçoes.
-### ⚠️ Algumas alterações no arquivo /config/config.yaml, pode fazer o bot parar, como por exemplo ativar o telegram quando o bot estiver em execução.
 ---
 ## 👍 Curtiu? Dê aquela fortalecida :)
 

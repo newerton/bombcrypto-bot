@@ -109,7 +109,6 @@ class MultiAccount():
 
         currentScreen = self.recognition.currentScreen()
 
-        print('currentScreen', currentScreen)
         if currentScreen == "login":
             self.auth.login()
 

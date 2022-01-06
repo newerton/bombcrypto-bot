@@ -5,6 +5,10 @@ app:
   run_time_app: 1
   monitor_to_use: 1
   captcha: false
+  multi_account: 
+    enable: false
+    window_title: 'bombcrypto'
+    window_fullscreen: false
 
 time_intervals:
   send_heroes_for_work: [30, 35]
@@ -44,7 +48,7 @@ offsets:
 
 metamask:
   enable_login_metamask: false
-  password: "METAMASK PASSWORD"
+  password: 'METAMASK PASSWORD'
 
 services:
   telegram: false
