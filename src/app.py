@@ -1,3 +1,4 @@
+import pyautogui
 import requests
 import yaml
 
@@ -12,6 +13,16 @@ class App:
         from src.log import Log
         self.log = Log()
 
+    def start(self):
+        pyautogui.PAUSE = self.config['time_intervals']['interval_between_movements']
+        pyautogui.FAILSAFE = False
+
+        self.checkUpdate()
+        self.getVersions()
+
+        input('Press Enter to start the bot...\n')
+        self.log.console('Starting bot...', services=True, emoji='🤖')
+        
     def getVersions(self):
         self.importLibs()
 
@@ -102,5 +113,4 @@ class App:
 
         if newConfigThreshold != self.configThreshold:
             self.configThreshold = newConfigThreshold
-            self.log.console('New Threshold applied',
-                             telegram=False, emoji='⚙️')
+            self.log.console('New Threshold applied', emoji='⚙️')
