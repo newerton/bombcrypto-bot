@@ -1,0 +1,10 @@
+# cache
+/**/__pycache__
+/**/**/__pycache__
+
+# vscode plugins
+/.history
+
+# config file
+/config/config.yaml
+/config/services/telegram.yaml

@@ -1,0 +1,6 @@
+chat_ids: ["YOUR_CHAT_ID_1", "YOUR_CHAT_ID_2"]
+botfather_token: "YOUR_BOTFATHER_TOKEN"
+enable_coin_report: true
+enable_map_report: true
+format_of_image: "jpg"
+enable_emergency_call: false

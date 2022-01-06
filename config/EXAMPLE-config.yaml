@@ -1,0 +1,54 @@
+app:
+  theme: 'lunar_newyear'
+  verify_version: true
+  emoji: False
+  run_time_app: 1
+  monitor_to_use: 1
+  captcha: false
+
+time_intervals:
+  send_heroes_for_work: [30, 35]
+  refresh_heroes_positions: [3, 4]
+  interval_between_movements: 0
+
+chests:
+  values:
+    chest_01: 0.01425
+    chest_02: 0.03250
+    chest_03: 0.16250
+    chest_04: 0.32500
+
+threshold:
+  default: 0.7
+  error_message: 0.7
+  select_wallet_buttons: 0.8
+  back_button: 0.9
+  heroes_green_bar: 0.9
+  heroes_full_bar: 0.7
+  heroes_send_all: 0.8
+  chest: 0.5
+
+heroes:
+  mode: 'all'
+  list:
+    scroll_size: 60
+    scroll_attempts: 3
+    click_and_drag: true
+    click_and_drag_amount: 200
+
+offsets:
+  work_button: [120, 140] # [min value, max value]
+  work_button_full: [90, 110] # [min value, max value]
+  work_button_all: [10, 50] # [min value, max value]
+  character_indicator: [100, 200] # [min value, max value]
+
+metamask:
+  enable_login_metamask: false
+  password: "METAMASK PASSWORD"
+
+services:
+  telegram: false
+  
+log:
+  save_to_file: false
+  debug: false
