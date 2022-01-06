@@ -1,6 +1,7 @@
 import requests
 import yaml
 
+
 class App:
     def __init__(self):
         from src.config import Config
@@ -8,8 +9,8 @@ class App:
         self.configThreshold = self.config['threshold']
 
     def importLibs(self):
-        from src.log import Log        
-        self.log = Log()        
+        from src.log import Log
+        self.log = Log()
 
     def getVersions(self):
         self.importLibs()
@@ -35,19 +36,27 @@ class App:
         localVersion = self.localVersion()
 
         versionGithubApp = githubVersion[0]
+        versionGithubConfigFile = githubVersion[1]
         emergencyGithubApp = githubVersion[2]
 
         versionLocalApp = localVersion[0]
+        versionLocalConfigFile = localVersion[1]
 
         # Allow BCBOT to be stopped remotely in case of emergency
         if (emergencyGithubApp == 'true' and versionGithubApp > versionLocalApp):
-            self.log.console('Update is required for your security', services=True, emoji='🆘')
+            self.log.console(
+                'Update is required for your security', services=True, emoji='🆘')
 
         if versionLocalApp is not None:
             if versionGithubApp > versionLocalApp:
-                self.log.console('New version ' + versionGithubApp + ' available, please update!', services=True, emoji='🎉'),
+                self.log.console('New app version ' + versionGithubApp +
+                                 ' available, please update!', services=True, emoji='🎉'),
+            if versionGithubConfigFile > versionLocalConfigFile:
+                self.log.console('New config file version ' + versionGithubConfigFile +
+                                 ' available, please update!', services=True, emoji='🎉'),
         else:
-            self.log.console('Version file not found, update is required', services=True, emoji='💥')
+            self.log.console(
+                'Version file not found, update is required', services=True, emoji='💥')
 
     def githubVersion(self):
         self.importLibs()
@@ -90,7 +99,8 @@ class App:
         from src.config import Config
         config = Config().read()
         newConfigThreshold = config['threshold']
-        
+
         if newConfigThreshold != self.configThreshold:
             self.configThreshold = newConfigThreshold
-            self.log.console('New Threshold applied', telegram=False, emoji='⚙️')
+            self.log.console('New Threshold applied',
+                             telegram=False, emoji='⚙️')
