@@ -7,25 +7,29 @@
   </a>
 </h1>
 
-## ⚠️ Aviso
+## ⚠️ Warning
 
 Não me responsabilizo por eventuais penalidades sofridas por quem usar o bot, use por sua própria conta e risco.
+I am not responsible for any penalties incurred by those who use the bot, use it at your own risk.
 
-## 📋 Sobre
+## 📋 About
 
 Este bot contêm códigos de outros desenvolvedores, esse bot foi somente refatorado, para facilitar novas implementações e manutenções.
+This bot contains code from other developers, this bot was just refactored, to facilitate new implementations and maintenance.
 
 Developers:
 * https://github.com/mpcabete/
 * https://github.com/afkapp/
 
 Este bot grátis e com o código aberto.
+This bot is free and open source.
 
-My Features:  
+Features:  
 * Refactored code
 * Add 3 captchas
 * Themes
 * Multi account with many windows side-by-side or many windows maximized
+* Run the bot, without interrupting errors in the code.
 ## 🎁 Wallet
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
@@ -33,19 +37,19 @@ PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 ## 🤖 Robot - Preview
 ![Screenshot - Preview](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/bot_working.jpg)
 
-## 🪟 Instalação:
+## 🪟 Installation
 
 🖥️ Computer/Laptop High or Medium Profile  
-🐍 Instale o Python 3.9.9
+🐍 Install the Python 3.9.9
 
 🖥️ Computer/Laptop Low Profile or Low Profile with Windows 7  
-🐍 Instale o Python 3.8.10
+🐍 Install the Python 3.8.10
 
 🔗 [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
 
-⚠️ **É importante marcar a opção para adicionar o
-python ao PATH**
+⚠️ **É importante marcar a opção para adicionar o python ao PATH**  
+⚠️ **It is important to check the option to add python to PATH**
 
 Instale as dependências, executando o comando abaixo, dentro da pasta do projeto:
 
