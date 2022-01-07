@@ -10,6 +10,7 @@ if os.name == 'nt':
 
 humanClicker = HumanClicker()
 
+
 class MultiAccount:
     def __init__(self):
         from src.config import Config
@@ -55,7 +56,6 @@ class MultiAccount:
             self.botSingle()
 
     def botSingle(self):
-        
 
         last = {
             "login": 0,
@@ -70,7 +70,7 @@ class MultiAccount:
 
     def botMultiAccountWindows(self):
         title = self.config['app']['multi_account']['window_title']
-        window_fullscreen = self.config['app']['multi_account']['window_fullscreen']
+        
         try:
             windows = []
             for w in botMultiAccount.getWindowsWithTitle(title):
@@ -87,14 +87,8 @@ class MultiAccount:
             while True:
                 for last in windows:
                     window = last["window"]
-                    if window_fullscreen == True:
-                        window.maximize()
-                    humanClicker.move(window.center, 0)
-                    humanClicker.click()
-                    window.activate()                    
-                    time.sleep(2)
+                    self.activeWindow(last, window)
 
-                self.steps(last)
 
         except PyGetWindowException:
             self.log.console(
@@ -148,3 +142,25 @@ class MultiAccount:
         self.actions.sleep(run_time_app, run_time_app,
                            randomMouseMovement=False)
         self.app.checkThreshold()
+
+    def activeWindow(self, last, window):
+        window_fullscreen = self.config['app']['multi_account']['window_fullscreen']
+
+        window = last["window"]
+        windowLeft = window.left
+        windowTop = window.top
+        windowWidth = window.width
+        windowHeight = window.height
+        if window_fullscreen is not True:
+            humanClicker.move(window.center, 0)
+            humanClicker.click()
+        window.maximize()
+        window.activate()
+        self.log.console('Browser Active: ' + window.title, emoji='🪟')
+        time.sleep(2)
+        self.steps(last)
+        if window_fullscreen is not True:
+            window.restore()
+            window.resizeTo(windowWidth, windowHeight)
+            window.moveTo(windowLeft, windowTop)
+            time.sleep(1)
