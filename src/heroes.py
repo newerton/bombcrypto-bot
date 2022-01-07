@@ -145,10 +145,10 @@ class Heroes:
 
         if currentScreen == "treasure_hunt":
             if self.actions.clickButton(back_button):
-                self.actionsclickButton(treasure_hunt_banner)
+                self.actions.clickButton(treasure_hunt_banner)
                 return True
         if currentScreen == "main":
-            if self.actionsclickButton(treasure_hunt_banner):
+            if self.actions.clickButton(treasure_hunt_banner):
                 return True
             else:
                 return False
