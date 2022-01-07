@@ -35,9 +35,7 @@ threshold:
 heroes:
   mode: 'all'
   list:
-    scroll_size: 60
     scroll_attempts: 3
-    click_and_drag_amount: 200
 
 offsets:
   work_button: [120, 140] # [min value, max value]

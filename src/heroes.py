@@ -166,25 +166,40 @@ class Heroes:
 
     def scroll(self):
         self.importLibs()
-        offset = self.config['offsets']['work_button_full']
-        offset_random = random.uniform(offset[0], offset[1])
-
         title_heroes_list = self.images.image('title_heroes_list', theme=True)
+
+        # heroesTypepath = './images/themes/default/heroes_types/'
+        # common = self.images.image('common', theme=True, newPath=heroesTypepath)
+        # rare = self.images.image('rare', theme=True, newPath=heroesTypepath)
+        # super_rare = self.images.image('super_rare', theme=True, newPath=heroesTypepath)
+
+        # commoms = self.recognition.positions(common, threshold=0.8)
+        # rares = self.recognition.positions(rare, threshold=0.8)
+        # super_rares = self.recognition.positions(super_rare, threshold=0.8)
+
+        # if commoms is False:
+        #     commoms = []
+        # if rares is False:
+        #     rares = []
+        # if super_rares is False:
+        #     super_rares = []
+
+        # print('commoms', len(commoms))
+        # print('rares', len(rares))
+        # print('super_rares', len(super_rares))
 
         character_indicator_pos = self.recognition.positions(title_heroes_list)
         if character_indicator_pos is False:
             return
 
         x, y, w, h = character_indicator_pos[0]
-        humanClicker.move(
-            (int(x+(w/2)), int(y+h+offset_random)), np.random.randint(1, 2))
-
+        humanClicker.move((int(x+(w/4)), int((y+420))), 1)
         
-        click_and_drag_amount = (-self.config['heroes']['list']['click_and_drag_amount'])
         pyautogui.mouseDown(button='left')
-        moveCoordinates = (int(x), int(y+click_and_drag_amount))
-        humanClicker.move(moveCoordinates, np.random.randint(1, 2))
+        moveCoordinates = (int(x), 370)
+        humanClicker.move(moveCoordinates, 2)
         pyautogui.mouseUp(button='left')
+        
 
     def clickFullBarButtons(self):
         self.importLibs()
@@ -196,7 +211,7 @@ class Heroes:
         bars = self.recognition.positions(
             bar_full_stamina, threshold=threshold['heroes_full_bar'])
 
-        return self.barButtons(bars, offset, 'FULL')
+        return self.barButtons(bars, offset, 'full')
 
     def clickGreenBarButtons(self):
         self.importLibs()
@@ -208,7 +223,7 @@ class Heroes:
         bars = self.recognition.positions(
             bar_green_stamina, threshold=threshold['heroes_green_bar'])
 
-        return self.barButtons(bars, offset, 'GREEN')
+        return self.barButtons(bars, offset, 'green')
 
     def clickAllWorkButtons(self):
         self.importLibs()
@@ -285,7 +300,7 @@ class Heroes:
                 not_working_bars.append(bar)
 
         if len(not_working_bars) > 0:
-            message = 'Clicking in {} heroes with {} bar detected.'.format(
+            message = 'Clicking in {} heroes with {} stamina bar detected.'.format(
                 len(not_working_bars), type)
             self.log.console(message, emoji='👆')
 
