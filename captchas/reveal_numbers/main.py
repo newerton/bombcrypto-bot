@@ -9,7 +9,8 @@ import threading
 
 humanClicker = HumanClicker()
 
-class RevealNumbersCaptcha():
+
+class RevealNumbersCaptcha:
     def __init__(self):
         from src.desktop import Desktop
         from src.recognition import Recognition
@@ -38,18 +39,19 @@ class RevealNumbersCaptcha():
             else:
                 template = d[str(i)]
 
-            p = self.recognition.positions(template,img=img,threshold=threshold)
-            if len (p) > 0:
-                digits.append({'digit':str(i),'x':p[0][0]})
+            p = self.recognition.positions(
+                template, img=img, threshold=threshold)
+            if len(p) > 0:
+                digits.append({'digit': str(i), 'x': p[0][0]})
 
         def getX(e):
             return e['x']
 
         digits.sort(key=getX)
-        r = list(map(lambda x : x['digit'],digits))
+        r = list(map(lambda x: x['digit'], digits))
         return(''.join(r))
 
-    def captchaImg(self, img, pos,w = 520, h = 180):
+    def captchaImg(self, img, pos, w=520, h=180):
         rx, ry, _, _ = pos
 
         x_offset = -10
@@ -57,10 +59,10 @@ class RevealNumbersCaptcha():
 
         y = ry + y_offset
         x = rx + x_offset
-        cropped = img[ y : y + h , x: x + w]
+        cropped = img[y: y + h, x: x + w]
         return cropped
 
-    def smallDigitsImg(self, img, pos, w = 200, h = 70):
+    def smallDigitsImg(self, img, pos, w=200, h=70):
         rx, ry, _, _ = pos
 
         x_offset = 150
@@ -68,14 +70,17 @@ class RevealNumbersCaptcha():
 
         y = ry + y_offset
         x = rx + x_offset
-        cropped = img[ y : y + h , x: x + w]
+        cropped = img[y: y + h, x: x + w]
         return cropped
 
     def getSliderPositions(self, screenshot, popup_pos):
-        slider = self.recognition.position(d['slider'], img=screenshot, threshold=0.8)
+        slider = self.recognition.position(
+            d['slider'], img=screenshot, threshold=0.8)
         if slider is None:
-            print('Error: Position start slider not found, verify target image or threshold')
-            print('Erro: Posição inicial do slider não encontrado, verifique a imagem ou o threshold')
+            print(
+                'Error: Position start slider not found, verify target image or threshold')
+            print(
+                'Erro: Posição inicial do slider não encontrado, verifique a imagem ou o threshold')
             return None
         (start_x, start_y) = slider
 
@@ -85,11 +90,14 @@ class RevealNumbersCaptcha():
 
         screenshot = self.desktop.printSreen()
 
-        end = self.recognition.position(d['slider'], img=screenshot, threshold = 0.8)
+        end = self.recognition.position(
+            d['slider'], img=screenshot, threshold=0.8)
         if end is None:
-            print('Error: Position end slider not found, verify target image or threshold')
-            print('Erro: Posição final do slider não encontrado, verifique a imagem ou o threshold')
-            return None        
+            print(
+                'Error: Position end slider not found, verify target image or threshold')
+            print(
+                'Erro: Posição final do slider não encontrado, verifique a imagem ou o threshold')
+            return None
         (end_x, end_y) = end
 
         size = end_x-start_x
@@ -97,14 +105,14 @@ class RevealNumbersCaptcha():
 
         positions = []
         for i in range(7):
-            positions.append((start_x+increment*i ,start_y+randint(0,10)))
+            positions.append((start_x+increment*i, start_y+randint(0, 10)))
         return positions
 
     def r(self):
-        return randint(0,5)
+        return randint(0, 5)
 
     def moveToReveal(self, popup_pos):
-        x,y,_,_ = popup_pos
+        x, y, _, _ = popup_pos
         t = 2.5
         offset_x = 20
         offset_y = 140
@@ -135,61 +143,61 @@ class RevealNumbersCaptcha():
         time.sleep(1)
 
     def lookAtCaptcha(self):
-        d = self.load_images( './captchas/reveal_numbers/images/')
+        d = self.load_images('./captchas/reveal_numbers/images/')
         screenshot = self.desktop.printSreen()
-        popup_pos = self.recognition.positions(d['robot'],img=screenshot)
+        popup_pos = self.recognition.positions(d['robot'], img=screenshot)
         img = self.captchaImg(screenshot, popup_pos[0])
         return img
 
     def preProcess(self, img):
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        _,img = cv2.threshold(img,170,240,cv2.THRESH_BINARY_INV)
+        _, img = cv2.threshold(img, 170, 240, cv2.THRESH_BINARY_INV)
         return img
 
     def add(self, img0, img1):
-        return cv2.bitwise_and(img0, img1, mask = None)
+        return cv2.bitwise_and(img0, img1, mask=None)
 
     def getDiff(self, data):
         try:
             if data[0] is None:
                 img0 = self.preProcess(self.lookAtCaptcha())
                 img1 = self.preProcess(self.lookAtCaptcha())
-                data[0] = self.add(img0,img1)
+                data[0] = self.add(img0, img1)
             while data[1]:
                 now = self.preProcess(self.lookAtCaptcha())
-                data[0] = self.add(data[0],now)
+                data[0] = self.add(data[0], now)
         except IndexError:
             return
         return
 
     def watchDiffs(self, data):
-        thread = threading.Thread(target=self.getDiff, args =(data,))
+        thread = threading.Thread(target=self.getDiff, args=(data,))
         thread.start()
         return thread
 
     def getBackgroundText(self):
-        d = self.load_images( './captchas/reveal_numbers/images/')
+        d = self.load_images('./captchas/reveal_numbers/images/')
         screenshot = self.desktop.printSreen()
-        popup_pos = self.recognition.positions(d['robot'],img=screenshot)
-        data = [None,True]
+        popup_pos = self.recognition.positions(d['robot'], img=screenshot)
+        data = [None, True]
         thread = self.watchDiffs(data)
         self.moveToReveal(popup_pos[0])
-        data[1]=False
+        data[1] = False
         thread.join()
 
         digits = self.getDigits(d, data[0])
         return digits
 
     def getSmallDigits(self, img):
-        s = self.load_images( './captchas/reveal_numbers/small-digits/')
+        s = self.load_images('./captchas/reveal_numbers/small-digits/')
         digits = self.getDigits(s, img, gray=False, threshold=0.92)
         return digits
 
     def solveCaptcha(self):
-        d = self.load_images( './captchas/reveal_numbers/images/')
+        d = self.load_images('./captchas/reveal_numbers/images/')
         screenshot = self.desktop.printSreen()
         img = screenshot.copy()
-        popup_pos = self.recognition.positions(d['robot'],img=img)
+        popup_pos = self.recognition.positions(d['robot'], img=img)
         if len(popup_pos) == 0:
             print('No captcha popup found!')
             return

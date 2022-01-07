@@ -37,7 +37,7 @@ class App:
   GitHub
     App: {}
     Config File: {}
-""".format(githubVersion[0], githubVersion[1], localVersion[0], localVersion[1])
+""".format(localVersion[0], localVersion[1], githubVersion[0], githubVersion[1])
 
             print(banner)
 

@@ -12,8 +12,8 @@ model = torch.hub.load('./captchas/crazy_numbers', 'custom',
 
 humanClicker = HumanClicker()
 
-class CrazyNumbersCaptcha():
 
+class CrazyNumbersCaptcha:
     def __init__(self):
         from src.desktop import Desktop
         from src.recognition import Recognition
@@ -60,7 +60,8 @@ class CrazyNumbersCaptcha():
     def getDigits(self, d, img):
         digits = []
         for i in range(10):
-            p = self.recognition.positions(d[str(i)], baseImage=img, threshold=0.95)
+            p = self.recognition.positions(
+                d[str(i)], baseImage=img, threshold=0.95)
             if len(p) > 0:
                 digits.append({'digit': str(i), 'x': p[0][0]})
 
@@ -97,7 +98,8 @@ class CrazyNumbersCaptcha():
 
         screenshot = self.desktop.printSreen()
 
-        end = self.recognition.position(d['slider'], baseImage=screenshot, threshold=0.8)
+        end = self.recognition.position(
+            d['slider'], baseImage=screenshot, threshold=0.8)
         (end_x, end_y) = end
 
         size = end_x-start_x
@@ -116,7 +118,7 @@ class CrazyNumbersCaptcha():
         popup_pos = self.recognition.positions(d['robot'], baseImage=img)
         if popup_pos == False:
             return
-            
+
         if len(popup_pos) == 0:
             print('no captcha popup found!')
             return
@@ -131,7 +133,8 @@ class CrazyNumbersCaptcha():
             x, y = position
             humanClicker.move((x, y), 1)
             screenshot = self.desktop.printSreen()
-            popup_pos = self.recognition.positions(d['robot'], baseImage=screenshot)
+            popup_pos = self.recognition.positions(
+                d['robot'], baseImage=screenshot)
             captcha_img = self.captchaImg(screenshot, popup_pos[0])
             background_digits = self.getBackgroundText(captcha_img,  0.7)
             # print( 'dig: {}, background_digits: {}'.format(digits, background_digits))
