@@ -27,7 +27,7 @@ My Features:
 * Themes
 * Multi account with many windows side-by-side or many windows maximized
 ## 🎁 Wallet
-Wallet Smart Chain(BEP20): 0x4847C29561B6682154E25c334E12d156e19F613a  
+BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
 
 ## 🤖 Robot - Preview
@@ -153,5 +153,5 @@ exemplo na pasta "targets" para uma tirada no seu próprio computador:
 | lunar_newyear 	| ![Lunar New Year](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/themes/lunar_newyear.jpg)	|
 ## 👍 Curtiu? Dê aquela fortalecida :)
 
-### Wallet Smart Chain(BEP20): 0x4847C29561B6682154E25c334E12d156e19F613a  
+### BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 ### PIX: 08912d17-47a6-411e-b7ec-ef793203f836

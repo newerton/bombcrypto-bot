@@ -21,7 +21,7 @@ class App:
         self.getVersions()
 
         input('Press Enter to start the bot...\n')
-        self.log.console('Starting bot...', services=True, emoji='🤖')
+        self.log.console('Starting bot...', services=True, emoji='🤖', color='green')
         
     def getVersions(self):
         self.importLibs()
