@@ -10,7 +10,7 @@ if os.name == 'nt':
 
 humanClicker = HumanClicker()
 
-class MultiAccount():
+class MultiAccount:
     def __init__(self):
         from src.config import Config
         self.config = Config().read()
@@ -43,11 +43,11 @@ class MultiAccount():
         self.importLibs()
         multiAccount = self.config['app']['multi_account']['enable']
         if multiAccount != True and os.name == 'nt':
-            self.log.console('Multi account DISABLE')
+            self.log.console('Multi account disabled')
             self.botSingle()
 
         if multiAccount == True and os.name == 'nt':
-            self.log.console('Multi account ENABLE')
+            self.log.console('Multi account enabled')
             self.botMultiAccountWindows()
 
         if os.name == 'posix':

@@ -37,7 +37,6 @@ heroes:
   list:
     scroll_size: 60
     scroll_attempts: 3
-    click_and_drag: true
     click_and_drag_amount: 200
 
 offsets:

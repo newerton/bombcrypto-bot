@@ -179,15 +179,12 @@ class Heroes:
         humanClicker.move(
             (int(x+(w/2)), int(y+h+offset_random)), np.random.randint(1, 2))
 
-        if not self.config['heroes']['list']['click_and_drag']:
-            humanClicker.click()
-            pyautogui.scroll(-self.config['heroes']['list']['scroll_size'])
-        else:
-            # pyautogui.dragRel(0,-self.config['click_and_drag_amount'],duration=1, button='left')
-            pyautogui.mouseDown(button='left')
-            humanClicker.move((int(x), int(
-                y+(-self.config['click_and_drag_amount']))), np.random.randint(1, 2))
-            pyautogui.mouseUp(button='left')
+        
+        click_and_drag_amount = (-self.config['heroes']['list']['click_and_drag_amount'])
+        pyautogui.mouseDown(button='left')
+        moveCoordinates = (int(x), int(y+click_and_drag_amount))
+        humanClicker.move(moveCoordinates, np.random.randint(1, 2))
+        pyautogui.mouseUp(button='left')
 
     def clickFullBarButtons(self):
         self.importLibs()
