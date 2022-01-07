@@ -30,6 +30,9 @@ My Features:
 Wallet Smart Chain(BEP20): 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
 
+## 🤖 Robot - Preview
+![Bomb Crypto Banner](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/bot_working.jpg)
+
 ## 🪟 Instalação:
 
 🖥️ Computer/Laptop High or Medium Profile  
