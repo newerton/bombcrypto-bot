@@ -31,7 +31,7 @@ Wallet Smart Chain(BEP20): 0x4847C29561B6682154E25c334E12d156e19F613a
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
 
 ## 🤖 Robot - Preview
-![Bomb Crypto Banner](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/bot_working.jpg)
+![Screenshot - Preview](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/bot_working.jpg)
 
 ## 🪟 Instalação:
 
@@ -146,7 +146,11 @@ exemplo na pasta "targets" para uma tirada no seu próprio computador:
 
 - Não enviando os heróis para trabalhar
 	- Pode ser um falso negativo na imagem "bar_green_stamina.png" caso a opção "heroes.mode" estiver como "green".
----
+
+## 🎨 Themes
+|      code     	| toolbar image preview 	|
+|:-------------:	|:-----:	|
+| lunar_newyear 	| ![Lunar New Year](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/themes/lunar_newyear.jpg)	|
 ## 👍 Curtiu? Dê aquela fortalecida :)
 
 ### Wallet Smart Chain(BEP20): 0x4847C29561B6682154E25c334E12d156e19F613a  
