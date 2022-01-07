@@ -85,6 +85,11 @@ Laptop Samsumg RV411, Pentium P6200 @ 2.13Ghz, 2GB RAM
 Windows 7, Resolution@1366x768  
 Python 3.8.10
 
+## 🎨 Themes
+|      code     	| toolbar image preview 	|
+|:-------------:	|:-----:	|
+| lunar_newyear 	| ![Lunar New Year](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/themes/lunar_newyear.jpg)	|
+
 ## ⚠️ Ajustando o bot
 
 **Por que uns ajustes podem ser necessários?**
@@ -151,10 +156,6 @@ exemplo na pasta "targets" para uma tirada no seu próprio computador:
 - Não enviando os heróis para trabalhar
 	- Pode ser um falso negativo na imagem "bar_green_stamina.png" caso a opção "heroes.mode" estiver como "green".
 
-## 🎨 Themes
-|      code     	| toolbar image preview 	|
-|:-------------:	|:-----:	|
-| lunar_newyear 	| ![Lunar New Year](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/themes/lunar_newyear.jpg)	|
 ## 👍 Curtiu? Dê aquela fortalecida :)
 
 ### BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
