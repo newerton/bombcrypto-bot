@@ -32,17 +32,23 @@ class Log:
 
     def console(self, message, services=False, emoji=False, color='default'):
         self.importLibs()
+        color_formatted = COLOR.get(color.lower(), COLOR['default'])
+
         formatted_datetime = self.date.dateFormatted()
         console_message = "{} - {}".format(formatted_datetime, message)
-        service_message = "⏰{}\n{} {}".format(
-            formatted_datetime, emoji, message)
+        console_message_colorful  = console_message
+
+        if self.config['app']['terminal_colorful'] is True:
+            console_message_colorful  = color_formatted + console_message + '\033[0m'        
+
         if emoji is not None and self.config['app']['emoji'] is True:
             console_message = "{} - {} {}".format(
                 formatted_datetime, emoji, message)
 
-        print(console_message)
+        print(console_message_colorful)
 
         if services == True:
+            service_message = "⏰{}\n{} {}".format(formatted_datetime, emoji, message)
             self.telegram.sendTelegramMessage(service_message)
 
         if (self.config['log']['save_to_file'] == True):

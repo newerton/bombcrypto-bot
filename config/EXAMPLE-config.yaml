@@ -1,10 +1,11 @@
 app:
   theme: 'lunar_newyear'
   verify_version: true
-  emoji: False
+  emoji: false
   run_time_app: 1
   monitor_to_use: 1
   captcha: false
+  terminal_colorful: false
   multi_account: 
     enable: false
     window_title: 'bombcrypto'
@@ -27,13 +28,13 @@ threshold:
   error_message: 0.7
   select_wallet_buttons: 0.8
   back_button: 0.9
-  heroes_green_bar: 0.9
-  heroes_full_bar: 0.7
+  heroes_green_bar: 0.8
+  heroes_full_bar: 0.8
   heroes_send_all: 0.8
   chest: 0.5
 
 heroes:
-  mode: 'all'
+  mode: 'green'
   list:
     scroll_size: 60
     scroll_attempts: 3
