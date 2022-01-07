@@ -135,6 +135,10 @@ class MultiAccount:
             self.actions.clickButton(close_button)
             self.actions.sleep(1, 2)
 
+        if now - last["refresh_heroes"] > self.next_refresh_heroes_positions * 60:
+            last["refresh_heroes"] = now
+            self.heroes.refreshHeroesPositions()
+
         if now - last["check_updates"] > self.check_for_updates * 60:
             last["check_updates"] = now
             self.app.checkUpdate()
