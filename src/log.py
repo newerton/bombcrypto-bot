@@ -38,6 +38,7 @@ class Log:
         formatted_datetime = self.date.dateFormatted()
         console_message = "{} - {}".format(formatted_datetime, message)
         console_message_colorfull = color_formatted + message + Fore.RESET
+        service_message = "⏰{}\n{}".format(formatted_datetime, message)
         
         if self.config['app']['terminal_colorful'] is True:
             console_message = "{} - {}".format(
@@ -46,6 +47,9 @@ class Log:
         if emoji is not None and self.config['app']['emoji'] is True:
             console_message = "{} - {} {}".format(
                 formatted_datetime, emoji, message)
+            service_message = "⏰{}\n{} {}".format(
+                formatted_datetime, emoji, message)
+
             if self.config['app']['terminal_colorful'] is True:
                 console_message = "{} - {} {}".format(
                     formatted_datetime, emoji, console_message_colorfull)
@@ -53,8 +57,6 @@ class Log:
         print(console_message)
 
         if services == True:
-            service_message = "⏰{}\n{} {}".format(
-                formatted_datetime, emoji, message)
             self.telegram.sendTelegramMessage(service_message)
 
         if (self.config['log']['save_to_file'] == True):
