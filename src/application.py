@@ -3,7 +3,7 @@ import requests
 import yaml
 
 
-class App:
+class Application:
     def __init__(self):
         from src.config import Config
         self.config = Config().read()
@@ -21,8 +21,9 @@ class App:
         self.getVersions()
 
         input('Press Enter to start the bot...\n')
-        self.log.console('Starting bot...', services=True, emoji='🤖', color='green')
-        
+        self.log.console('Starting bot...', services=True,
+                         emoji='🤖', color='green')
+
     def getVersions(self):
         self.importLibs()
 
@@ -30,7 +31,8 @@ class App:
             githubVersion = self.githubVersion()
             localVersion = self.localVersion()
 
-            banner = """Versions
+            banner = """
+Versions
   Local
     App: {}
     Config File: {}
@@ -53,21 +55,20 @@ class App:
         versionLocalApp = localVersion[0]
         versionLocalConfigFile = localVersion[1]
 
-        # Allow BCBOT to be stopped remotely in case of emergency
         if (emergencyGithubApp == 'true' and versionGithubApp > versionLocalApp):
             self.log.console(
-                'Update is required for your security', services=True, emoji='🆘')
+                'Update is required for your security', services=True, emoji='🆘', color='red')
 
         if versionLocalApp is not None:
             if versionGithubApp > versionLocalApp:
                 self.log.console('New app version ' + versionGithubApp +
-                                 ' available, please update!', services=True, emoji='🎉'),
+                                 ' available, please update!', services=True, emoji='🎉', color='red'),
             if versionGithubConfigFile > versionLocalConfigFile:
                 self.log.console('New config file version ' + versionGithubConfigFile +
-                                 ' available, please update!', services=True, emoji='🎉'),
+                                 ' available, please update!', services=True, emoji='🎉', color='red'),
         else:
             self.log.console(
-                'Version file not found, update is required', services=True, emoji='💥')
+                'Version file not found, update is required', services=True, emoji='💥', color='red')
 
     def githubVersion(self):
         self.importLibs()
@@ -81,7 +82,7 @@ class App:
             emergency = version['emergency']
         except KeyError:
             self.log.console(
-                'Version file not found in github', emoji='💥')
+                'Version file not found in github', emoji='💥', color='red')
             app = "0.0.0"
             config_file = "0.0.0"
             emergency = False
@@ -99,7 +100,7 @@ class App:
             fileVersion.close()
         except FileNotFoundError:
             self.log.console(
-                'Version file not found in local', emoji='💥')
+                'Version file not found in local', emoji='💥', color='red')
             app = "0.0.0"
             config_file = "0.0.0"
             emergency = False
@@ -113,4 +114,4 @@ class App:
 
         if newConfigThreshold != self.configThreshold:
             self.configThreshold = newConfigThreshold
-            self.log.console('New Threshold applied', emoji='⚙️')
+            self.log.console('New Threshold applied', emoji='⚙️', color='grey')

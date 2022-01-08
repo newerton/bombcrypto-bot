@@ -2,10 +2,10 @@ app:
   theme: 'lunar_newyear'
   verify_version: true
   emoji: false
+  terminal_colorful: false
   run_time_app: 1
   monitor_to_use: 1
   captcha: false
-  terminal_colorful: false
   multi_account: 
     enable: false
     window_title: 'bombcrypto'

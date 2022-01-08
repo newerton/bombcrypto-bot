@@ -3,6 +3,7 @@ from cv2 import cv2
 import numpy as np
 import time
 
+
 class Recognition:
     def importLibs(self):
         from src.actions import Actions
@@ -54,7 +55,8 @@ class Recognition:
         while True:
             if multiple is not False:
                 for img in images:
-                    matches = self.recognition.positions(img, threshold=threshold)
+                    matches = self.recognition.positions(
+                        img, threshold=threshold)
                     if matches is False:
                         hast_timed_out = time.time()-start > timeout
                         if hast_timed_out is not False:
@@ -62,7 +64,8 @@ class Recognition:
                         continue
                     return True
             else:
-                matches = self.recognition.positions(images, threshold=threshold)
+                matches = self.recognition.positions(
+                    images, threshold=threshold)
                 if matches is False:
                     hast_timed_out = time.time()-start > timeout
                     if hast_timed_out is not False:
@@ -72,7 +75,7 @@ class Recognition:
 
     def currentScreen(self):
         self.importLibs()
-        
+
         back_button = self.images.image('back_button')
         treasure_hunt_banner = self.images.image('treasure_hunt_banner')
         connect_wallet_button = self.images.image('connect_wallet_button')
