@@ -74,7 +74,7 @@ class Telegram:
 
         self.bot = Bot(botFatherToken)
         self.bot.set_my_commands(Commands, language_code='en')
-        
+
         def sendPrint(update: Update, context: CallbackContext) -> None:
             self.commandSendPrint(update)
 
@@ -89,7 +89,6 @@ class Telegram:
 
         def sendDonation(update: Update, context: CallbackContext) -> None:
             self.commandSendDonation(update)
-
 
         commands = [
             ['chat_id', sendChatId],
