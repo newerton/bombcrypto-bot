@@ -6,6 +6,7 @@ login_attempts = 0
 class Auth:
     def importLibs(self):
         from src.actions import Actions
+        from src.application import Application
         from src.config import Config
         from src.error import Errors
         from src.images import Images
@@ -13,6 +14,7 @@ class Auth:
         from src.log import Log
         from src.services.telegram import Telegram
         self.actions = Actions()
+        self.application = Application()
         self.config = Config().read()
         self.errors = Errors()
         self.images = Images()
@@ -47,7 +49,7 @@ class Auth:
             if(metamaskData["enable_login_metamask"] is False):
                 self.log.console(
                     'Metamask locked! But login with password is disabled, exiting', emoji='🔒', color='red')
-                exit()
+                self.application.stop()
             self.log.console(
                 'Found unlock button. Waiting for password', emoji='🔓', color='yellow')
             password = metamaskData["password"]

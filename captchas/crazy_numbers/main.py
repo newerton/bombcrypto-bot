@@ -186,13 +186,11 @@ def main():
             pyautogui.hotkey('ctrl','f5')
             time.sleep(7)
             return
-            # exit()
 
     first = captchaImg(img,popup_pos[0])
     awnser = getDigits(d,first)
     save('digits/'+awnser,first)
-    # save(awnser,first)
-    # exit()
+
     choice_screenshots = moveSlider(screenshot,randint(0,4),popup_pos)
     time.sleep(1)
     o = outcome()

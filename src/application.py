@@ -6,8 +6,10 @@ import yaml
 class Application:
     def __init__(self):
         from src.config import Config
+        from src.services.telegram import Telegram
         self.config = Config().read()
         self.configThreshold = self.config['threshold']
+        self.telegram = Telegram()
 
     def importLibs(self):
         from src.log import Log
@@ -23,6 +25,10 @@ class Application:
         input('Press Enter to start the bot...\n')
         self.log.console('Starting bot...', services=True,
                          emoji='🤖', color='green')
+
+    def stop(self):
+        self.telegram.stop()
+        exit()
 
     def getVersions(self):
         self.importLibs()
