@@ -36,7 +36,7 @@ Desenvolvedores:
 * https://github.com/mpcabete/
 * https://github.com/afkapp/
 
-This bot is free and open source.
+Este bot é grátis e de código aberto.
 
 Recursos:  
 * Refatoração do código

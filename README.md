@@ -12,7 +12,10 @@
 I am not responsible for any penalties incurred by those who use the bot, use it at your own risk.
 
 ## 📄 Documentation
-  * ![Portuguese](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/flags/brazil.png) - Portuguese
+| - | Language |
+|:---: | :---: |
+| ![Portuguese](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/flags/brazil.png) | [Portuguese](https://github.com/newerton/bombcrypto-bot/blob/main/docs/README_pt-br.md) |
+  
 ## 📌 Glossary
 
   * [About](#about)
@@ -29,8 +32,6 @@ I am not responsible for any penalties incurred by those who use the bot, use it
     * [Threshold in config file](#threshold-config)
     * [Image replacement](#image-replacement)
     * [Some behaviors that may indicate a false positive or negative](#some-behaviors)
-
-Alguns comportamentos que podem indicar um falso positivo ou negativo**
 
 ## 📋 <a id="about"></a>About
 
