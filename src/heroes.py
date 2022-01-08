@@ -78,10 +78,6 @@ class Heroes:
                 buttonsClicked = self.clickGreenBarButtons()
                 if buttonsClicked is not None:
                     heroes_clicked += buttonsClicked
-            else:
-                buttonsClicked = self.clickAllWorkButtons()
-                if buttonsClicked is not None:
-                    heroes_clicked += buttonsClicked
 
             if buttonsClicked == 0 or buttonsClicked is None:
                 empty_scrolls_attempts = empty_scrolls_attempts - 1
@@ -202,7 +198,7 @@ class Heroes:
 
     def clickGreenBarButtons(self):
         self.importLibs()
-        offset = self.config['offsets']['work_button']
+        offset = self.config['offsets']['work_button_green']
         threshold = self.config['threshold']
 
         bar_green_stamina = self.images.image('bar_green_stamina')
@@ -211,45 +207,6 @@ class Heroes:
             bar_green_stamina, threshold=threshold['heroes_green_bar'])
 
         return self.barButtons(bars, offset, 'green')
-
-    def clickAllWorkButtons(self):
-        self.importLibs()
-        offset = self.config['offsets']['work_button_all']
-
-        work_button = self.images.image('work_button')
-
-        buttons = self.recognition.positions(
-            work_button,
-            threshold=self.config['threshold']['back_button']
-        )
-
-        if buttons is False:
-            return
-
-        if self.config['log']['debug'] is not False:
-            self.log.console('%d buttons detected' %
-                             len(buttons), emoji='✔️', color='red')
-
-        for (x, y, w, h) in buttons:
-            offset_random = random.uniform(offset[0], offset[1])
-            humanClicker.move(
-                (int(x+offset_random), int(y+(h/2))),
-                np.random.randint(1, 2)
-            )
-            humanClicker.click()
-
-            global heroes_clicked_total
-            global heroes_clicked
-
-            heroes_clicked_total = heroes_clicked_total + 1
-            if heroes_clicked > 15:
-                self.log.console('Too many hero clicks, try to increase the back_button threshold',
-                                 services=True, emoji='⚠️', color='red')
-                return
-            self.actions.sleep(1, 2)
-        self.log.console('Clicking in %d heroes detected.' %
-                         len(buttons), emoji='👆', color='red')
-        return len(buttons)
 
     def clickSendAllButtons(self):
         self.importLibs()

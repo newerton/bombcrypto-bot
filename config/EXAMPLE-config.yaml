@@ -26,7 +26,6 @@ chests:
 threshold:
   default: 0.7
   error_message: 0.7
-  select_wallet_buttons: 0.8
   back_button: 0.9
   heroes_green_bar: 0.8
   heroes_full_bar: 0.8
@@ -36,15 +35,12 @@ threshold:
 heroes:
   mode: 'green'
   list:
-    scroll_size: 60
     scroll_attempts: 3
     click_and_drag_amount: 200
 
 offsets:
-  work_button: [120, 140] # [min value, max value]
+  work_button_green: [120, 140] # [min value, max value]
   work_button_full: [90, 110] # [min value, max value]
-  work_button_all: [10, 50] # [min value, max value]
-  character_indicator: [100, 200] # [min value, max value]
 
 metamask:
   enable_login_metamask: false
