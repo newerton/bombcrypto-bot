@@ -1,11 +1,20 @@
 from cv2 import cv2
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
+from telegram.bot import Bot, BotCommand
 
 import mss
 import numpy as np
 import telegram
 import yaml
+
+Commands = [
+    BotCommand("id", "Send chat id"),
+    BotCommand("print", "Send printscreen"),
+    BotCommand("map", "Send a printscreen of the map (disabled in multi account)"),
+    BotCommand("bcoin", "Send a printscreen of your BCOIN"),
+    BotCommand("donation", "Some wallets for donation")
+]
 
 
 class Telegram:
@@ -30,11 +39,13 @@ class Telegram:
 
     def importLibs(self):
         from src.actions import Actions
+        from src.config import Config
         from src.desktop import Desktop
         from src.images import Images
         from src.log import Log
         from src.recognition import Recognition
         self.actions = Actions()
+        self.config = Config().read()
         self.desktop = Desktop()
         self.images = Images()
         self.log = Log()
@@ -58,16 +69,14 @@ class Telegram:
             return
 
         self.log.console('Initializing Telegram...', emoji='📱')
-        self.updater = Updater(self.telegramConfig['botfather_token'])
+        botFatherToken = self.telegramConfig['botfather_token']
+        self.updater = Updater(botFatherToken)
+        self.bot = Bot(botFatherToken)
+        self.bot.set_my_commands(Commands, language_code='en')
 
         try:
             def send_print(update: Update, context: CallbackContext) -> None:
-                update.message.reply_text('🔃 Proccessing...')
-                screenshot = self.desktop.printScreen()
-                image = './logs/print-report.{}'.format(
-                    self.telegramConfig['format_of_image'])
-                cv2.imwrite(image, screenshot)
-                update.message.reply_photo(photo=open(image, 'rb'))
+                self.sendPrint(update)
 
             def send_id(update: Update, context: CallbackContext) -> None:
                 update.message.reply_text(
@@ -75,19 +84,27 @@ class Telegram:
 
             def send_map(update: Update, context: CallbackContext) -> None:
                 update.message.reply_text('🔃 Proccessing...')
-                if self.sendMapReport() is None:
-                    update.message.reply_text('😿 An error has occurred')
+                if self.config['app']['multi_account']['enable'] is not True:
+                    if self.sendMapReport() is None:
+                        update.message.reply_text('😿 An error has occurred')
+                else:
+                    update.message.reply_text(
+                        f'⚠️ Command disabled, because of the Multi Accounts is enabled.')
 
             def send_bcoin(update: Update, context: CallbackContext) -> None:
                 update.message.reply_text('🔃 Proccessing...')
-                if self.sendBCoinReport() is None:
-                    update.message.reply_text('😿 An error has occurred')
+                if self.config['app']['multi_account']['enable'] is not True:
+                    if self.sendBCoinReport() is None:
+                        update.message.reply_text('😿 An error has occurred')
+                else:
+                    update.message.reply_text(
+                        f'⚠️ Command disabled, because of the Multi Accounts is enabled.')
 
             def send_donation(update: Update, context: CallbackContext) -> None:
                 update.message.reply_text(
-                    f'🎁 BCBOT Chave PIX: \n\n 08912d17-47a6-411e-b7ec-ef793203f836 \n\n Muito obrigado! 😀')
-                update.message.reply_text(
                     f'🎁 Smart Chain Wallet: \n\n 0x4847C29561B6682154E25c334E12d156e19F613a \n\n Thank You! 😀')
+                update.message.reply_text(
+                    f'🎁 BCBOT Chave PIX: \n\n 08912d17-47a6-411e-b7ec-ef793203f836 \n\n Muito obrigado! 😀')
 
             def send_stop(update: Update, context: CallbackContext) -> None:
                 update.message.reply_text(f'🛑 Shutting down bot...')
@@ -105,7 +122,7 @@ class Telegram:
                 self.updater.dispatcher.add_handler(
                     CommandHandler(command[0], command[1]))
 
-            self.updater.start_polling()
+                self.updater.start_polling()
         except:
             self.log.console(
                 'Bot not initialized, see configuration file', emoji='🤖')
@@ -301,3 +318,14 @@ Possible quantity chest per type:
         except:
             self.log.console(
                 'Error to send telegram print. See configuration file', emoji='📄')
+
+    def sendHelp(self):
+        exit()
+
+    def sendPrint(self, update):
+        update.message.reply_text('🔃 Proccessing...')
+        screenshot = self.desktop.printScreen()
+        image = './logs/print-report.{}'.format(
+            self.telegramConfig['format_of_image'])
+        cv2.imwrite(image, screenshot)
+        update.message.reply_photo(photo=open(image, 'rb'))
