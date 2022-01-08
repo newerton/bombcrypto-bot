@@ -1,11 +1,14 @@
-from src.app import App
+from colorama import init, Fore, Style
+
+from src.application import Application
 from src.log import Log
 from src.multi_account import MultiAccount
 
 from src.services.telegram import Telegram
 
+init()
 
-banner = """\033[92m
+banner = """
 ******************************* BombCrypto Bot **********************************
 *********************************************************************************
 ********************* Please consider buying me a coffee :) *********************
@@ -21,19 +24,18 @@ banner = """\033[92m
 * Some configs can be found in the /config/config.yaml file.
 
 *********************************************************************************
-\033[0m
 """
 
-print(banner)
+print(Fore.GREEN + banner + Style.RESET_ALL)
 
-app = App()
+application = Application()
 log = Log()
 multi_account = MultiAccount()
 telegram = Telegram()
 
 
 def main():
-    app.start()
+    application.start()
     telegram.start()
     multi_account.start()
 

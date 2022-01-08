@@ -1,3 +1,4 @@
+from colorama import Fore, Back, Style
 from cv2 import cv2
 
 heroe_clicks = 0
@@ -5,16 +6,16 @@ last_log_is_progress = False
 new_map_btn_img = cv2.imread('./targets/new-map.png')
 
 COLOR = {
-    'blue': '\033[94m',
-    'default': '\033[99m',
-    'grey': '\033[90m',
-    'yellow': '\033[93m',
-    'black': '\033[90m',
-    'cyan': '\033[96m',
-    'green': '\033[92m',
-    'magenta': '\033[95m',
-    'white': '\033[97m',
-    'red': '\033[91m'
+    'blue': Fore.BLUE,
+    'default': Fore.WHITE,
+    'grey': Fore.LIGHTBLACK_EX,
+    'yellow': Fore.YELLOW,
+    'black': Fore.BLACK,
+    'cyan': Fore.CYAN,
+    'green': Fore.GREEN,
+    'magenta': Fore.MAGENTA,
+    'white': Fore.WHITE,
+    'red': Fore.RED
 }
 
 
@@ -35,20 +36,25 @@ class Log:
         color_formatted = COLOR.get(color.lower(), COLOR['default'])
 
         formatted_datetime = self.date.dateFormatted()
-        console_message = "{} - {}".format(formatted_datetime, message)
-        console_message_colorful  = console_message
-
+        console_message = "{} ● {}".format(formatted_datetime, message)
+        console_message_colorfull = color_formatted + message + Fore.RESET
+        
         if self.config['app']['terminal_colorful'] is True:
-            console_message_colorful  = color_formatted + console_message + '\033[0m'        
+            console_message = "{} ● {}".format(
+                formatted_datetime, console_message_colorfull)
 
         if emoji is not None and self.config['app']['emoji'] is True:
-            console_message = "{} - {} {}".format(
+            console_message = "{} ● {} {}".format(
                 formatted_datetime, emoji, message)
+            if self.config['app']['terminal_colorful'] is True:
+                console_message = "{} ● {} {}".format(
+                    formatted_datetime, emoji, console_message_colorfull)
 
-        print(console_message_colorful)
+        print(console_message)
 
         if services == True:
-            service_message = "⏰{}\n{} {}".format(formatted_datetime, emoji, message)
+            service_message = "⏰{}\n{} {}".format(
+                formatted_datetime, emoji, message)
             self.telegram.sendTelegramMessage(service_message)
 
         if (self.config['log']['save_to_file'] == True):

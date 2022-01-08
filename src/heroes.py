@@ -38,22 +38,23 @@ class Heroes:
         global heroes_clicked
 
         self.importLibs()
-        self.log.console('Search for heroes to work', emoji='🏢')
+        self.log.console('Search for heroes to work', emoji='🏢', color='green')
 
         self.goToHeroes()
 
         mode = self.config['heroes']['mode']
         if mode == "all":
             self.log.console('Sending all heroes to work!',
-                             services=True, emoji='⚒️')
+                             services=True, emoji='⚒️', color='green')
         elif mode == "full":
             self.log.console(
-                'Sending heroes with full stamina bar to work!', emoji='⚒️')
+                'Sending heroes with full stamina bar to work!', emoji='⚒️', color='green')
         elif mode == "green":
             self.log.console(
-                'Sending heroes with green stamina bar to work!', emoji='⚒️')
+                'Sending heroes with green stamina bar to work!', emoji='⚒️', color='green')
         else:
-            self.log.console('Sending all heroes to work!', emoji='⚒️')
+            self.log.console('Sending all heroes to work!',
+                             emoji='⚒️', color='green')
 
         if mode == 'all':
             self.clickSendAllButtons()
@@ -88,7 +89,7 @@ class Heroes:
             self.actions.sleep(1, 2)
 
         self.log.console('{} total heroes sent since the bot started'.format(
-            heroes_clicked_total), services=True, emoji='🦸')
+            heroes_clicked_total), services=True, emoji='🦸', color='yellow')
         self.goToTreasureHunt()
 
     def goToHeroes(self):
@@ -129,7 +130,8 @@ class Heroes:
             self.auth.checkLogout()
 
     def refreshHeroesPositions(self):
-        self.log.console('Refreshing heroes positions', emoji='🔃')
+        self.log.console('Refreshing heroes positions',
+                         emoji='🔃', color='yellow')
 
         global next_refresh_heroes_positions
 
@@ -179,8 +181,8 @@ class Heroes:
         humanClicker.move(
             (int(x+(w/2)), int(y+h+offset_random)), np.random.randint(1, 2))
 
-        
-        click_and_drag_amount = (-self.config['heroes']['list']['click_and_drag_amount'])
+        click_and_drag_amount = (-self.config['heroes']
+                                 ['list']['click_and_drag_amount'])
         pyautogui.mouseDown(button='left')
         moveCoordinates = (int(x), int(y+click_and_drag_amount))
         humanClicker.move(moveCoordinates, np.random.randint(1, 2))
@@ -196,7 +198,7 @@ class Heroes:
         bars = self.recognition.positions(
             bar_full_stamina, threshold=threshold['heroes_full_bar'])
 
-        return self.barButtons(bars, offset, 'FULL')
+        return self.barButtons(bars, offset, 'full')
 
     def clickGreenBarButtons(self):
         self.importLibs()
@@ -208,7 +210,7 @@ class Heroes:
         bars = self.recognition.positions(
             bar_green_stamina, threshold=threshold['heroes_green_bar'])
 
-        return self.barButtons(bars, offset, 'GREEN')
+        return self.barButtons(bars, offset, 'green')
 
     def clickAllWorkButtons(self):
         self.importLibs()
@@ -225,7 +227,8 @@ class Heroes:
             return
 
         if self.config['log']['debug'] is not False:
-            self.log.console('%d buttons detected' % len(buttons), emoji='✔️')
+            self.log.console('%d buttons detected' %
+                             len(buttons), emoji='✔️', color='red')
 
         for (x, y, w, h) in buttons:
             offset_random = random.uniform(offset[0], offset[1])
@@ -241,11 +244,11 @@ class Heroes:
             heroes_clicked_total = heroes_clicked_total + 1
             if heroes_clicked > 15:
                 self.log.console('Too many hero clicks, try to increase the back_button threshold',
-                                 services=True, emoji='⚠️')
+                                 services=True, emoji='⚠️', color='red')
                 return
             self.actions.sleep(1, 2)
         self.log.console('Clicking in %d heroes detected.' %
-                         len(buttons), emoji='👆')
+                         len(buttons), emoji='👆', color='red')
         return len(buttons)
 
     def clickSendAllButtons(self):
@@ -276,8 +279,9 @@ class Heroes:
 
         if self.config['log']['debug'] is not False:
             self.log.console('%d green bars detected' %
-                             len(bars_elements), emoji='🟩')
-            self.log.console('%d buttons detected' % len(buttons), emoji='🔳')
+                             len(bars_elements), emoji='🟩', color='red')
+            self.log.console('%d buttons detected' %
+                             len(buttons), emoji='🔳', color='red')
 
         not_working_bars = []
         for bar in bars_elements:
@@ -287,7 +291,7 @@ class Heroes:
         if len(not_working_bars) > 0:
             message = 'Clicking in {} heroes with {} bar detected.'.format(
                 len(not_working_bars), type)
-            self.log.console(message, emoji='👆')
+            self.log.console(message, emoji='👆', color='green')
 
         for (x, y, w, h) in not_working_bars:
             offset_random = random.uniform(offset[0], offset[1])
@@ -303,7 +307,7 @@ class Heroes:
             heroes_clicked_total = heroes_clicked_total + 1
             if heroes_clicked > 15:
                 self.log.console('Too many hero clicks, try to increase the back_button threshold',
-                                 services=True, emoji='⚠️')
+                                 services=True, emoji='⚠️', color='yellow')
                 return
             self.actions.sleep(1, 2)
         return len(not_working_bars)

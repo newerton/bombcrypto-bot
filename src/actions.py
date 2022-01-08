@@ -62,7 +62,7 @@ class Actions:
             heroe_clicks = heroe_clicks + 1
             if heroe_clicks > 20:
                 self.log.console(
-                    'Too many hero clicks, try to increase the go_to_work_btn threshold')
+                    'Too many hero clicks, try to increase the go_to_work_btn threshold', emoji='💥', color='red')
                 return
         return len(buttons)
 
@@ -80,7 +80,7 @@ class Actions:
         return time.sleep(sleep)
 
     def clickNewMap(self):
-        self.log.console('New map', emoji='🗺️')
+        self.log.console('New map', emoji='🗺️', color='magenta')
         # sleep(1, 2)
         # checkCaptcha()
         self.telegram.sendMapReport()

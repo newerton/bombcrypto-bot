@@ -22,7 +22,7 @@ class MultiAccount:
 
     def importLibs(self):
         from src.actions import Actions
-        from src.app import App
+        from src.application import Application
         from src.auth import Auth
         from src.captcha import Captcha
         from src.error import Errors
@@ -31,7 +31,7 @@ class MultiAccount:
         from src.log import Log
         from src.recognition import Recognition
         self.actions = Actions()
-        self.app = App()
+        self.application = Application()
         self.auth = Auth()
         self.captcha = Captcha()
         self.errors = Errors()
@@ -44,15 +44,15 @@ class MultiAccount:
         self.importLibs()
         multiAccount = self.config['app']['multi_account']['enable']
         if multiAccount != True and os.name == 'nt':
-            self.log.console('Multi account disabled', emoji='🧾')
+            self.log.console('Multi account disabled', emoji='🧾', color='cyan')
             self.botSingle()
 
         if multiAccount == True and os.name == 'nt':
-            self.log.console('Multi account enabled', emoji='🧾')
+            self.log.console('Multi account enabled', emoji='🧾', color='cyan')
             self.botMultiAccountWindows()
 
         if os.name == 'posix':
-            self.log.console('Multi account DISABLE', emoji='🧾')
+            self.log.console('Multi account DISABLE', emoji='🧾', color='cyan')
             self.botSingle()
 
     def botSingle(self):
@@ -92,7 +92,7 @@ class MultiAccount:
 
         except PyGetWindowException:
             self.log.console(
-                'Error: Multi Account (PyGetWindow): Trying to resolve, check your farm.', emoji='💥')
+                'Error: Multi Account (PyGetWindow): Trying to resolve, check your farm.', emoji='💥', color='cyan')
             self.botMultiAccountWindows()
 
     def steps(self, last):
@@ -117,7 +117,7 @@ class MultiAccount:
 
         if currentScreen == "main":
             if self.actions.clickButton(treasure_hunt_banner):
-                self.log.console('Entering treasure hunt', emoji='▶️')
+                self.log.console('Entering treasure hunt', emoji='▶️', color='yellow')
                 last["refresh_heroes"] = now
 
         if currentScreen == "treasure_hunt":
@@ -135,13 +135,13 @@ class MultiAccount:
 
         if now - last["check_updates"] > self.check_for_updates * 60:
             last["check_updates"] = now
-            self.app.checkUpdate()
+            self.application.checkUpdate()
 
         self.auth.checkLogout()
         sys.stdout.flush()
         self.actions.sleep(run_time_app, run_time_app,
                            randomMouseMovement=False)
-        self.app.checkThreshold()
+        self.application.checkThreshold()
 
     def activeWindow(self, last, window):
         window_fullscreen = self.config['app']['multi_account']['window_fullscreen']
@@ -156,7 +156,7 @@ class MultiAccount:
             humanClicker.click()
         window.maximize()
         window.activate()
-        self.log.console('Browser Active: ' + window.title, emoji='🪟')
+        self.log.console('Browser Active: ' + window.title, emoji='🪟', color='cyan')
         time.sleep(2)
         self.steps(last)
         if window_fullscreen is not True:
