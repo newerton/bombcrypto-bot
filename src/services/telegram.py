@@ -9,7 +9,7 @@ import telegram
 import yaml
 
 Commands = [
-    BotCommand("id", "Send chat id"),
+    BotCommand("chat_id", "Send chat id"),
     BotCommand("print", "Send printscreen"),
     BotCommand("map", "Send a printscreen of the map (disabled in multi account)"),
     BotCommand("bcoin", "Send a printscreen of your BCOIN"),
@@ -71,58 +71,39 @@ class Telegram:
         self.log.console('Initializing Telegram...', emoji='📱')
         botFatherToken = self.telegramConfig['botfather_token']
         self.updater = Updater(botFatherToken)
+
         self.bot = Bot(botFatherToken)
         self.bot.set_my_commands(Commands, language_code='en')
+        
+        def sendPrint(update: Update, context: CallbackContext) -> None:
+            self.commandSendPrint(update)
 
+        def sendChatId(update: Update, context: CallbackContext) -> None:
+            self.commandSendChatId(update)
+
+        def sendMap(update: Update, context: CallbackContext) -> None:
+            self.commandSendMap(update)
+
+        def sendBcoin(update: Update, context: CallbackContext) -> None:
+            self.commandSendBcoin(update)
+
+        def sendDonation(update: Update, context: CallbackContext) -> None:
+            self.commandSendDonation(update)
+
+
+        commands = [
+            ['chat_id', sendChatId],
+            ['print', sendPrint],
+            ['map', sendMap],
+            ['bcoin', sendBcoin],
+            ['donation', sendDonation],
+        ]
+
+        for command in commands:
+            self.updater.dispatcher.add_handler(
+                CommandHandler(command[0], command[1]))
         try:
-            def send_print(update: Update, context: CallbackContext) -> None:
-                self.sendPrint(update)
-
-            def send_id(update: Update, context: CallbackContext) -> None:
-                update.message.reply_text(
-                    f'🆔 Your id is: {update.effective_user.id}')
-
-            def send_map(update: Update, context: CallbackContext) -> None:
-                update.message.reply_text('🔃 Proccessing...')
-                if self.config['app']['multi_account']['enable'] is not True:
-                    if self.sendMapReport() is None:
-                        update.message.reply_text('😿 An error has occurred')
-                else:
-                    update.message.reply_text(
-                        f'⚠️ Command disabled, because of the Multi Accounts is enabled.')
-
-            def send_bcoin(update: Update, context: CallbackContext) -> None:
-                update.message.reply_text('🔃 Proccessing...')
-                if self.config['app']['multi_account']['enable'] is not True:
-                    if self.sendBCoinReport() is None:
-                        update.message.reply_text('😿 An error has occurred')
-                else:
-                    update.message.reply_text(
-                        f'⚠️ Command disabled, because of the Multi Accounts is enabled.')
-
-            def send_donation(update: Update, context: CallbackContext) -> None:
-                update.message.reply_text(
-                    f'🎁 Smart Chain Wallet: \n\n 0x4847C29561B6682154E25c334E12d156e19F613a \n\n Thank You! 😀')
-                update.message.reply_text(
-                    f'🎁 BCBOT Chave PIX: \n\n 08912d17-47a6-411e-b7ec-ef793203f836 \n\n Muito obrigado! 😀')
-
-            def send_stop(update: Update, context: CallbackContext) -> None:
-                update.message.reply_text(f'🛑 Shutting down bot...')
-
-            commands = [
-                ['print', send_print],
-                ['id', send_id],
-                ['map', send_map],
-                ['bcoin', send_bcoin],
-                ['donation', send_donation],
-                ['stop', send_stop]
-            ]
-
-            for command in commands:
-                self.updater.dispatcher.add_handler(
-                    CommandHandler(command[0], command[1]))
-
-                self.updater.start_polling()
+            self.updater.start_polling()
         except:
             self.log.console(
                 'Bot not initialized, see configuration file', emoji='🤖')
@@ -319,13 +300,37 @@ Possible quantity chest per type:
             self.log.console(
                 'Error to send telegram print. See configuration file', emoji='📄')
 
-    def sendHelp(self):
-        exit()
-
-    def sendPrint(self, update):
+    def commandSendPrint(self, update):
         update.message.reply_text('🔃 Proccessing...')
         screenshot = self.desktop.printScreen()
         image = './logs/print-report.{}'.format(
             self.telegramConfig['format_of_image'])
         cv2.imwrite(image, screenshot)
         update.message.reply_photo(photo=open(image, 'rb'))
+
+    def commandSendChatId(self, update):
+        update.message.reply_text('🆔 Your id is: {update.effective_user.id}')
+
+    def commandSendMap(self, update):
+        update.message.reply_text('🔃 Proccessing...')
+        if self.config['app']['multi_account']['enable'] is not True:
+            if self.sendMapReport() is None:
+                update.message.reply_text('😿 An error has occurred')
+        else:
+            update.message.reply_text(
+                '⚠️ Command disabled, because of the Multi Accounts is enabled.')
+
+    def commandSendBcoin(self, update):
+        update.message.reply_text('🔃 Proccessing...')
+        if self.config['app']['multi_account']['enable'] is not True:
+            if self.sendBCoinReport() is None:
+                update.message.reply_text('😿 An error has occurred')
+        else:
+            update.message.reply_text(
+                '⚠️ Command disabled, because of the Multi Accounts is enabled.')
+
+    def commandSendDonation(self, update):
+        update.message.reply_text(
+            '🎁 Smart Chain Wallet: \n\n 0x4847C29561B6682154E25c334E12d156e19F613a \n\n Thank You! 😀')
+        update.message.reply_text(
+            '🎁 Chave PIX: \n\n 08912d17-47a6-411e-b7ec-ef793203f836 \n\n Muito obrigado! 😀')
