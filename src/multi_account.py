@@ -73,8 +73,9 @@ class MultiAccount:
         
         try:
             windows = []
-            for w in botMultiAccount.getWindowsWithTitle(title):
-                if w.title.startswith(title) == True:
+            for w in botMultiAccount.getAllWindows():
+                lowerTitle = w.title.strip().lower().startswith(title)
+                if lowerTitle == True:
                     windows.append({
                         "window": w,
                         "login": 0,
