@@ -6,6 +6,7 @@ app:
   run_time_app: 1
   monitor_to_use: 1
   captcha: false
+  speed: 'normal'
   multi_account: 
     enable: false
     window_title: 'bombcrypto'
@@ -14,7 +15,6 @@ app:
 time_intervals:
   send_heroes_for_work: [30, 35]
   refresh_heroes_positions: [3, 4]
-  interval_between_movements: 0
 
 chests:
   values:
