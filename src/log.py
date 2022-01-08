@@ -36,18 +36,18 @@ class Log:
         color_formatted = COLOR.get(color.lower(), COLOR['default'])
 
         formatted_datetime = self.date.dateFormatted()
-        console_message = "{} ● {}".format(formatted_datetime, message)
+        console_message = "{} - {}".format(formatted_datetime, message)
         console_message_colorfull = color_formatted + message + Fore.RESET
         
         if self.config['app']['terminal_colorful'] is True:
-            console_message = "{} ● {}".format(
+            console_message = "{} - {}".format(
                 formatted_datetime, console_message_colorfull)
 
         if emoji is not None and self.config['app']['emoji'] is True:
-            console_message = "{} ● {} {}".format(
+            console_message = "{} - {} {}".format(
                 formatted_datetime, emoji, message)
             if self.config['app']['terminal_colorful'] is True:
-                console_message = "{} ● {} {}".format(
+                console_message = "{} - {} {}".format(
                     formatted_datetime, emoji, console_message_colorfull)
 
         print(console_message)
