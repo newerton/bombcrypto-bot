@@ -4,7 +4,6 @@ deepdiff==5.7.0
 mss==6.1.0
 numpy==1.21.4
 opencv-python==4.5.4.60
-PyAutoGUI==0.9.53
 Pillow==8.4.0
 pyclick==0.0.2
 python_telegram_bot==13.8.1
