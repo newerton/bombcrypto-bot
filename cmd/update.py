@@ -46,7 +46,6 @@ def success():
 def updateFiles(path):
     print('🔃 Updating files...')
     copyRecursive(path, './')
-    success()
     deleteRecursive(path)
 
 
