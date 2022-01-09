@@ -52,6 +52,7 @@ Features:
 * Console colorful
 * Bot speed, gain a few seconds on the move
 * Update the configuration file required
+* Auto-update files (requires Git installed)
 ## 🎁 <a id="donation"></a>Donation
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
@@ -61,6 +62,8 @@ PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 
 ## 🪟 <a id="installation"></a>Installation
 
+### **Python**
+
 🖥️ Computer/Laptop High or Medium Profile  
 🐍 Install the Python 3.9.9
 
@@ -69,8 +72,17 @@ PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 
 🔗 [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
-
 ⚠️ **It is important to check the option to add python to PATH**
+
+### **Git (To use auto-update)**
+
+Windows: [https://gitforwindows.org/](https://gitforwindows.org/)  
+Linux (Ubuntu): sudo apt -y update && sudo apt -y install git
+
+⚠️ **Open a new terminal and type the command to verify that it was installed correctly**
+```
+git version
+```
 
 ### <a id="commands"></a>Commands
 Install the dependencies by running the command below into the project folder:
@@ -83,6 +95,13 @@ Ready! Now just start the bot with the command, inside the project folder
 ```
 python index.py
 ```
+
+| commands | OS | description |
+| :---: | :---: | :---: |
+| ./cmd/update_files.sh | Linux	| Updates all project files except config.yaml and telegram.yaml and Python requirements.txt |
+| ./cmd/update.sh | Linux	| Updates only the Python requirements.txt |
+| .\cmd\update_files.bat | Windows | Updates all project files except config.yaml and telegram.yaml and Python requirements.txt |
+| .\cmd\update.bat | Windows	| Updates only the Python requirements.txt |
 
 
 ### <a id="how-to-works"></a>**How to works?**
