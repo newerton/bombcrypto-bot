@@ -46,7 +46,8 @@ Recursos:
 * Rodar o Bot, sem interrupção por erro
 * Terminal colorido
 * Velocidade no Bot, ganho de alguns minutos nas tarefas
-* Aatualização obrigatório do arquivo de configuração
+* Atualização obrigatório do arquivo de configuração
+* Atualização automática dos arquivos (requer o Git instalado)
 ## 🎁 <a id="donation"></a>Doação
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
@@ -56,6 +57,8 @@ PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 
 ## 🪟 <a id="installation"></a>Instalação
 
+### **Python**
+
 🖥️ Computador/Notebook com Alto e Média configuração  
 🐍 Instalar o Python 3.9.9
 
@@ -64,8 +67,17 @@ PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 
 🔗 [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
-
 ⚠️ **É importante marcar a opção para adicionar o python ao PATH**  
+
+### **Git (Para usar o auto-update)**
+
+Windows: [https://gitforwindows.org/](https://gitforwindows.org/)  
+Linux (Ubuntu): sudo apt -y update && sudo apt -y install git
+
+⚠️ **Abra um novo terminal e digite o comando abaixo, para verificar se foi instalado corretamente**
+```
+git version
+```
 
 ### <a id="commands"></a>Commands
 Instale as dependências, executando o comando abaixo, dentro da pasta do projeto:  
@@ -78,6 +90,13 @@ Pronto! Agora é só iniciar o bot com o comando, dentro da pasta do projeto
 ```
 python index.py
 ```
+| comandos | sistema operacional | descrição |
+| :---: | :---: | :---: |
+| ./cmd/update_files.sh | Linux	| Atualiza todos os arquivos, menos o config.yaml and telegram.yaml and atualiza o requirements.txt do Python |
+| ./cmd/update.sh | Linux	| Atualiza somente o requirements.txt do Python |
+| .\cmd\update_files.bat | Windows | Atualiza todos os arquivos, menos o config.yaml and telegram.yaml and atualiza o requirements.txt do Python |
+| .\cmd\update.bat | Windows | Atualiza somente o requirements.txt do Python |
+
 
 
 ### <a id="how-to-works"></a>**Como funciona?**
