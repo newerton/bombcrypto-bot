@@ -36,14 +36,17 @@ def copyRecursive(src, dest):
     shutil.copytree(src, dest, dirs_exist_ok=True)
 
 
-def updateFiles(path):
-    print('🔃 Updating files...')
-    copyRecursive(path, './')
+def success():
     print(Fore.GREEN + '🎉 Updated files!')
     print('Your version is now:', localVersion())
     print('\nRun: python index.py')
     print('Run without stopping (Windows): .\start.bat')
     print('Run without stopping (Linx): ./start.sh', Fore.RESET)
+
+def updateFiles(path):
+    print('🔃 Updating files...')
+    copyRecursive(path, './')
+    success()
     deleteRecursive(path)
 
 
@@ -60,28 +63,35 @@ def localVersion():
     return app
 
 
-print('------------------------------------------------------------------')
-try:
-    version = subprocess.check_output(["git", "version"]).strip().decode()
-    print(Fore.GREEN + 'Git installed:', version, Fore.RESET)
+def run():
+    print('------------------------------------------------------------------')
     try:
-        print('Cloning repository https://github.com/newerton/bombcrypto-bot.git')
-        git.Repo.clone_from(
-            'https://github.com/newerton/bombcrypto-bot.git', './clone-repo', branch='main')
-        deleteRecursive(pathSource + '.git/')
-    except git.exc.GitCommandError:
-        print(Fore.GREEN + 'Repository cloned', Fore.RESET)
+        version = subprocess.check_output(["git", "version"]).strip().decode()
+        print(Fore.GREEN + 'Git installed:', version, Fore.RESET)
+        try:
+            print('Cloning repository https://github.com/newerton/bombcrypto-bot.git')
+            git.Repo.clone_from(
+                'https://github.com/newerton/bombcrypto-bot.git', './clone-repo', branch='main')
+            deleteRecursive(pathSource + '.git/')
+        except git.exc.GitCommandError:
+            print(Fore.GREEN + 'Repository cloned', Fore.RESET)
 
-    updateFiles(pathSource)
-    print('------------------------------------------------------------------')
-except FileNotFoundError:
-    print(Fore.RED + 'Git not found' + Fore.RESET)
-    print(Fore.RED + 'To use auto-update, you need to install Git on your machine' + Fore.RESET)
-    if os.name == 'nt':
-        print(
-            Fore.GREEN + 'Download Git for Windows: https://gitforwindows.org/' + Fore.RESET)
-    elif os.name == 'posix':
-        print(Fore.GREEN + 'Install Git for unix system: sudo apt update && sudo apt install git' + Fore.RESET)
+        updateFiles(pathSource)
+        print('------------------------------------------------------------------')
+    except FileNotFoundError:
+        print(Fore.RED + 'Git not found' + Fore.RESET)
+        print(Fore.RED + 'To use auto-update, you need to install Git on your machine' + Fore.RESET)
+        if os.name == 'nt':
+            print(
+                Fore.GREEN + 'Download Git for Windows: https://gitforwindows.org/' + Fore.RESET)
+        elif os.name == 'posix':
+            print(
+                Fore.GREEN + 'Install Git for unix system: sudo apt update && sudo apt install git' + Fore.RESET)
 
-    print('------------------------------------------------------------------')
-    exit()
+        print('------------------------------------------------------------------')
+        exit()
+
+
+
+if __name__ == '__main__':
+    globals()[sys.argv[1]]()
