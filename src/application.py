@@ -1,7 +1,8 @@
-import pyautogui
+from colorama import Fore
+from deepdiff import DeepDiff
+
 import requests
 import yaml
-
 
 class Application:
     def __init__(self):
@@ -16,9 +17,7 @@ class Application:
         self.log = Log()
 
     def start(self):
-        pyautogui.PAUSE = self.config['time_intervals']['interval_between_movements']
-        pyautogui.FAILSAFE = False
-
+        self.compareYamlConfig()
         self.checkUpdate()
         self.getVersions()
 
@@ -34,7 +33,7 @@ class Application:
         self.importLibs()
 
         if self.config['app']['verify_version'] == True:
-            githubVersion = self.githubVersion()
+            gitHubVersion = self.gitHubVersion()
             localVersion = self.localVersion()
 
             banner = """
@@ -45,18 +44,18 @@ Versions
   GitHub
     App: {}
     Config File: {}
-""".format(localVersion[0], localVersion[1], githubVersion[0], githubVersion[1])
+""".format(localVersion[0], localVersion[1], gitHubVersion[0], gitHubVersion[1])
 
             print(banner)
 
     def checkUpdate(self):
 
-        githubVersion = self.githubVersion()
+        gitHubVersion = self.gitHubVersion()
         localVersion = self.localVersion()
 
-        versionGithubApp = githubVersion[0]
-        versionGithubConfigFile = githubVersion[1]
-        emergencyGithubApp = githubVersion[2]
+        versionGithubApp = gitHubVersion[0]
+        versionGithubConfigFile = gitHubVersion[1]
+        emergencyGithubApp = gitHubVersion[2]
 
         versionLocalApp = localVersion[0]
         versionLocalConfigFile = localVersion[1]
@@ -76,7 +75,7 @@ Versions
             self.log.console(
                 'Version file not found, update is required', services=True, emoji='💥', color='red')
 
-    def githubVersion(self):
+    def gitHubVersion(self):
         self.importLibs()
         data = requests.get(
             'https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/config/version.yaml')
@@ -88,7 +87,7 @@ Versions
             emergency = version['emergency']
         except KeyError:
             self.log.console(
-                'Version file not found in github', emoji='💥', color='red')
+                'Version file not found in GitHub', emoji='💥', color='red')
             app = "0.0.0"
             config_file = "0.0.0"
             emergency = False
@@ -121,3 +120,36 @@ Versions
         if newConfigThreshold != self.configThreshold:
             self.configThreshold = newConfigThreshold
             self.log.console('New Threshold applied', emoji='⚙️', color='grey')
+
+    def compareYamlConfig(self):
+        from src.config import Config
+        configGitHubExample = Config().readGitHubExample()
+        diff = DeepDiff(self.config, configGitHubExample)
+        if len(diff) > 0 and 'dictionary_item_added' in diff:
+            print('File that needs updating: ./config/config.yaml\n')
+            try:
+                if len(diff['dictionary_item_added']) > 0:
+                    print(Fore.RED + '***************************' + Fore.RESET)
+                    print(Fore.RED + '***** UPDATE REQUIRED *****' + Fore.RESET)
+                    print(Fore.RED + '***************************' + Fore.RESET)
+                    print('Key added:')
+                    for added in diff['dictionary_item_added']:
+                        key = added.replace("root", "")
+                        print(Fore.GREEN + key + Fore.RESET)
+                if len(diff['dictionary_item_removed']) > 0:
+                    print(Fore.LIGHTBLACK_EX + '\n\n***************************' + Fore.RESET)
+                    print(Fore.LIGHTBLACK_EX + '***** UPDATE OPTIONAL *****' + Fore.RESET)
+                    print(Fore.LIGHTBLACK_EX + '***************************' + Fore.RESET)
+                    print('Key removed:')
+                    for removed in diff['dictionary_item_removed']:
+                        key = removed.replace("root", "")
+                        print(Fore.GREEN + key + Fore.RESET)
+
+                print(Fore.WHITE + '\nSee: https://github.com/newerton/bombcrypto-bot/blob/main/config/EXAMPLE-config.yaml' + Fore.RESET)    
+                print(Fore.GREEN + '\n*********************************************************************************' + Fore.RESET)
+
+                if len(diff['dictionary_item_added']) > 0:
+                    exit()
+            except KeyError:
+                print('Erro in validation configs')
+                exit()

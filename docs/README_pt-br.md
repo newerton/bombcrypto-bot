@@ -43,8 +43,10 @@ Recursos:
 * Adicionado os 3 captchas
 * Temas
 * Multi conta com janelas lado a lado e muitas janelas maximizadas
-* Rodar o bot, sem interrupção por erro
+* Rodar o Bot, sem interrupção por erro
 * Terminal colorido
+* Velocidade no Bot, ganho de alguns minutos nas tarefas
+* Aatualização obrigatório do arquivo de configuração
 ## 🎁 <a id="donation"></a>Doação
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
@@ -113,6 +115,7 @@ Python 3.8.10
 | run_time_app |  int | Tempo de execução do loop do bot |
 | monitor_to_use | int | Monitor que o bot usa como referência |
 | captcha |  bollean - true/false | Ativar/Desativar o reconhecimento do captcha no jogo |
+| speed | string - normal/fast | Dois modos de velocidade do bot, o modo fast é entre 1~3 minutos mais rápido |
 | **multi_account** | - | - |
 | enable | bollean - true/false | Ativar/Desaativar a funcionalidade de Multi Account  |
 | window_title | string | Título da janela, para identificação do jogo ativo pelo bot |
