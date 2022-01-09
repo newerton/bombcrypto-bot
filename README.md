@@ -48,7 +48,7 @@ Features:
 * Add 3 captchas
 * Themes
 * Multi account with many windows side-by-side or many windows maximized
-* Run the bot, without interrupting errors in the code
+* Run the Bot, without interrupting errors in the code
 * Console colorful
 * Bot speed, gain a few seconds on the move
 * Update the configuration file required
