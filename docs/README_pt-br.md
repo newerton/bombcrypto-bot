@@ -90,6 +90,13 @@ Pronto! Agora é só iniciar o bot com o comando, dentro da pasta do projeto
 ```
 python index.py
 ```
+| comandos | sistema operacional | descrição |
+| :---: | :---: | :---: |
+| ./cmd/update_files.sh | Linux	| Atualiza todos os arquivos, menos o config.yaml and telegram.yaml and atualiza o requirements.txt do Python |
+| ./cmd/update.sh | Linux	| Atualiza somente o requirements.txt do Python |
+| .\cmd\update_files.bat | Windows | Atualiza todos os arquivos, menos o config.yaml and telegram.yaml and atualiza o requirements.txt do Python |
+| .\cmd\update.bat | Windows | Atualiza somente o requirements.txt do Python |
+
 
 
 ### <a id="how-to-works"></a>**Como funciona?**
