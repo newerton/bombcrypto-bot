@@ -48,8 +48,10 @@ Features:
 * Add 3 captchas
 * Themes
 * Multi account with many windows side-by-side or many windows maximized
-* Run the bot, without interrupting errors in the code
+* Run the Bot, without interrupting errors in the code
 * Console colorful
+* Bot speed, gain a few seconds on the move
+* Update the configuration file required
 ## 🎁 <a id="donation"></a>Donation
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
@@ -115,6 +117,7 @@ Python 3.8.10
 | run_time_app | int | Bot loop execution time |
 | monitor_to_use | int | Monitor that the bot uses as a reference |
 | captcha | bollean - true/false | Enable/Disable in-game captcha recognition |
+| speed | string - normal/fast | Two bot speed modes, fast mode is between 1~3 minutes faster |
 | **multi_account** | - | - |
 | enable | bollean - true/false | Enable/Disable Multi Account functionality |
 | window_title | string | Window title, for identification of the active game by the bot |
@@ -122,7 +125,6 @@ Python 3.8.10
 | **time_intervals** | - | - |
 | send_heroes_for_work | array - [int, int] | Start and end time for bot to search for heroes to work |
 | refresh_heroes_positions | array - [int, int] | Start and end interval for bot to update map |
-| interval_between_movements | array - [int, int] | Time in seconds of mouse movement pause (pyautogui.PAUSE) |
 | **chests** | - | - |
 | **values** | - | - |
 | chest_01 | decimal | Brown chest reward value |

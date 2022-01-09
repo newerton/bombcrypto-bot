@@ -174,14 +174,14 @@ class Heroes:
             return
 
         x, y, w, h = character_indicator_pos[0]
-        humanClicker.move(
+        self.actions.move(
             (int(x+(w/2)), int(y+h+offset_random)), np.random.randint(1, 2))
 
         click_and_drag_amount = (-self.config['heroes']
                                  ['list']['click_and_drag_amount'])
         pyautogui.mouseDown(button='left')
         moveCoordinates = (int(x), int(y+click_and_drag_amount))
-        humanClicker.move(moveCoordinates, np.random.randint(1, 2))
+        self.actions.move(moveCoordinates, np.random.randint(1, 2))
         pyautogui.mouseUp(button='left')
 
     def clickFullBarButtons(self):
@@ -252,7 +252,7 @@ class Heroes:
 
         for (x, y, w, h) in not_working_bars:
             offset_random = random.uniform(offset[0], offset[1])
-            humanClicker.move(
+            self.actions.move(
                 (int(x+offset_random+(w/2)), int(y+(h/2))),
                 np.random.randint(1, 2)
             )

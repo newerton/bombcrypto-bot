@@ -1,11 +1,12 @@
 autopep8==1.6.0
 colorama==0.4.4
+deepdiff==5.7.0
 mss==6.1.0
 numpy==1.21.4
 opencv-python==4.5.4.60
 Pillow==8.4.0
-pyclick
+pyclick==0.0.2
 python_telegram_bot==13.8.1
 PyYAML==6.0
 requests==2.26.0
-telegram
+telegram==0.0.1

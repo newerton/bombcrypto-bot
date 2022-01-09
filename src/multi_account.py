@@ -153,15 +153,15 @@ class MultiAccount:
         windowWidth = window.width
         windowHeight = window.height
         if window_fullscreen is not True:
-            humanClicker.move(window.center, 0)
+            self.actions.move(window.center, 0)
             humanClicker.click()
         window.maximize()
         window.activate()
         self.log.console('Browser Active: ' + window.title, emoji='🪟', color='cyan')
-        time.sleep(2)
+        self.actions.sleep(2, 2)
         self.steps(last)
         if window_fullscreen is not True:
             window.restore()
             window.resizeTo(windowWidth, windowHeight)
             window.moveTo(windowLeft, windowTop)
-            time.sleep(1)
+            self.actions.sleep(1, 1)
