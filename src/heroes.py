@@ -1,9 +1,9 @@
-from cv2 import cv2
 from pyclick import HumanClicker
 
 import numpy as np
 import pyautogui
 import random
+import time
 
 humanClicker = HumanClicker()
 
@@ -61,15 +61,15 @@ class Heroes:
             self.goToTreasureHunt()
             return
 
-        buttonsClicked = 0
-        heroes_clicked = 0
-        empty_scrolls_attempts = self.config['heroes']['list']['scroll_attempts']
+        scrolls_attempts = self.config['heroes']['list']['scroll_attempts']
         next_refresh_heroes = random.uniform(
             self.config['time_intervals']['send_heroes_for_work'][0],
             self.config['time_intervals']['send_heroes_for_work'][1]
         )
 
-        while(empty_scrolls_attempts > 0):
+        buttonsClicked = 0
+        heroes_clicked = 0
+        while(scrolls_attempts > 0):
             if mode == 'full':
                 buttonsClicked = self.clickFullBarButtons()
                 if buttonsClicked is not None:
@@ -80,9 +80,8 @@ class Heroes:
                     heroes_clicked += buttonsClicked
 
             if buttonsClicked == 0 or buttonsClicked is None:
-                empty_scrolls_attempts = empty_scrolls_attempts - 1
+                scrolls_attempts = scrolls_attempts - 1
                 self.scroll()
-            self.actions.sleep(1, 2)
 
         self.log.console('{} total heroes sent since the bot started'.format(
             heroes_clicked_total), services=True, emoji='🦸', color='yellow')
@@ -182,6 +181,7 @@ class Heroes:
         pyautogui.mouseDown(button='left')
         moveCoordinates = (int(x), int(y+click_and_drag_amount))
         self.actions.move(moveCoordinates, np.random.randint(1, 2))
+        self.actions.sleep(0.5, 0.5, randomMouseMovement=False)
         pyautogui.mouseUp(button='left')
 
     def clickFullBarButtons(self):
@@ -189,24 +189,31 @@ class Heroes:
         offset = self.config['offsets']['work_button_full']
         threshold = self.config['threshold']
 
-        bar_full_stamina = self.images.image('bar_full_stamina')
+        workButtons = self.checkWorkButton()
+        if workButtons is False:
+            return
 
+        bar_full_stamina = self.images.image('bar_full_stamina')
         bars = self.recognition.positions(
             bar_full_stamina, threshold=threshold['heroes_full_bar'])
 
-        return self.barButtons(bars, offset, 'full')
+        return self.barButtons(bars, workButtons, offset, 'full')
 
     def clickGreenBarButtons(self):
         self.importLibs()
         offset = self.config['offsets']['work_button_green']
         threshold = self.config['threshold']
 
+        workButtons = self.checkWorkButton()
+        if workButtons is False:
+            return
+
+        self.actions.sleep(1, 1)
         bar_green_stamina = self.images.image('bar_green_stamina')
-
         bars = self.recognition.positions(
-            bar_green_stamina, threshold=threshold['heroes_green_bar'])
+            bar_green_stamina, threshold=threshold['heroes_green_bar'], debug=True)
 
-        return self.barButtons(bars, offset, 'green')
+        return self.barButtons(bars, workButtons, offset, 'green')
 
     def clickSendAllButtons(self):
         self.importLibs()
@@ -224,25 +231,20 @@ class Heroes:
         self.actions.clickButton(send_all_heroes_button)
         self.recognition.waitForImage(rest_all_heroes_button)
 
-    def barButtons(self, bars_elements, offset, type):
-        threshold = self.config['threshold']
-
-        work_button = self.images.image('work_button')
-        buttons = self.recognition.positions(
-            work_button, threshold=threshold['back_button'])
-
-        if bars_elements is False or buttons is False:
+    def barButtons(self, bars_elements, workButtons, offset, type):
+        if bars_elements is False:
             return
 
         if self.config['log']['debug'] is not False:
-            self.log.console('%d green bars detected' %
+            self.log.console('%d STAMINA bars detected' %
                              len(bars_elements), emoji='🟩', color='red')
-            self.log.console('%d buttons detected' %
-                             len(buttons), emoji='🔳', color='red')
+            self.log.console('%d WORK buttons detected' %
+                             len(workButtons), emoji='🔳', color='red')
 
         not_working_bars = []
         for bar in bars_elements:
-            if not self.isWorking(bar, buttons):
+            isWorking = self.isWorking(bar, workButtons)
+            if not isWorking:
                 not_working_bars.append(bar)
 
         if len(not_working_bars) > 0:
@@ -268,3 +270,9 @@ class Heroes:
                 return
             self.actions.sleep(1, 2)
         return len(not_working_bars)
+
+    def checkWorkButton(self):
+        threshold = self.config['threshold']
+        work_button = self.images.image('work_button')
+        return self.recognition.positions(
+            work_button, threshold=threshold['work_button'], debug=True)

@@ -17,7 +17,7 @@ class Recognition:
         self.images = Images()
         self.recognition = Recognition()
 
-    def positions(self, target, threshold=None, baseImage=None, return0=False):
+    def positions(self, target, threshold=None, baseImage=None, return0=False, debug=False):
         self.importLibs()
         if threshold == None:
             threshold = self.config['threshold']['default']
@@ -31,7 +31,6 @@ class Recognition:
         h = target.shape[0]
 
         result = cv2.matchTemplate(img, target, cv2.TM_CCOEFF_NORMED)
-        # self.actions.show(result)
 
         yloc, xloc = np.where(result >= threshold)
 
@@ -41,6 +40,15 @@ class Recognition:
             rectangles.append([int(x), int(y), int(w), int(h)])
 
         rectangles, _ = cv2.groupRectangles(rectangles, 1, 0.2)
+
+        if self.config['log']['debug'] is not False and debug == True:
+            img2 = img.copy()
+            for r in rectangles:
+                cv2.rectangle(img2, (r[0], r[1]),
+                              (r[0]+w, r[1]+h), (0, 0, 255), 2)
+            cv2.imshow("detected", img2)
+            cv2.waitKey(0)
+
         if return0 is False:
             if len(rectangles) > 0:
                 return rectangles
