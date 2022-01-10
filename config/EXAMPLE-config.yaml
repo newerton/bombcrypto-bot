@@ -27,6 +27,7 @@ threshold:
   default: 0.7
   error_message: 0.7
   back_button: 0.9
+  work_button: 0.9
   heroes_green_bar: 0.9
   heroes_full_bar: 0.9
   heroes_send_all: 0.9
