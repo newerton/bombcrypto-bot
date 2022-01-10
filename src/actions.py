@@ -69,16 +69,14 @@ class Actions:
         self.importLibs()
         speed = self.config['app']['speed']
         if speed == 'fast':
-            movementInSeconds = 0.1
+            movementInSeconds = 0.5
         humanClicker.move(coords, movementInSeconds)
 
     def moveTo(self, coords, movementInSeconds):
         self.importLibs()
-        print(coords[0])
-        print(coords[1])
         speed = self.config['app']['speed']
         if speed == 'fast':
-            movementInSeconds = 0.1
+            movementInSeconds = 0.5
         humanClicker.moveTo(coords, movementInSeconds)
 
     def randomMouseMovement(self):
