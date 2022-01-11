@@ -82,6 +82,8 @@ class Heroes:
             if buttonsClicked == 0 or buttonsClicked is None:
                 scrolls_attempts = scrolls_attempts - 1
                 self.scroll()
+                if scrolls_attempts < 2:
+                    time.sleep(1)
 
         self.log.console('{} total heroes sent since the bot started'.format(
             heroes_clicked_total), services=True, emoji='🦸', color='yellow')
