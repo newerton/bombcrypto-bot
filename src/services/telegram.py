@@ -5,7 +5,6 @@ from telegram.bot import Bot, BotCommand
 
 import mss
 import numpy as np
-import pyautogui
 import telegram
 import yaml
 
