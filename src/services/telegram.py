@@ -178,10 +178,12 @@ class Telegram:
         self.log.console('Map report sent', services=True, emoji='📄')
         return True
 
-    def sendPossibleAmountReport(self, baseImage):
-        self.importLibs()
-        # if self.enableTelegram == False:
-        #     return
+    def sendPossibleAmountReport(self, baseImage=None):
+        if self.enableTelegram == False:
+            return
+        if baseImage is None:
+            baseImage = self.desktop.printScreen()
+
         totalChest = self.totalChestsByMap(baseImage)
 
         totalChest01 = totalChest['totalChest01']
