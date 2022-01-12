@@ -17,7 +17,7 @@ class Recognition:
         self.images = Images()
         self.recognition = Recognition()
 
-    def positions(self, target, threshold=None, baseImage=None, return0=False, debug=False):
+    def positions(self, target, threshold=None, baseImage=None, returnArray=False, debug=False):
         self.importLibs()
         if threshold == None:
             threshold = self.config['threshold']['default']
@@ -49,7 +49,7 @@ class Recognition:
             cv2.imshow("detected", img2)
             cv2.waitKey(0)
 
-        if return0 is False:
+        if returnArray is False:
             if len(rectangles) > 0:
                 return rectangles
             else:
