@@ -138,9 +138,9 @@ class Telegram:
         else:
             return
 
-        back_btn = self.recognition.positions(back_button, return0=True)
+        back_btn = self.recognition.positions(back_button, returnArray=True)
         full_screen_btn = self.recognition.positions(
-            full_screen_button, return0=True)
+            full_screen_button, returnArray=True)
 
         if len(back_btn) <= 0 or len(full_screen_btn) <= 0:
             return
@@ -179,41 +179,32 @@ class Telegram:
         return True
 
     def sendPossibleAmountReport(self, baseImage):
-        if self.enableTelegram == False:
-            return
+        self.importLibs()
+        # if self.enableTelegram == False:
+        #     return
+        totalChest = self.totalChestsByMap(baseImage)
 
-        chest_01 = self.images.image('chest_01')
-        chest_02 = self.images.image('chest_02')
-        chest_03 = self.images.image('chest_03')
-        chest_04 = self.images.image('chest_04')
-
-        threshold = self.config['threshold']['chest']
-
-        c01 = len(self.recognition.positions(
-            chest_01, threshold, baseImage, True))
-        c02 = len(self.recognition.positions(
-            chest_02, threshold, baseImage, True))
-        c03 = len(self.recognition.positions(
-            chest_03, threshold, baseImage, True))
-        c04 = len(self.recognition.positions(
-            chest_04, threshold, baseImage, True))
+        totalChest01 = totalChest['totalChest01']
+        totalChest02 = totalChest['totalChest02']
+        totalChest03 = totalChest['totalChest03']
+        totalChest04 = totalChest['totalChest04']
 
         chestValues = self.config['chests']['values']
-        value01 = c01 * chestValues["chest_01"]
-        value02 = c02 * chestValues["chest_02"]
-        value03 = c03 * chestValues["chest_03"]
-        value04 = c04 * chestValues["chest_04"]
+        value01 = totalChest01 * chestValues["chest_01"]
+        value02 = totalChest02 * chestValues["chest_02"]
+        value03 = totalChest03 * chestValues["chest_03"]
+        value04 = totalChest04 * chestValues["chest_04"]
 
         total = value01 + value02 + value03 + value04
 
-        report = """
+        report = f"""
 Possible quantity chest per type:
-🟤 - """+str(c01)+"""
-🟣 - """+str(c02)+"""
-🟡 - """+str(c03)+"""
-🔵 - """+str(c04)+"""
+🟤 - {totalChest01}
+🟣 - {totalChest02}
+🟡 - {totalChest03}
+🔵 - {totalChest04}
 
-🤑 Possible amount: """+f'{total:.3f} BCoin'+"""
+🤑 Possible amount: {total:.3f} BCoin
 """
         self.log.console(report, services=True)
 
@@ -246,7 +237,7 @@ Possible quantity chest per type:
         self.actions.clickButton(treasure_chest_button)
         self.actions.sleep(5, 15)
 
-        coin = self.recognition.positions(bcoins, return0=True)
+        coin = self.recognition.positions(bcoins, returnArray=True)
         image = './logs/bcoin-report.%s' % self.telegramConfig['format_of_image']
         if len(coin) > 0:
             x, y, w, h = coin[0]
@@ -267,6 +258,57 @@ Possible quantity chest per type:
         self.actions.clickButton(close_button)
         self.log.console('BCoin report sent', services=True, emoji='📄')
         return True
+
+    def totalChestsByMap(self, baseImage):
+        threshold = self.config['threshold']['chest']
+
+        chest_01_closed = self.images.image(
+            'chest_01_closed', newPath='./images/themes/default/chests/')
+        chest_02_closed = self.images.image(
+            'chest_02_closed', newPath='./images/themes/default/chests/')
+        chest_03_closed = self.images.image(
+            'chest_03_closed', newPath='./images/themes/default/chests/')
+        chest_04_closed = self.images.image(
+            'chest_04_closed', newPath='./images/themes/default/chests/')
+
+        c01 = len(self.recognition.positions(
+            chest_01_closed, threshold, baseImage, returnArray=True))
+        c02 = len(self.recognition.positions(
+            chest_02_closed, threshold, baseImage, returnArray=True))
+        c03 = len(self.recognition.positions(
+            chest_03_closed, threshold, baseImage, returnArray=True))
+        c04 = len(self.recognition.positions(
+            chest_04_closed, threshold, baseImage, returnArray=True))
+
+        chest_01_hit = self.images.image(
+            'chest_01_hit', newPath='./images/themes/default/chests/')
+        chest_02_hit = self.images.image(
+            'chest_02_hit', newPath='./images/themes/default/chests/')
+        chest_03_hit = self.images.image(
+            'chest_03_hit', newPath='./images/themes/default/chests/')
+        chest_04_hit = self.images.image(
+            'chest_04_hit', newPath='./images/themes/default/chests/')
+
+        c01_hit = len(self.recognition.positions(
+            chest_01_hit, threshold, baseImage, returnArray=True))
+        c02_hit = len(self.recognition.positions(
+            chest_02_hit, threshold, baseImage, returnArray=True))
+        c03_hit = len(self.recognition.positions(
+            chest_03_hit, threshold, baseImage, returnArray=True))
+        c04_hit = len(self.recognition.positions(
+            chest_04_hit, threshold, baseImage, returnArray=True))
+
+        totalChest01 = c01 + c01_hit
+        totalChest02 = c02 + c02_hit
+        totalChest03 = c03 + c03_hit
+        totalChest04 = c04 + c04_hit
+
+        return {
+            'totalChest01': totalChest01,
+            'totalChest02': totalChest02,
+            'totalChest03': totalChest03,
+            'totalChest04': totalChest04,
+        }
 
     def sendTelegramMessage(self, message):
         self.importLibs()

@@ -31,7 +31,7 @@ threshold:
   heroes_green_bar: 0.9
   heroes_full_bar: 0.9
   heroes_send_all: 0.9
-  chest: 0.5
+  chest: 0.65
 
 heroes:
   mode: 'green'
