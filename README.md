@@ -162,7 +162,6 @@ Python 3.8.10
 | mode | string - all, green, full | How to send heroes to work.<br />**all** - Sends all heroes without criteria.<br />**green** - Sends heroes with partially green energy<br />**full** - Sends heroes with full energy|
 | **list** | - | - |
 | scroll_attempts | int | Total scroll the bot will make in the hero list |
-| click_and_drag_amount | int | Maximum amount bot will scroll hero list |
 | **offsets** | - | - |
 | work_button_green | array - [int, int] | Offset for mouse click on WORK button |
 | work_button_full | array - [int, int] | Offset for mouse click on WORK button |

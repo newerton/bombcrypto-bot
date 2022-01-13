@@ -174,14 +174,13 @@ class Heroes:
         if character_indicator_pos is False:
             return
 
-        x, y, w, h = character_indicator_pos[0]
+        x, y, _, h = character_indicator_pos[0]
+        scrollHeight = int(y+422)
         self.actions.move(
-            (int(x+(w/2)), int(y+h+offset_random)), np.random.randint(1, 2))
+            (int(x), scrollHeight), np.random.randint(1, 2))
 
-        click_and_drag_amount = (-self.config['heroes']
-                                 ['list']['click_and_drag_amount'])
         pyautogui.mouseDown(button='left')
-        moveCoordinates = (int(x), int(y+click_and_drag_amount))
+        moveCoordinates = (int(x), int(y+h))
         self.actions.move(moveCoordinates, np.random.randint(1, 2))
         self.actions.sleep(0.5, 0.5, randomMouseMovement=False)
         pyautogui.mouseUp(button='left')
