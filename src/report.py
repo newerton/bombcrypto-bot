@@ -20,4 +20,4 @@ class Report:
         writer = csv.writer(file, delimiter='\t')
         writer.writerow(content)
         file.close()
-        print(file)
+        return file

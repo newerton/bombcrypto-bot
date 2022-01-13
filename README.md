@@ -58,7 +58,7 @@ BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
 
 ## 🤖 <a id="robot-preview"></a>Robot - Preview
-![Screenshot - Preview](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/bot_working.jpg)
+![Screenshot - Preview](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/bot_working.png)
 
 ## 🪟 <a id="installation"></a>Installation
 

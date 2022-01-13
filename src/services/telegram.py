@@ -219,52 +219,18 @@ Possible quantity chest per type:
         if(len(self.telegramConfig['chat_ids']) <= 0 or self.telegramConfig['enable_coin_report'] is False):
             return
 
-        treasure_hunt_banner = self.images.image('treasure_hunt_banner')
-        close_button = self.images.image('close_button')
-        treasure_chest_button = self.images.image('treasure_chest_button')
-        bcoins = self.images.image('bcoins')
+        bcoins = self.bcoins.getBcoins()
 
-        currentScreen = self.recognition.currentScreen()
-        if currentScreen == "main":
-            if self.actions.clickButton(treasure_hunt_banner):
-                self.actions.sleep(2, 2)
-        elif currentScreen == "character":
-            if self.actions.clickButton(close_button):
-                self.actions.sleep(2, 2)
-                if self.actions.clickButton(treasure_hunt_banner):
-                    self.actions.sleep(2, 2)
-        elif currentScreen == "treasure_hunt":
-            self.actions.sleep(2, 2)
-        else:
-            return
+        try:
+            image = self.bcoins.BCOIN_BOX_IMAGE
+            for chat_id in self.telegramConfig['chat_ids']:
+                self.TelegramBot.send_photo(chat_id=chat_id, photo=open(image, 'rb'))
+        except:
+            self.log.console('Telegram offline', emoji='😿')
 
-        self.actions.clickButton(treasure_chest_button)
-        self.actions.sleep(5, 15)
-
-        coin = self.recognition.positions(bcoins, returnArray=True)
-        image = './logs/bcoin-report.%s' % self.telegramConfig['format_of_image']
-        if len(coin) > 0:
-            x, y, w, h = coin[0]
-
-            with mss.mss() as sct:
-                monitorToUse = self.config['app']['monitor_to_use']
-                monitor = sct.monitors[monitorToUse]
-                sct_img = np.array(sct.grab(monitor))
-                crop_img = sct_img[y:y+h, x:x+w]
-                cv2.imwrite(image, crop_img)
-                self.actions.sleep(1, 1)
-                try:
-                    for chat_id in self.telegramConfig['chat_ids']:
-                        self.TelegramBot.send_photo(
-                            chat_id=chat_id, photo=open(image, 'rb'))
-                except:
-                    self.log.console('Telegram offline', emoji='😿')
-        self.log.console('BCoin report sent', services=False, emoji='📄')
-
-        bcoins = self.bcoins.bcoinsWaitForClaim()
+        self.log.console('BCoin image sent to Telegram', services=False, emoji='📄')
         self.log.console('Bcoin: ' + bcoins, services=True, emoji='🤑')
 
-        self.actions.clickButton(close_button)
         return True
 
     def totalChestsByMap(self, baseImage):
