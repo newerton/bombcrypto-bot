@@ -165,11 +165,8 @@ class Heroes:
 
     def scroll(self):
         self.importLibs()
-        offset = self.config['offsets']['work_button_full']
-        offset_random = random.uniform(offset[0], offset[1])
-
+        
         title_heroes_list = self.images.image('title_heroes_list', theme=True)
-
         character_indicator_pos = self.recognition.positions(title_heroes_list)
         if character_indicator_pos is False:
             return
