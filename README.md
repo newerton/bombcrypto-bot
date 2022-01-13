@@ -37,9 +37,8 @@ I am not responsible for any penalties incurred by those who use the bot, use it
 
 This bot contains code from other developers, this bot was just refactored, to facilitate new implementations and maintenance.
 
-Developers:
+Developers (Base code):
 * https://github.com/mpcabete/
-* https://github.com/afkapp/
 
 This bot is free and open source.
 
@@ -53,6 +52,7 @@ Features:
 * Bot speed, gain a few seconds on the move
 * Update the configuration file required
 * Auto-update files (requires Git installed)
+* Bcoins report after finalizing the map
 ## 🎁 <a id="donation"></a>Donation
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
