@@ -39,12 +39,14 @@ class Telegram:
 
     def importLibs(self):
         from src.actions import Actions
+        from src.bcoins import Bcoins
         from src.config import Config
         from src.desktop import Desktop
         from src.images import Images
         from src.log import Log
         from src.recognition import Recognition
         self.actions = Actions()
+        self.bcoins = Bcoins()
         self.config = Config().read()
         self.desktop = Desktop()
         self.images = Images()
@@ -257,8 +259,12 @@ Possible quantity chest per type:
                             chat_id=chat_id, photo=open(image, 'rb'))
                 except:
                     self.log.console('Telegram offline', emoji='😿')
+        self.log.console('BCoin report sent', services=False, emoji='📄')
+
+        bcoins = self.bcoins.bcoinsWaitForClaim()
+        self.log.console('Bcoin: ' + bcoins, services=True, emoji='🤑')
+
         self.actions.clickButton(close_button)
-        self.log.console('BCoin report sent', services=True, emoji='📄')
         return True
 
     def totalChestsByMap(self, baseImage):

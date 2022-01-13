@@ -1,6 +1,7 @@
 from colorama import Fore
 from deepdiff import DeepDiff
 
+import pyautogui
 import requests
 import yaml
 
@@ -17,6 +18,8 @@ class Application:
         self.log = Log()
 
     def start(self):
+        pyautogui.FAILSAFE = False
+        
         self.compareYamlConfig()
         self.checkUpdate()
         self.getVersions()

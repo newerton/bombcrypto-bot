@@ -29,9 +29,11 @@ telegram = Telegram()
 
 
 def main():
-    application.start()
-    telegram.start()
-    multi_account.start()
+    from src.bcoins import Bcoins
+    Bcoins().bcoinsWaitForClaim()
+    # application.start()
+    # telegram.start()
+    # multi_account.start()
 
 
 if __name__ == '__main__':
