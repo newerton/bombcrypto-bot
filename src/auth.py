@@ -43,7 +43,6 @@ class Auth:
             self.recognition.waitForImage(
                 (metamask_sign_button, metamask_unlock_button), multiple=True)
 
-        print('passou')
         metamask_unlock_coord = self.recognition.positions(
             metamask_unlock_button)
         if metamask_unlock_coord is not False:

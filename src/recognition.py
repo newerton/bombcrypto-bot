@@ -61,7 +61,6 @@ class Recognition:
         self.importLibs()
         start = time.time()
         while True:
-            print('ok')
             if multiple is not False:
                 for img in images:
                     matches = self.recognition.positions(
