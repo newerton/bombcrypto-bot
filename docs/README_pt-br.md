@@ -161,7 +161,6 @@ Python 3.8.10
 | mode | string - all, green, full | Modo de enviar os heróis para o trabalho.<br />**all** - Envia todos os heróis, sem critério.<br />**green** - Envia os heróis com energia parcialmente verde<br />**full** - Envia os heróis com energia completa|
 | **list** | - | - |
 | scroll_attempts | int | Total de rolagem que o bot vai fazer na lista de heróis |
-| click_and_drag_amount | int | Valor máximo que o bot vai fazer a rolagem da lista de heróis |
 | **offsets** | - | - |
 | work_button_green | array - [int, int] | Offset para o click do mouse no botão de WORK |
 | work_button_full | array - [int, int] | Offset para o click do mouse no botão de WORK |

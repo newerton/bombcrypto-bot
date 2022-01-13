@@ -1,4 +1,4 @@
-from colorama import Fore, Back, Style
+from colorama import Fore
 from cv2 import cv2
 
 heroe_clicks = 0
