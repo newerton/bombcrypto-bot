@@ -40,7 +40,7 @@ class Bcoins:
         close_button = self.images.image('close_button')
 
         box_bcoins_positions = self.recognition.positions(
-            box_bcoins, threshold=0.7, returnArray=True)
+            box_bcoins, returnArray=True)
         if len(box_bcoins_positions) > 0:
             x, y, w, h = box_bcoins_positions[0]
             screenshot = self.desktop.printScreen()
