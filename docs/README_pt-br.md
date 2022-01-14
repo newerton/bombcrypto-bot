@@ -34,6 +34,7 @@ Este bot contêm códigos de outros desenvolvedores, esse bot foi somente refato
 
 Desenvolvedores (Código base):
 * https://github.com/mpcabete/
+* https://github.com/vin350/ (Telegram integração)
 
 Este bot é grátis e de código aberto.
 
