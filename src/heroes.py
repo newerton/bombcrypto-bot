@@ -3,7 +3,6 @@ from pyclick import HumanClicker
 import numpy as np
 import pyautogui
 import random
-import time
 
 humanClicker = HumanClicker()
 
