@@ -219,8 +219,6 @@ Possible quantity chest per type:
         if(len(self.telegramConfig['chat_ids']) <= 0 or self.telegramConfig['enable_coin_report'] is False):
             return
 
-        bcoins = self.bcoins.getBcoins()
-
         try:
             image = self.bcoins.BCOIN_BOX_IMAGE
             for chat_id in self.telegramConfig['chat_ids']:
@@ -229,7 +227,6 @@ Possible quantity chest per type:
             self.log.console('Telegram offline', emoji='😿')
 
         self.log.console('BCoin image sent to Telegram', services=False, emoji='📄')
-        self.log.console('Bcoin: ' + bcoins, services=True, emoji='🤑')
 
         return True
 

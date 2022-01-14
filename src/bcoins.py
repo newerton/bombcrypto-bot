@@ -21,13 +21,8 @@ class Bcoins:
         self.recognition = Recognition()
         self.report = Report()
 
-    def bcoinsWaitForClaim(self):
-        self.importLibs()
-        self.getBcoins()
-
     def getBcoins(self):
         self.importLibs()
-        self.openYourChestWindow()
 
         image = cv2.imread(self.BCOIN_BOX_IMAGE)
 
@@ -47,9 +42,12 @@ class Bcoins:
         headers = ['date', 'bcoins']
         content = [self.date.dateFormatted(), digits.replace('.', ',')]
         self.report.writeCsv('bcoins-report', headers, content)
+        
+        self.log.console('Bcoin: ' + digits, services=True, emoji='🤑')
         return digits
 
     def openYourChestWindow(self):
+        self.importLibs()
         self.actionToOpenYourChestWindow()
 
         box_bcoins = self.images.image('box_bcoins')

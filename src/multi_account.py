@@ -55,6 +55,13 @@ class MultiAccount:
             self.log.console('Multi account DISABLE', emoji='🧾', color='cyan')
             self.botSingle()
 
+    def startOnlyMapAction(self):
+        self.importLibs()
+        print(ALLOW_ADDRESS_METAMASK)
+        self.log.console('Multi account disabled', emoji='🧾', color='cyan')
+        self.botSingleOnlyMap()
+
+
     def botSingle(self):
 
         last = {
@@ -67,6 +74,19 @@ class MultiAccount:
 
         while True:
             self.steps(last)
+
+    def botSingleOnlyMap(self):
+
+        last = {
+            "login": 0,
+            "heroes": 0,
+            "new_map": 0,
+            "refresh_heroes": 0,
+            "check_updates": 0
+        }
+
+        while True:
+            self.stepsOnlyMap(last)
 
     def botMultiAccountWindows(self):
         title = self.config['app']['multi_account']['window_title']
@@ -139,6 +159,26 @@ class MultiAccount:
             self.application.checkUpdate()
 
         self.auth.checkLogout()
+        sys.stdout.flush()
+        self.actions.sleep(run_time_app, run_time_app,
+                           randomMouseMovement=False)
+        self.application.checkThreshold()
+
+    def stepsOnlyMap(self, last):
+        new_map_button = self.images.image('new_map_button')
+        run_time_app = self.config['app']['run_time_app']
+
+        currentScreen = self.recognition.currentScreen()
+
+        self.errors.verify()
+
+        now = time.time()
+
+        if currentScreen == "treasure_hunt":
+            if self.actions.clickButton(new_map_button):
+                last["new_map"] = now
+                self.actions.clickNewMap()
+
         sys.stdout.flush()
         self.actions.sleep(run_time_app, run_time_app,
                            randomMouseMovement=False)

@@ -14,10 +14,12 @@ humanClicker = HumanClicker()
 
 class Actions:
     def importLibs(self):
+        from src.bcoins import Bcoins
         from src.config import Config
         from src.recognition import Recognition
         from src.log import Log
         from src.services.telegram import Telegram
+        self.bcoins = Bcoins()
         self.config = Config().read()
         self.recognition = Recognition()
         self.log = Log()
@@ -106,7 +108,9 @@ class Actions:
         # sleep(1, 2)
         # checkCaptcha()
         self.telegram.sendMapReport()
+        self.bcoins.openYourChestWindow()
         self.telegram.sendBCoinReport()
+        self.bcoins.getBcoins()
 
     def show(self, img):
         cv2.imshow('img', img)
