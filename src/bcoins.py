@@ -39,13 +39,15 @@ class Bcoins:
         box_bcoins = self.images.image('box_bcoins')
         close_button = self.images.image('close_button')
 
-        box_bcoins_positions = self.recognition.positions(box_bcoins, returnArray=True)
+        box_bcoins_positions = self.recognition.positions(
+            box_bcoins, threshold=0.7, returnArray=True)
         if len(box_bcoins_positions) > 0:
             x, y, w, h = box_bcoins_positions[0]
             screenshot = self.desktop.printScreen()
             cropped = screenshot[y: y + h, x: x + w]
             cv2.imwrite(self.BCOIN_BOX_IMAGE, cropped)
-            self.log.console('Your Chest image created', services=False, emoji='🪟')
+            self.log.console('Your Chest image created',
+                             services=False, emoji='🪟')
 
         self.actions.clickButton(close_button)
         return True
@@ -71,7 +73,10 @@ class Bcoins:
 
         self.log.console('Opening modal Your Chest', services=False, emoji='🪟')
         self.actions.clickButton(treasure_chest_button)
-        self.actions.sleep(5, 15)
+        seconds = 10
+        message = 'Wait for {} seconds, to show your BCOIN'.format(seconds)
+        self.log.console(message, services=False, emoji='⏳')
+        self.actions.sleep(seconds, seconds, forceTime=True)
 
     def loadImages(self, dir):
         file_names = listdir(dir)
@@ -96,17 +101,13 @@ class Bcoins:
             templateDot = d['dot']
             positionDot = self.recognition.positions(
                 target=templateDot, baseImage=img, threshold=threshold, returnArray=True)
-
-            result = [a for a in digits if a['digit'] not in digits]
-            if len(positionDot) > 0 and len(result) == 0:
+            if len(positionDot) > 0 and self.checkCharacter(digits, '.') == False:
                 digits.append({'digit': '.', 'x': positionDot[0][0]})
 
             templateComma = d['comma']
             positionComma = self.recognition.positions(
                 target=templateComma, baseImage=img, threshold=threshold, returnArray=True)
-
-            result = [a for a in digits if a['digit'] not in digits]
-            if len(positionComma) > 0 and len(result) == 0:
+            if len(positionComma) > 0 and self.checkCharacter(digits, ',') == False:
                 digits.append({'digit': ',', 'x': positionComma[0][0]})
 
         def getX(e):
@@ -116,3 +117,10 @@ class Bcoins:
         r = list(map(lambda x: x['digit'], digits))
         return(''.join(r))
 
+    def checkCharacter(self, array, digit):
+        exist = False
+        for value in array:
+            if digit in value['digit']:
+                exist = True
+                break
+        return exist
