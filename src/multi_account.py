@@ -57,7 +57,6 @@ class MultiAccount:
 
     def startOnlyMapAction(self):
         self.importLibs()
-        print(ALLOW_ADDRESS_METAMASK)
         self.log.console('Multi account disabled', emoji='🧾', color='cyan')
         self.botSingleOnlyMap()
 
