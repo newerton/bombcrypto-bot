@@ -7,7 +7,7 @@ app:
   monitor_to_use: 1
   captcha: false
   speed: 'normal'
-  multi_account: 
+  multi_account:
     enable: false
     window_title: 'bombcrypto'
     window_fullscreen: false
@@ -32,6 +32,7 @@ threshold:
   heroes_full_bar: 0.9
   heroes_send_all: 0.9
   chest: 0.65
+  jail: 0.8
 
 heroes:
   mode: 'green'
@@ -48,7 +49,7 @@ metamask:
 
 services:
   telegram: false
-  
+
 log:
   save_to_file: false
   debug: false
