@@ -71,17 +71,17 @@ class Actions:
                 return
         return len(buttons)
 
-    def move(self, coords, movementInSeconds):
+    def move(self, coords, movementInSeconds, forceTime=False):
         self.importLibs()
         speed = self.config['app']['speed']
-        if speed == 'fast':
+        if speed == 'fast' and forceTime == False:
             movementInSeconds = 0.5
         humanClicker.move(coords, movementInSeconds)
 
-    def moveTo(self, coords, movementInSeconds):
+    def moveTo(self, coords, movementInSeconds, forceTime):
         self.importLibs()
         speed = self.config['app']['speed']
-        if speed == 'fast':
+        if speed == 'fast' and forceTime == False:
             movementInSeconds = 0.5
         humanClicker.moveTo(coords, movementInSeconds)
 
@@ -103,11 +103,8 @@ class Actions:
             self.randomMouseMovement()
 
         speed = self.config['app']['speed']
-        if speed == 'fast':
-            time.sleep(0)
-        if forceTime == True:
-            time.sleep(sleep)
-
+        if speed == 'fast' and forceTime == False:
+            sleep = 0
         return time.sleep(sleep)
 
     def clickNewMap(self):

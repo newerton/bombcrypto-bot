@@ -84,8 +84,7 @@ class Heroes:
             if buttonsClicked == 0 or buttonsClicked is None:
                 scrolls_attempts = scrolls_attempts - 1
                 self.scroll()
-                if scrolls_attempts < 2:
-                    time.sleep(1)
+            self.actions.sleep(1, 1, randomMouseMovement=False, forceTime=True)
 
         self.log.console('{} total heroes sent since the bot started'.format(
             heroes_clicked_total), services=True, emoji='🦸', color='yellow')
@@ -153,22 +152,24 @@ class Heroes:
 
     def scroll(self):
         self.importLibs()
-        
+
         title_heroes_list = self.images.image('title_heroes_list', theme=True)
         character_indicator_pos = self.recognition.positions(title_heroes_list)
         if character_indicator_pos is False:
             return
 
         x, y, _, h = character_indicator_pos[0]
-        scrollHeight = int(y+422)
+        scrollHeight = int(y+420)
         self.actions.move(
             (int(x), scrollHeight), np.random.randint(1, 2))
 
+        self.actions.sleep(0.5, 0.5, randomMouseMovement=False, forceTime=True)
         pyautogui.mouseDown(button='left')
-        moveCoordinates = (int(x), int(y+h))
-        self.actions.move(moveCoordinates, np.random.randint(1, 2))
-        self.actions.sleep(0.5, 0.5, randomMouseMovement=False)
+        moveCoordinates = (int(x), int(y+h+2))
+        self.actions.move(moveCoordinates, 1, forceTime=True)
+        self.actions.sleep(0.5, 0.5, randomMouseMovement=False, forceTime=True)
         pyautogui.mouseUp(button='left')
+        self.actions.sleep(1, 1, randomMouseMovement=False, forceTime=True)
 
     def clickFullBarButtons(self):
         self.importLibs()
@@ -194,7 +195,6 @@ class Heroes:
         if workButtons is False:
             return
 
-        self.actions.sleep(1, 1)
         bar_green_stamina = self.images.image('bar_green_stamina')
         bars = self.recognition.positions(
             bar_green_stamina, threshold=threshold['heroes_green_bar'], debug=True)
