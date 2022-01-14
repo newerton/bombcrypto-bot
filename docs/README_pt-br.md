@@ -48,6 +48,8 @@ Recursos:
 * Atualização obrigatório do arquivo de configuração
 * Atualização automática dos arquivos (requer o Git instalado)
 * Relatório de Bcoins, depois de finalizar o mapa
+* Novas estimativa do mapa adicionada
+
 ## 🎁 <a id="donation"></a>Doação
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
@@ -157,6 +159,7 @@ Python 3.8.10
 | heroes_full_bar | decimal | Valor de confiança da barra completa de energia do herói |
 | heroes_send_all | decimal | Valor de confiança do botão de enviar todos para trabalhar |
 | chest | decimal | Valor de confiança dos baús, para calcular o total de BCOINS do mapa |
+| jail | decimal | Valor de confiança dos baús, para calcular o total de jaula do mapa |
 | **heroes** | - | - |
 | mode | string - all, green, full | Modo de enviar os heróis para o trabalho.<br />**all** - Envia todos os heróis, sem critério.<br />**green** - Envia os heróis com energia parcialmente verde<br />**full** - Envia os heróis com energia completa|
 | **list** | - | - |

@@ -3,7 +3,7 @@ from os import listdir
 
 
 class Bcoins:
-    BCOIN_BOX_IMAGE = './logs/bcoin-box.png'
+    BCOIN_BOX_IMAGE = './temp/bcoin-box.png'
 
     def importLibs(self):
         from src.actions import Actions
@@ -23,26 +23,12 @@ class Bcoins:
 
     def getBcoins(self):
         self.importLibs()
-
         image = cv2.imread(self.BCOIN_BOX_IMAGE)
-
-        your_bcoins = self.images.image('your_chest_bcoin')
-        positions = self.recognition.positions(
-            your_bcoins, baseImage=image)
-        if positions is False:
-            return False
-
-        x, y, w, h = positions[0]
-        x = x - 30
-        y = y + 130
-        w = w + 60
-        h = h - 85
-        cropped = image[y: y + h, x: x + w]
+        cropped = image[193:228, 26:200]
         digits = self.getDigits(cropped)
         headers = ['date', 'bcoins']
         content = [self.date.dateFormatted(), digits.replace('.', ',')]
         self.report.writeCsv('bcoins-report', headers, content)
-        
         self.log.console('Bcoin: {}'.format(digits), services=True, emoji='🤑')
         return digits
 

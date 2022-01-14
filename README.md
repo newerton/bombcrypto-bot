@@ -53,6 +53,8 @@ Features:
 * Update the configuration file required
 * Auto-update files (requires Git installed)
 * Bcoins report after finalizing the map
+* New map estimation added
+
 ## 🎁 <a id="donation"></a>Donation
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
@@ -158,6 +160,7 @@ Python 3.8.10
 | heroes_full_bar | decimal | Hero's full energy bar confidence value |
 | heroes_send_all | decimal | Trust value of the send all button to work |
 | chest | decimal | Confidence value of the chests to calculate the total BCOINS of the map |
+| jail | decimal | Confidence value of the chests to calculate the total jail of the map |
 | **heroes** | - | - |
 | mode | string - all, green, full | How to send heroes to work.<br />**all** - Sends all heroes without criteria.<br />**green** - Sends heroes with partially green energy<br />**full** - Sends heroes with full energy|
 | **list** | - | - |

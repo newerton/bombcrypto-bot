@@ -25,12 +25,14 @@ class Heroes:
         from src.images import Images
         from src.recognition import Recognition
         from src.log import Log
+        from src.treasure_hunt import TreasureHunt
         self.actions = Actions()
         self.auth = Auth()
         self.errors = Errors()
         self.images = Images()
         self.recognition = Recognition()
         self.log = Log()
+        self.treasureHunt = TreasureHunt()
 
     def getMoreHeroes(self):
 
@@ -58,7 +60,7 @@ class Heroes:
 
         if mode == 'all':
             self.clickSendAllButtons()
-            self.goToTreasureHunt()
+            self.treasureHunt.goToMap()
             return
 
         scrolls_attempts = self.config['heroes']['list']['scroll_attempts']
@@ -87,7 +89,7 @@ class Heroes:
 
         self.log.console('{} total heroes sent since the bot started'.format(
             heroes_clicked_total), services=True, emoji='🦸', color='yellow')
-        self.goToTreasureHunt()
+        self.treasureHunt.goToMap()
 
     def goToHeroes(self):
         self.importLibs()
@@ -109,20 +111,6 @@ class Heroes:
                 self.actions.sleep(1, 1)
                 # checkCaptcha()
                 self.recognition.waitForImage(home_button)
-        if currentScreen == "unknown" or currentScreen == "login":
-            self.auth.checkLogout()
-
-    def goToTreasureHunt(self):
-        currentScreen = self.recognition.currentScreen()
-
-        treasure_hunt_banner = self.images.image('treasure_hunt_banner')
-        close_button = self.images.image('close_button')
-
-        if currentScreen == "main":
-            self.actions.clickButton(treasure_hunt_banner)
-        if currentScreen == "character":
-            if self.actions.clickButton(close_button):
-                self.actions.clickButton(treasure_hunt_banner)
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
 
