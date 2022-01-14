@@ -43,7 +43,7 @@ class Bcoins:
         content = [self.date.dateFormatted(), digits.replace('.', ',')]
         self.report.writeCsv('bcoins-report', headers, content)
         
-        self.log.console('Bcoin: ' + digits, services=True, emoji='🤑')
+        self.log.console('Bcoin: {}'.format(digits), services=True, emoji='🤑')
         return digits
 
     def openYourChestWindow(self):
