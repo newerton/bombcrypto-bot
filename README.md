@@ -3,7 +3,7 @@
 ![Bomb Crypto Banner](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/banner.jpg)
 
   <a>
-    💣 Bomb Crypto Bot 💣 
+    💣 Bomb Crypto Bot 💣
   </a>
 </h1>
 
@@ -15,7 +15,7 @@ I am not responsible for any penalties incurred by those who use the bot, use it
 | - | Language |
 |:---: | :---: |
 | ![Portuguese](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/flags/brazil.png) | [Portuguese](https://github.com/newerton/bombcrypto-bot/blob/main/docs/README_pt-br.md) |
-  
+
 ## 📌 Glossary
 
   * [About](#about)
@@ -42,7 +42,7 @@ Developers (Base code):
 
 This bot is free and open source.
 
-Features:  
+Features:
 * Refactored code
 * Add 3 captchas
 * Themes
@@ -53,9 +53,10 @@ Features:
 * Update the configuration file required
 * Auto-update files (requires Git installed)
 * Bcoins report after finalizing the map
+* New map estimation added
 ## 🎁 <a id="donation"></a>Donation
-BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
-PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
+BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a
+PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 
 ## 🤖 <a id="robot-preview"></a>Robot - Preview
 ![Screenshot - Preview](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/bot_working.png)
@@ -64,10 +65,10 @@ PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 
 ### **Python**
 
-🖥️ Computer/Laptop High or Medium Profile  
+🖥️ Computer/Laptop High or Medium Profile
 🐍 Install the Python 3.9.9
 
-🖥️ Computer/Laptop Low Profile or Low Profile with Windows 7 Pro  
+🖥️ Computer/Laptop Low Profile or Low Profile with Windows 7 Pro
 🐍 Install the Python 3.8.10
 
 🔗 [https://www.python.org/downloads/](https://www.python.org/downloads/)
@@ -76,7 +77,7 @@ PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 
 ### **Git (To use auto-update)**
 
-Windows: [https://gitforwindows.org/](https://gitforwindows.org/)  
+Windows: [https://gitforwindows.org/](https://gitforwindows.org/)
 Linux (Ubuntu): sudo apt -y update && sudo apt -y install git
 
 ⚠️ **Open a new terminal and type the command to verify that it was installed correctly**
@@ -110,14 +111,14 @@ The bot doesn't change any of the game's source code, it just takes a screenshot
 
 ### ⚠️ Some settings can be changed in the /config/config.yaml file, don't forget to restart the bot if you change the settings, some changes in the /config/config.yaml file may cause the bot to stop, such as activating the telegram when the bot is running.
 ## 🧪 <a id="tests"></a>Tests
-**Desktop Medium Profile**  
-Intel i5-3570k @ 3.4Ghz, 24GB RAM  
-Windows 11, Resolution@1920x1080  
-Python 3.9.9  
+**Desktop Medium Profile**
+Intel i5-3570k @ 3.4Ghz, 24GB RAM
+Windows 11, Resolution@1920x1080
+Python 3.9.9
 
-**Laptop Low Profile**  
-Laptop Samsumg RV411, Pentium P6200 @ 2.13Ghz, 2GB RAM  
-Windows 7, Resolution@1366x768  
+**Laptop Low Profile**
+Laptop Samsumg RV411, Pentium P6200 @ 2.13Ghz, 2GB RAM
+Windows 7, Resolution@1366x768
 Python 3.8.10
 
 ## 🎨 <a id="themes"></a>Themes
@@ -158,6 +159,7 @@ Python 3.8.10
 | heroes_full_bar | decimal | Hero's full energy bar confidence value |
 | heroes_send_all | decimal | Trust value of the send all button to work |
 | chest | decimal | Confidence value of the chests to calculate the total BCOINS of the map |
+| jail | decimal | Confidence value of the chests to calculate the total jail of the map |
 | **heroes** | - | - |
 | mode | string - all, green, full | How to send heroes to work.<br />**all** - Sends all heroes without criteria.<br />**green** - Sends heroes with partially green energy<br />**full** - Sends heroes with full energy|
 | **list** | - | - |
@@ -180,12 +182,12 @@ Python 3.8.10
 
 **Why some adjustments might be necessary?**
 
-The bot uses image recognition to make decisions and move the mouse and click in the right places.  
-It accomplishes this by comparing an example image with a screenshot of the computer/laptop screen.  
-This method is subject to inconsistencies due to differences in your screen resolution and how the game is rendered on your computer.  
+The bot uses image recognition to make decisions and move the mouse and click in the right places.
+It accomplishes this by comparing an example image with a screenshot of the computer/laptop screen.
+This method is subject to inconsistencies due to differences in your screen resolution and how the game is rendered on your computer.
 It's likely that the bot doesn't work 100% on the first run, and you need to make some adjustments to the config file.
 
-<a id="what-are-problems"></a>  
+<a id="what-are-problems"></a>
 
 **What are the problems?**
 
@@ -198,9 +200,9 @@ To solve these problems there are two possibilities, adjusting the "threshold" p
   <a id="threshold-config"></a>
   ### **Threshold in config file**
 
-The "threshold" parameter regulates how confident the bot needs to be to consider that it has found the image it is looking for.  
-This value is from 0 to 1 (0% to 100%).  
-Ex:  
+The "threshold" parameter regulates how confident the bot needs to be to consider that it has found the image it is looking for.
+This value is from 0 to 1 (0% to 100%).
+Ex:
 
 A threshold of 0.1 is too low, it will assume that it has found the image it is looking for in places it is not showing (false positive). The most common behavior for this problem is the bot clicking random places around the screen.
 
@@ -223,7 +225,7 @@ A threshold of 0.99 or 1 is too high, it won't find the image it's looking for, 
 
 - Clicking random places (usually white) on the screen
    - False positive on image "metamask_sign_button.png"
- 
+
  ### False negative:
 
 - Not doing anything
@@ -234,5 +236,5 @@ A threshold of 0.99 or 1 is too high, it won't find the image it's looking for, 
 
 ## 👍 Did you like it? :)
 
-### BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
+### BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a
 ### PIX: 08912d17-47a6-411e-b7ec-ef793203f836
