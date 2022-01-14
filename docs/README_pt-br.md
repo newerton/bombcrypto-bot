@@ -3,13 +3,13 @@
 ![Bomb Crypto Banner](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/banner.jpg)
 
   <a>
-    💣 Bomb Crypto Bot 💣
+    💣 Bomb Crypto Bot 💣 
   </a>
 </h1>
 
 ## ⚠️ Aviso
 
-Não me responsabilizo por eventuais penalidades sofridas por quem usar o bot, use por sua própria conta e risco.
+Não me responsabilizo por eventuais penalidades sofridas por quem usar o bot, use por sua própria conta e risco.  
 
 ## 📌 Glossário
 
@@ -30,14 +30,14 @@ Não me responsabilizo por eventuais penalidades sofridas por quem usar o bot, u
 
 ## 📋 <a id="about"></a>Sobre
 
-Este bot contêm códigos de outros desenvolvedores, esse bot foi somente refatorado, para facilitar novas implementações e manutenções.
+Este bot contêm códigos de outros desenvolvedores, esse bot foi somente refatorado, para facilitar novas implementações e manutenções.  
 
 Desenvolvedores (Código base):
 * https://github.com/mpcabete/
 
 Este bot é grátis e de código aberto.
 
-Recursos:
+Recursos:  
 * Refatoração do código
 * Adicionado os 3 captchas
 * Temas
@@ -49,9 +49,10 @@ Recursos:
 * Atualização automática dos arquivos (requer o Git instalado)
 * Relatório de Bcoins, depois de finalizar o mapa
 * Novas estimativa do mapa adicionada
+
 ## 🎁 <a id="donation"></a>Doação
-BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a
-PIX: 08912d17-47a6-411e-b7ec-ef793203f836
+BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
+PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
 
 ## 🤖 <a id="robot-preview"></a>Robô - Previsualização
 ![Screenshot - Preview](https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/images/readme/bot_working.png)
@@ -60,19 +61,19 @@ PIX: 08912d17-47a6-411e-b7ec-ef793203f836
 
 ### **Python**
 
-🖥️ Computador/Notebook com Alto e Média configuração
+🖥️ Computador/Notebook com Alto e Média configuração  
 🐍 Instalar o Python 3.9.9
 
-🖥️ Computador/Notebook com Baixa configuração or baixa configuração com Windows 7 Pro
+🖥️ Computador/Notebook com Baixa configuração or baixa configuração com Windows 7 Pro  
 🐍 Instalar o Python 3.8.10
 
 🔗 [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
-⚠️ **É importante marcar a opção para adicionar o python ao PATH**
+⚠️ **É importante marcar a opção para adicionar o python ao PATH**  
 
 ### **Git (Para usar o auto-update)**
 
-Windows: [https://gitforwindows.org/](https://gitforwindows.org/)
+Windows: [https://gitforwindows.org/](https://gitforwindows.org/)  
 Linux (Ubuntu): sudo apt -y update && sudo apt -y install git
 
 ⚠️ **Abra um novo terminal e digite o comando abaixo, para verificar se foi instalado corretamente**
@@ -81,12 +82,12 @@ git version
 ```
 
 ### <a id="commands"></a>Commands
-Instale as dependências, executando o comando abaixo, dentro da pasta do projeto:
+Instale as dependências, executando o comando abaixo, dentro da pasta do projeto:  
 
 ```
 pip install -r requirements.txt
 ```
-Pronto! Agora é só iniciar o bot com o comando, dentro da pasta do projeto
+Pronto! Agora é só iniciar o bot com o comando, dentro da pasta do projeto  
 
 ```
 python index.py
@@ -108,14 +109,14 @@ game para encontrar os botões e simula movimentos do mouse.
 ### ⚠️ Algumas configurações podem ser mudadas no arquivo /config/config.yaml, não se esqueça de reiniciar o bot caso mude as configuraçoes, algumas alterações no arquivo /config/config.yaml, pode fazer o bot parar, como por exemplo ativar o telegram quando o bot estiver em execução.
 
 ## 🧪 <a id="tests"></a>Testes
-**Desktop com médio configuração**
-Intel i5-3570k @ 3.4Ghz, 24GB RAM
-Windows 11, Resolução@1920x1080
-Python 3.9.9
+**Desktop com médio configuração**  
+Intel i5-3570k @ 3.4Ghz, 24GB RAM  
+Windows 11, Resolução@1920x1080  
+Python 3.9.9  
 
-**Notebook com baixa configuração**
-Laptop Samsumg RV411, Pentium P6200 @ 2.13Ghz, 2GB RAM
-Windows 7, Resolução@1366x768
+**Notebook com baixa configuração**  
+Laptop Samsumg RV411, Pentium P6200 @ 2.13Ghz, 2GB RAM  
+Windows 7, Resolução@1366x768  
 Python 3.8.10
 
 ## 🎨 <a id="themes"></a>Temas
@@ -182,14 +183,14 @@ Python 3.8.10
 **Por que uns ajustes podem ser necessários?**
 
 O bot usa reconhecimento de imagem para tomar decisões e movimentar o mouse e
-clicar nos lugares certos.
+clicar nos lugares certos.  
 Ele realiza isso comparando uma imagem de exemplo com um screenshot da tela do
-computador/laptop.
+computador/laptop.  
 Este método está sujeito a inconsistências devido a diferenças na resolução da
 sua tela e de como o jogo é renderizado no seu computador.
 É provável que o bot não funcione 100% na primeira execução, e que você precise fazer alguns ajustes no arquivo de configuração.
 
-<a id="what-are-problems"></a>
+<a id="what-are-problems"></a>  
 
 **Quais são os problemas?**
 
@@ -212,7 +213,7 @@ exemplo na pasta "targets" para uma tirada no seu próprio computador:
   Um threshold de 0.1 é muito baixo, ele vai considerar que encontrou a imagem
   que esta procurando em lugares que ela não está aparecendo ( falso positivo ).
   O comportamento mais comum pra esse problema é o bot clicando em lugares
-  aleatórios pela tela.
+  aleatórios pela tela. 
 
 
   Um threshold de 0.99 ou 1 é muito alto, ele não vai encontrar a imagem que
@@ -241,7 +242,7 @@ exemplo na pasta "targets" para uma tirada no seu próprio computador:
 
 - Clicando em lugares aleatórios(geralmente brancos) na tela
   - Falso positivo na imagem "metamask_sign_button.png"
-
+ 
  #### Falso negativo:
 
 - Não fazendo nada
@@ -252,5 +253,5 @@ exemplo na pasta "targets" para uma tirada no seu próprio computador:
 
 ## 👍 Curtiu? Dê aquela fortalecida :)
 
-### BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a
+### BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 ### PIX: 08912d17-47a6-411e-b7ec-ef793203f836
