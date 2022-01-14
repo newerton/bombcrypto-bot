@@ -6,6 +6,7 @@ class TreasureHunt:
 
     def importLibs(self):
         from src.actions import Actions
+        from src.auth import Auth
         from src.desktop import Desktop
         from src.config import Config
         from src.images import Images
@@ -13,6 +14,7 @@ class TreasureHunt:
         from src.recognition import Recognition
         from src.treasure_hunt import TreasureHunt
         self.actions = Actions()
+        self.auth = Auth()
         self.desktop = Desktop()
         self.config = Config().read()
         self.images = Images()
