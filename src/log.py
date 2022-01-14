@@ -44,7 +44,7 @@ class Log:
             console_message = "{} - {}".format(
                 formatted_datetime, console_message_colorfull)
 
-        if emoji is not None and self.config['app']['emoji'] is True:
+        if emoji is not None and emoji is not False and self.config['app']['emoji'] is True:
             console_message = "{} - {} {}".format(
                 formatted_datetime, emoji, message)
             service_message = "⏰{}\n{} {}".format(

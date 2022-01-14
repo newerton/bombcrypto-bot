@@ -6,6 +6,8 @@ from src.multi_account import MultiAccount
 
 from src.services.telegram import Telegram
 
+import sys
+
 init()
 
 banner = """
@@ -34,10 +36,19 @@ def main():
     multi_account.start()
 
 
+def onlyMap():
+    application.start()
+    multi_account.startOnlyMapAction()
+
+
 if __name__ == '__main__':
     try:
-        main()
+        if 'only-map' in sys.argv:
+            onlyMap()
+        else:
+            main()
     except KeyboardInterrupt:
-        log.console('Shutting down the bot', services=True, emoji='😓', color='red')
+        log.console('Shutting down the bot',
+                    services=True, emoji='😓', color='red')
         telegram.stop()
         exit()
