@@ -91,7 +91,22 @@ Possible quantity chest per type:
 
 🤑 Possible amount: {total:.3f} BCoin
 """
-        self.log.console(report, services=True)
+        reportWithoutEmoji = f"""
+Possible quantity chest per type:
+Brown - {totalChest01}
+Purple - {totalChest02}
+Yellow - {totalChest03}
+Blue - {totalChest04}
+Jail - {totalChestJail}
+Key - 0
+
+Possible amount: {total:.3f} BCoin
+"""
+        try:
+            self.log.console(report, services=True)
+        except UnicodeEncodeError:
+            self.log.console(reportWithoutEmoji, services=True)
+
 
     def totalChestsByMap(self, baseImage):
         threshold = self.config['threshold']['chest']

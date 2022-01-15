@@ -44,7 +44,10 @@ def success():
     print('Run without stopping (Linx): ./start.sh', Fore.RESET)
 
 def updateFiles(path):
-    print('🔃 Updating files...')
+    try:
+        print('🔃 Updating files...')
+    except UnicodeEncodeError:
+        print('Updating files...')
     copyRecursive(path, './')
     deleteRecursive(path)
 
