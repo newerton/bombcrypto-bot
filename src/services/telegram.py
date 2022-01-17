@@ -158,7 +158,7 @@ class Telegram:
                          services=False, emoji='📄')
         return True
 
-    def sendTelegramMessage(self, message):
+    def sendMessage(self, message):
         self.importLibs()
         if self.enableTelegram == False:
             return
@@ -173,7 +173,7 @@ class Telegram:
                 'Error to send telegram message. See configuration file', emoji='📄')
             return
 
-    def sendTelegramPrint(self):
+    def sendPrint(self):
         self.importLibs()
         if self.enableTelegram == False:
             return

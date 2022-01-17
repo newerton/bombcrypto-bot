@@ -29,7 +29,7 @@ class Errors:
         if self.recognition.positions(title_error, thresholdError) is not False:
             self.log.console('Error detected, trying to resolve',
                              services=True, emoji='💥', color='red')
-            self.telegram.sendTelegramPrint()
+            self.telegram.sendPrint()
             self.actions.clickButton(ok_button)
             self.log.console('Refreshing page', services=True,
                              emoji='🔃', color='green')
