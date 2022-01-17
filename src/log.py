@@ -39,7 +39,7 @@ class Log:
         console_message = "{} - {}".format(formatted_datetime, message)
         console_message_colorfull = color_formatted + message + Fore.RESET
         service_message = "⏰{}\n{}".format(formatted_datetime, message)
-        
+
         if self.config['app']['terminal_colorful'] is True:
             console_message = "{} - {}".format(
                 formatted_datetime, console_message_colorfull)
@@ -57,7 +57,7 @@ class Log:
         print(console_message)
 
         if services == True:
-            self.telegram.sendTelegramMessage(service_message)
+            self.telegram.sendMessage(service_message)
 
         if (self.config['log']['save_to_file'] == True):
             file = open("./logs/logger.log", "a", encoding='utf-8')
