@@ -12,7 +12,7 @@ Commands = [
     BotCommand("chat_id", "Send chat id"),
     BotCommand("print", "Send printscreen"),
     BotCommand("map", "Send a printscreen of the map (disabled in multi account)"),
-    BotCommand("bcoin", "Send a printscreen of your BCOIN"),
+    BotCommand("bcoin", "Send a printscreen of your BCOIN (disabled in multi account)"),
     BotCommand("donation", "Some wallets for donation")
 ]
 
