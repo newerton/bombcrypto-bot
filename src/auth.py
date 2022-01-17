@@ -78,12 +78,12 @@ class Auth:
                              emoji='😿', color='red')
             login_attempts += 1
 
-            if (login_attempts > 3):
+            if (login_attempts > 2):
                 self.telegram.sendPrint()
                 self.log.console('+3 login attempts, retrying',
                                  services=True, emoji='🔃', color='red')
-                pyautogui.hotkey('ctrl', 'shift', 'r')
                 login_attempts = 0
+                self.errors.verify()
 
                 if self.actions.clickButton(metamask_cancel_button):
                     self.log.console(
