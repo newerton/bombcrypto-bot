@@ -3,8 +3,6 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 from telegram.bot import Bot, BotCommand
 
-import mss
-import numpy as np
 import telegram
 import yaml
 
