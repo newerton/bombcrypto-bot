@@ -79,7 +79,7 @@ class Auth:
             login_attempts += 1
 
             if (login_attempts > 3):
-                self.telegram.sendTelegramPrint()
+                self.telegram.commandSendPrint()
                 self.log.console('+3 login attempts, retrying',
                                  services=True, emoji='🔃', color='red')
                 pyautogui.hotkey('ctrl', 'shift', 'r')
@@ -105,7 +105,7 @@ class Auth:
         currentScreen = self.recognition.currentScreen()
         if currentScreen == "unknown" or currentScreen == "login":
             if self.recognition.positions(connect_wallet_button) is not False:
-                self.telegram.sendTelegramPrint()
+                self.telegram.commandSendPrint()
                 self.log.console('Logout detected',
                                  services=True, emoji='😿', color='red')
                 self.log.console('Refreshing page',

@@ -3,8 +3,6 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, CallbackContext
 from telegram.bot import Bot, BotCommand
 
-import mss
-import numpy as np
 import telegram
 import yaml
 
@@ -12,7 +10,7 @@ Commands = [
     BotCommand("chat_id", "Send chat id"),
     BotCommand("print", "Send printscreen"),
     BotCommand("map", "Send a printscreen of the map (disabled in multi account)"),
-    BotCommand("bcoin", "Send a printscreen of your BCOIN"),
+    BotCommand("bcoin", "Send a printscreen of your BCOIN (disabled in multi account)"),
     BotCommand("donation", "Some wallets for donation")
 ]
 
@@ -122,6 +120,9 @@ class Telegram:
         if(len(self.telegramConfig['chat_ids']) <= 0 or self.telegramConfig['enable_map_report'] is False):
             return
 
+        self.treasure_hunt.goToMap()
+        self.treasure_hunt.generateMapImage()
+
         try:
             image = self.treasure_hunt.MAP_IMAGE
             for chat_id in self.telegramConfig['chat_ids']:
@@ -130,7 +131,8 @@ class Telegram:
         except:
             self.log.console('Telegram offline', emoji='😿')
 
-        self.log.console('Map image sent to Telegram', services=False, emoji='📄')
+        self.log.console('Map image sent to Telegram',
+                         services=False, emoji='📄')
         return True
 
     def sendBCoinReport(self):
@@ -140,17 +142,21 @@ class Telegram:
         if(len(self.telegramConfig['chat_ids']) <= 0 or self.telegramConfig['enable_coin_report'] is False):
             return
 
+        self.bcoins.openYourChestWindow()
+
         try:
             image = self.bcoins.BCOIN_BOX_IMAGE
             for chat_id in self.telegramConfig['chat_ids']:
-                self.TelegramBot.send_photo(chat_id=chat_id, photo=open(image, 'rb'))
+                self.TelegramBot.send_photo(
+                    chat_id=chat_id, photo=open(image, 'rb'))
         except:
             self.log.console('Telegram offline', emoji='😿')
 
-        self.log.console('BCoin image sent to Telegram', services=False, emoji='📄')
+        self.log.console('BCoin image sent to Telegram',
+                         services=False, emoji='📄')
         return True
 
-    def sendTelegramMessage(self, message):
+    def sendMessage(self, message):
         self.importLibs()
         if self.enableTelegram == False:
             return
@@ -162,56 +168,47 @@ class Telegram:
                         text=message, chat_id=chat_id)
         except:
             self.log.console(
-                'Error to send telegram message. See configuration file', emoji='📄')
+                'Error to send telegram message.', emoji='📄')
             return
 
-    def sendTelegramPrint(self):
+    def commandSendPrint(self, update):
         self.importLibs()
         if self.enableTelegram == False:
             return
         try:
-            image = './logs/print-report.%s' % self.telegramConfig['format_of_image']
-            if(len(self.telegramConfig['chat_ids']) > 0):
-                screenshot = self.desktop.printScreen()
-                cv2.imwrite(image, screenshot)
-                for chat_id in self.telegramConfig['chat_ids']:
-                    self.TelegramBot.send_photo(
-                        chat_id=chat_id, photo=open(image, 'rb'))
+          self.sendMessage('🔃 Proccessing...')
+          screenshot = self.desktop.printScreen()
+          image = './logs/print-report.{}'.format(
+              self.telegramConfig['format_of_image'])
+          cv2.imwrite(image, screenshot)
+          update.message.reply_photo(photo=open(image, 'rb'))
         except:
             self.log.console(
-                'Error to send telegram print. See configuration file', emoji='📄')
-
-    def commandSendPrint(self, update):
-        update.message.reply_text('🔃 Proccessing...')
-        screenshot = self.desktop.printScreen()
-        image = './logs/print-report.{}'.format(
-            self.telegramConfig['format_of_image'])
-        cv2.imwrite(image, screenshot)
-        update.message.reply_photo(photo=open(image, 'rb'))
+                'Error to send telegram print', emoji='📄')
 
     def commandSendChatId(self, update):
-        update.message.reply_text('🆔 Your id is: {update.effective_user.id}')
+        self.sendMessage('🆔 Your id is: {update.effective_user.id}')
 
     def commandSendMap(self, update):
-        update.message.reply_text('🔃 Proccessing...')
+        self.sendMessage('🔃 Proccessing...')
         if self.config['app']['multi_account']['enable'] is not True:
             if self.sendMapReport() is None:
-                update.message.reply_text('😿 An error has occurred')
+                self.sendMessage('😿 An error has occurred')
         else:
-            update.message.reply_text(
+            self.sendMessage(
                 '⚠️ Command disabled, because of the Multi Accounts is enabled.')
 
     def commandSendBcoin(self, update):
-        update.message.reply_text('🔃 Proccessing...')
+        self.sendMessage('🔃 Proccessing...')
         if self.config['app']['multi_account']['enable'] is not True:
             if self.sendBCoinReport() is None:
-                update.message.reply_text('😿 An error has occurred')
+                self.sendMessage('😿 An error has occurred')
         else:
-            update.message.reply_text(
+            self.sendMessage(
                 '⚠️ Command disabled, because of the Multi Accounts is enabled.')
 
     def commandSendDonation(self, update):
-        update.message.reply_text(
+        self.sendMessage(
             '🎁 Smart Chain Wallet: \n\n 0x4847C29561B6682154E25c334E12d156e19F613a \n\n Thank You! 😀')
-        update.message.reply_text(
+        self.sendMessage(
             '🎁 Chave PIX: \n\n 08912d17-47a6-411e-b7ec-ef793203f836 \n\n Muito obrigado! 😀')
