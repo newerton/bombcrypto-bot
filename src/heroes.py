@@ -33,7 +33,7 @@ class Heroes:
         self.log = Log()
         self.treasureHunt = TreasureHunt()
 
-    def getMoreHeroes(self):
+    def getMoreHeroes(self, heroesMode = None):
 
         global next_refresh_heroes
         global heroes_clicked
@@ -44,21 +44,32 @@ class Heroes:
         self.goToHeroes()
 
         mode = self.config['heroes']['mode']
-        if mode == "all":
+        if heroesMode is not None:
+          mode = heroesMode
+
+        if mode == 'all' or mode == 'workall':
             self.log.console('Sending all heroes to work!',
                              services=True, emoji='⚒️', color='green')
-        elif mode == "full":
+        elif mode == 'full':
             self.log.console(
                 'Sending heroes with full stamina bar to work!', emoji='⚒️', color='green')
-        elif mode == "green":
+        elif mode == 'green':
+            self.log.console(
+                'Sending heroes with green stamina bar to work!', emoji='⚒️', color='green')
+        elif mode == 'green':
             self.log.console(
                 'Sending heroes with green stamina bar to work!', emoji='⚒️', color='green')
         else:
             self.log.console('Sending all heroes to work!',
                              emoji='⚒️', color='green')
 
-        if mode == 'all':
-            self.clickSendAllButtons()
+        if mode == 'all' or mode == 'workall':
+            self.clickSendAllButton()
+            self.treasureHunt.goToMap()
+            return
+
+        if mode == 'restall':
+            self.clickRestAllButton()
             self.treasureHunt.goToMap()
             return
 
@@ -200,7 +211,7 @@ class Heroes:
 
         return self.barButtons(bars, workButtons, offset, 'green')
 
-    def clickSendAllButtons(self):
+    def clickSendAllButton(self):
         self.importLibs()
         threshold = self.config['threshold']
 
@@ -215,6 +226,22 @@ class Heroes:
 
         self.actions.clickButton(send_all_heroes_button)
         self.recognition.waitForImage(rest_all_heroes_button)
+
+    def clickRestAllButton(self):
+        self.importLibs()
+        threshold = self.config['threshold']
+
+        rest_all_heroes_button = self.images.image('rest_all_heroes_button')
+        send_all_heroes_button = self.images.image('send_all_heroes_button')
+
+        rest_all = self.recognition.positions(
+            rest_all_heroes_button, threshold=threshold['heroes_rest_all'])
+
+        if rest_all is False:
+            return
+
+        self.actions.clickButton(rest_all_heroes_button)
+        self.recognition.waitForImage(send_all_heroes_button)
 
     def barButtons(self, bars_elements, workButtons, offset, type):
         if bars_elements is False:

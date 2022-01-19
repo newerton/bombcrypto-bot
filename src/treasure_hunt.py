@@ -29,6 +29,7 @@ class TreasureHunt:
         treasure_hunt_banner = self.images.image('treasure_hunt_banner')
         close_button = self.images.image('close_button')
 
+        self.log.console('Entering treasure hunt', emoji='▶️', color='yellow')
         if currentScreen == "main":
             self.actions.clickButton(treasure_hunt_banner)
         if currentScreen == "character":
@@ -107,7 +108,6 @@ Possible amount: {total:.3f} BCoin
             self.log.console(report, services=True)
         except UnicodeEncodeError:
             self.log.console(reportWithoutEmoji, services=True)
-
 
     def totalChestsByMap(self, baseImage):
         threshold = self.config['threshold']['chest']

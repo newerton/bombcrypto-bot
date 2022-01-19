@@ -10,7 +10,9 @@ Commands = [
     BotCommand("chat_id", "Send chat id"),
     BotCommand("print", "Send printscreen"),
     BotCommand("map", "Send a printscreen of the map (disabled in multi account)"),
-    BotCommand("bcoin", "Send a printscreen of your BCOIN (disabled in multi account)"),
+    BotCommand("bcoin", "Send a printscreen of your BCOIN (disabled in multi account temporarily)"),
+    BotCommand("workall", "Send all heroes to work (disabled in multi account temporarily)"),
+    BotCommand("restall", "Send all heroes to rest (disabled in multi account temporarily)"),
     BotCommand("donation", "Some wallets for donation")
 ]
 
@@ -40,6 +42,7 @@ class Telegram:
         from src.bcoins import Bcoins
         from src.config import Config
         from src.desktop import Desktop
+        from src.heroes import Heroes
         from src.images import Images
         from src.log import Log
         from src.recognition import Recognition
@@ -48,6 +51,7 @@ class Telegram:
         self.bcoins = Bcoins()
         self.config = Config().read()
         self.desktop = Desktop()
+        self.heroes = Heroes()
         self.images = Images()
         self.log = Log()
         self.recognition = Recognition()
@@ -92,11 +96,19 @@ class Telegram:
         def sendDonation(update: Update, context: CallbackContext) -> None:
             self.commandSendDonation(update)
 
+        def sendAllHeroesToWork(update: Update, context: CallbackContext) -> None:
+            self.commandAllHeroesToWork(update)
+
+        def sendAllHeroesToRest(update: Update, context: CallbackContext) -> None:
+            self.commandAllHeroesToRest(update)
+
         commands = [
             ['chat_id', sendChatId],
             ['print', sendPrint],
             ['map', sendMap],
             ['bcoin', sendBcoin],
+            ['workall', sendAllHeroesToWork],
+            ['restall', sendAllHeroesToRest],
             ['donation', sendDonation],
         ]
 
@@ -222,6 +234,12 @@ class Telegram:
         else:
             update.message.reply_text(
                 '⚠️ Command disabled, because of the Multi Accounts is enabled.')
+
+    def commandAllHeroesToWork(self, _):
+      self.heroes.getMoreHeroes('workall')
+
+    def commandAllHeroesToRest(self, _):
+      self.heroes.getMoreHeroes('restall')
 
     def commandSendDonation(self, update):
         update.message.reply_text(

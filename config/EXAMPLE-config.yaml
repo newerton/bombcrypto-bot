@@ -31,6 +31,7 @@ threshold:
   heroes_green_bar: 0.9
   heroes_full_bar: 0.9
   heroes_send_all: 0.9
+  heroes_rest_all: 0.9
   chest: 0.65
   jail: 0.8
 
