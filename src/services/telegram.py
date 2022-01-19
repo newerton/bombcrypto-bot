@@ -218,7 +218,7 @@ class Telegram:
                 'Error to send telegram print', emoji='📄')
 
     def commandSendChatId(self, update):
-        update.message.reply_text('🆔 Your id is: {update.effective_user.id}')
+        update.message.reply_text(f'🆔 Your id is: {update.effective_user.id}')
 
     def commandSendMap(self, update):
         update.message.reply_text('🔃 Proccessing...')
