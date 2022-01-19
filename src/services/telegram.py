@@ -10,9 +10,12 @@ Commands = [
     BotCommand("chat_id", "Send chat id"),
     BotCommand("print", "Send printscreen"),
     BotCommand("map", "Send a printscreen of the map (disabled in multi account)"),
-    BotCommand("bcoin", "Send a printscreen of your BCOIN (disabled in multi account temporarily)"),
-    BotCommand("workall", "Send all heroes to work (disabled in multi account temporarily)"),
-    BotCommand("restall", "Send all heroes to rest (disabled in multi account temporarily)"),
+    BotCommand(
+        "bcoin", "Send a printscreen of your BCOIN (disabled in multi account temporarily)"),
+    BotCommand(
+        "workall", "Send all heroes to work (disabled in multi account temporarily)"),
+    BotCommand(
+        "restall", "Send all heroes to rest (disabled in multi account temporarily)"),
     BotCommand("donation", "Some wallets for donation")
 ]
 
@@ -204,12 +207,12 @@ class Telegram:
         if self.enableTelegram == False:
             return
         try:
-          update.message.reply_text('🔃 Proccessing...')
-          screenshot = self.desktop.printScreen()
-          image = './logs/print-report.{}'.format(
-              self.telegramConfig['format_of_image'])
-          cv2.imwrite(image, screenshot)
-          update.message.reply_photo(photo=open(image, 'rb'))
+            update.message.reply_text('🔃 Proccessing...')
+            screenshot = self.desktop.printScreen()
+            image = './logs/print-report.{}'.format(
+                self.telegramConfig['format_of_image'])
+            cv2.imwrite(image, screenshot)
+            update.message.reply_photo(photo=open(image, 'rb'))
         except:
             self.log.console(
                 'Error to send telegram print', emoji='📄')
@@ -235,11 +238,19 @@ class Telegram:
             update.message.reply_text(
                 '⚠️ Command disabled, because of the Multi Accounts is enabled.')
 
-    def commandAllHeroesToWork(self, _):
-      self.heroes.getMoreHeroes('workall')
+    def commandAllHeroesToWork(self, update):
+        if self.config['app']['multi_account']['enable'] is not True:
+            self.heroes.getMoreHeroes('workall')
+        else:
+            update.message.reply_text(
+                '⚠️ Command disabled, because of the Multi Accounts is enabled.')
 
-    def commandAllHeroesToRest(self, _):
-      self.heroes.getMoreHeroes('restall')
+    def commandAllHeroesToRest(self, update):
+        if self.config['app']['multi_account']['enable'] is not True:
+            self.heroes.getMoreHeroes('restall')
+        else:
+            update.message.reply_text(
+                '⚠️ Command disabled, because of the Multi Accounts is enabled.')
 
     def commandSendDonation(self, update):
         update.message.reply_text(
