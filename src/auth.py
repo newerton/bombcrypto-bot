@@ -62,7 +62,7 @@ class Auth:
         if self.actions.clickButton(metamask_sign_button):
             self.log.console(
                 'Found sign button. Waiting to check if logged in', emoji='✔️', color='green')
-            self.actions.sleep(5, 7)
+            self.actions.sleep(5, 7, forceTime=True)
             if self.actions.clickButton(metamask_sign_button):
                 self.log.console(
                     'Found glitched sign button. Waiting to check if logged in', emoji='✔️', color='yellow')
