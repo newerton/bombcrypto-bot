@@ -113,11 +113,11 @@ class Actions:
         # checkCaptcha()
         self.treasure_hunt.goToMap()
         self.treasure_hunt.generateMapImage()
-        self.telegram.sendMapReport()
+        self.telegram.sendMapReport(callTreasureHuntMethods=False)
         self.treasure_hunt.chestEstimate()
 
         self.bcoins.openYourChestWindow()
-        self.telegram.sendBCoinReport()
+        self.telegram.sendBCoinReport(callTreasureHuntMethods=False)
         self.bcoins.getBcoins()
 
     def show(self, img):

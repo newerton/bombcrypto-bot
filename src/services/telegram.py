@@ -128,15 +128,16 @@ class Telegram:
         if self.updater:
             self.updater.stop()
 
-    def sendMapReport(self):
+    def sendMapReport(self, callTreasureHuntMethods=True):
         self.importLibs()
         if self.enableTelegram == False:
             return
         if(len(self.telegramConfig['chat_ids']) <= 0 or self.telegramConfig['enable_map_report'] is False):
             return
 
-        self.treasure_hunt.goToMap()
-        self.treasure_hunt.generateMapImage()
+        if callTreasureHuntMethods == True:
+            self.treasure_hunt.goToMap()
+            self.treasure_hunt.generateMapImage()
 
         try:
             image = self.treasure_hunt.MAP_IMAGE
@@ -150,14 +151,15 @@ class Telegram:
                          services=False, emoji='📄')
         return True
 
-    def sendBCoinReport(self):
+    def sendBCoinReport(self, callTreasureHuntMethods=True):
         self.importLibs()
         if self.enableTelegram == False:
             return
         if(len(self.telegramConfig['chat_ids']) <= 0 or self.telegramConfig['enable_coin_report'] is False):
             return
 
-        self.bcoins.openYourChestWindow()
+        if callTreasureHuntMethods == True:
+            self.bcoins.openYourChestWindow()
 
         try:
             image = self.bcoins.BCOIN_BOX_IMAGE
