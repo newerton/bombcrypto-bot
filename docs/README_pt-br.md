@@ -50,6 +50,7 @@ Recursos:
 * Atualização automática dos arquivos (requer o Git instalado)
 * Relatório de Bcoins, depois de finalizar o mapa
 * Novas estimativa do mapa adicionada
+* Novos comandos no Telegram (workall, restall)
 
 ## 🎁 <a id="donation"></a>Doação
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  

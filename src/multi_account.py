@@ -85,7 +85,7 @@ class MultiAccount:
 
     def botMultiAccountWindows(self):
         title = self.config['app']['multi_account']['window_title']
-        
+
         try:
             windows = []
             for w in botMultiAccount.getAllWindows():
@@ -131,19 +131,10 @@ class MultiAccount:
             last["refresh_heroes"] = now
             self.heroes.getMoreHeroes()
 
-        if currentScreen == "main":
-            if self.actions.clickButton(treasure_hunt_banner):
-                self.log.console('Entering treasure hunt', emoji='▶️', color='yellow')
-                last["refresh_heroes"] = now
-
         if currentScreen == "treasure_hunt":
             if self.actions.clickButton(new_map_button):
                 last["new_map"] = now
                 self.actions.clickNewMap()
-
-        if currentScreen == "character":
-            self.actions.clickButton(close_button)
-            self.actions.sleep(1, 2)
 
         if now - last["refresh_heroes"] > self.next_refresh_heroes_positions * 60:
             last["refresh_heroes"] = now
