@@ -71,6 +71,7 @@ class TreasureHunt:
         totalChest03 = totalChest['totalChest03']
         totalChest04 = totalChest['totalChest04']
         totalChestJail = totalChest['totalChestJail']
+        totalChestKey = totalChest['totalChestKey']
 
         chestValues = self.config['chests']['values']
         value01 = totalChest01 * chestValues["chest_01"]
@@ -87,7 +88,7 @@ Possible quantity chest per type:
 🟡 - {totalChest03}
 🔵 - {totalChest04}
 🏛️ - {totalChestJail}
-🗝️ - 0
+🗝️ - {totalChestKey}
 
 🤑 Possible amount: {total:.3f} BCoin
 """
@@ -98,7 +99,7 @@ Purple - {totalChest02}
 Yellow - {totalChest03}
 Blue - {totalChest04}
 Jail - {totalChestJail}
-Key - 0
+Key - {totalChestKey}
 
 Possible amount: {total:.3f} BCoin
 """
@@ -122,6 +123,8 @@ Possible amount: {total:.3f} BCoin
             'chest_04_closed', newPath='./images/themes/default/chests/')
         chest_jail_closed = self.images.image(
             'chest_jail_closed', newPath='./images/themes/default/chests/')
+        chest_key_closed = self.images.image(
+            'chest_key_closed', newPath='./images/themes/default/chests/')
 
         c01 = len(self.recognition.positions(
             chest_01_closed, threshold, baseImage, returnArray=True))
@@ -133,6 +136,8 @@ Possible amount: {total:.3f} BCoin
             chest_04_closed, threshold, baseImage, returnArray=True))
         jail = len(self.recognition.positions(
             chest_jail_closed, thresholdJail, baseImage, returnArray=True))
+        key = len(self.recognition.positions(
+            chest_key_closed, thresholdJail, baseImage, returnArray=True))
 
         chest_01_hit = self.images.image(
             'chest_01_hit', newPath='./images/themes/default/chests/')
@@ -144,6 +149,8 @@ Possible amount: {total:.3f} BCoin
             'chest_04_hit', newPath='./images/themes/default/chests/')
         chest_jail_hit = self.images.image(
             'chest_jail_hit', newPath='./images/themes/default/chests/')
+        chest_key_hit = self.images.image(
+            'chest_key_hit', newPath='./images/themes/default/chests/')
 
         c01_hit = len(self.recognition.positions(
             chest_01_hit, threshold, baseImage, returnArray=True))
@@ -155,12 +162,15 @@ Possible amount: {total:.3f} BCoin
             chest_04_hit, threshold, baseImage, returnArray=True))
         jail_hit = len(self.recognition.positions(
             chest_jail_hit, thresholdJail, baseImage, returnArray=True))
+        key_hit = len(self.recognition.positions(
+            chest_key_hit, thresholdJail, baseImage, returnArray=True))
 
         totalChest01 = c01 + c01_hit
         totalChest02 = c02 + c02_hit
         totalChest03 = c03 + c03_hit
         totalChest04 = c04 + c04_hit
         totalChestJail = jail + jail_hit
+        totalChestKey = key + key_hit
 
         return {
             'totalChest01': totalChest01,
@@ -168,4 +178,5 @@ Possible amount: {total:.3f} BCoin
             'totalChest03': totalChest03,
             'totalChest04': totalChest04,
             'totalChestJail': totalChestJail,
+            'totalChestKey': totalChestKey,
         }
