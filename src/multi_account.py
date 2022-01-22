@@ -114,7 +114,6 @@ class MultiAccount:
             self.botMultiAccountWindows()
 
     def steps(self, last):
-        treasure_hunt_banner = self.images.image('treasure_hunt_banner')
         new_map_button = self.images.image('new_map_button')
         run_time_app = self.config['app']['run_time_app']
 
@@ -185,13 +184,14 @@ class MultiAccount:
         if window_fullscreen is not True:
             self.actions.move(window.center, 0)
             humanClicker.click()
+            self.actions.sleep(0.5, 0.5, forceTime=True)
         window.maximize()
         window.activate()
         self.log.console('Browser Active: ' + window.title, emoji='🪟', color='cyan')
-        self.actions.sleep(2, 2)
+        self.actions.sleep(2, 2, forceTime=True)
         self.steps(last)
         if window_fullscreen is not True:
             window.restore()
             window.resizeTo(windowWidth, windowHeight)
             window.moveTo(windowLeft, windowTop)
-            self.actions.sleep(1, 1)
+            self.actions.sleep(1, 1, forceTime=True)

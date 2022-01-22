@@ -110,8 +110,8 @@ class Heroes:
         self.log.console('{} total heroes sent since the bot started'.format(
             heroes_clicked_total), services=True, emoji='🦸', color='yellow')
 
-        close_button = self.images.image('close_button')
-        self.actions.clickButton(close_button)
+        self.treasureHunt.goToMap()
+        # pyautogui.hotkey('ctrl', 'shift', 'r') # bug - no broken last item
 
     def goToHeroes(self):
         self.importLibs()
