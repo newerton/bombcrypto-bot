@@ -209,7 +209,7 @@ class Telegram:
         if self.enableTelegram == False:
             return
         try:
-            update.message.reply_text('🔃 Proccessing...')
+            update.message.reply_text('🔃 Proccessing printscreen...')
             screenshot = self.desktop.printScreen()
             image = './logs/print-report.{}'.format(
                 self.telegramConfig['format_of_image'])
@@ -223,7 +223,7 @@ class Telegram:
         update.message.reply_text(f'🆔 Your id is: {update.effective_user.id}')
 
     def commandSendMap(self, update):
-        update.message.reply_text('🔃 Proccessing...')
+        update.message.reply_text('🔃 Proccessing image map...')
         if self.config['app']['multi_account']['enable'] is not True:
             if self.sendMapReport() is None:
                 update.message.reply_text('😿 An error has occurred')
@@ -232,7 +232,7 @@ class Telegram:
                 '⚠️ Command disabled, because of the Multi Accounts is enabled.')
 
     def commandSendBcoin(self, update):
-        update.message.reply_text('🔃 Proccessing...')
+        update.message.reply_text('🔃 Proccessing image bcoin...')
         if self.config['app']['multi_account']['enable'] is not True:
             if self.sendBCoinReport() is None:
                 update.message.reply_text('😿 An error has occurred')

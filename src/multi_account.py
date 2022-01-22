@@ -30,6 +30,7 @@ class MultiAccount:
         from src.images import Images
         from src.log import Log
         from src.recognition import Recognition
+        from src.treasure_hunt import TreasureHunt
         self.actions = Actions()
         self.application = Application()
         self.auth = Auth()
@@ -39,6 +40,7 @@ class MultiAccount:
         self.images = Images()
         self.log = Log()
         self.recognition = Recognition()
+        self.treasure_hunt = TreasureHunt()
 
     def start(self):
         self.importLibs()
@@ -114,7 +116,6 @@ class MultiAccount:
     def steps(self, last):
         treasure_hunt_banner = self.images.image('treasure_hunt_banner')
         new_map_button = self.images.image('new_map_button')
-        close_button = self.images.image('close_button')
         run_time_app = self.config['app']['run_time_app']
 
         currentScreen = self.recognition.currentScreen()
@@ -130,6 +131,9 @@ class MultiAccount:
             last["heroes"] = now
             last["refresh_heroes"] = now
             self.heroes.getMoreHeroes()
+
+        if currentScreen == "main":
+            self.treasure_hunt.goToMap()
 
         if currentScreen == "treasure_hunt":
             if self.actions.clickButton(new_map_button):

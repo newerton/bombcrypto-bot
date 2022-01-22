@@ -12,6 +12,7 @@ class Auth:
         from src.images import Images
         from src.recognition import Recognition
         from src.log import Log
+        from src.treasure_hunt import TreasureHunt
         from src.services.telegram import Telegram
         self.actions = Actions()
         self.application = Application()
@@ -20,6 +21,7 @@ class Auth:
         self.images = Images()
         self.recognition = Recognition()
         self.log = Log()
+        self.treasure_hunt = TreasureHunt()
         self.telegram = Telegram()
 
     def login(self):

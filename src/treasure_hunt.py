@@ -1,3 +1,4 @@
+from time import sleep
 import cv2
 
 
@@ -30,6 +31,7 @@ class TreasureHunt:
         close_button = self.images.image('close_button')
 
         self.log.console('Entering treasure hunt', emoji='▶️', color='yellow')
+
         if currentScreen == "main":
             self.actions.clickButton(treasure_hunt_banner)
         if currentScreen == "character":
@@ -37,6 +39,7 @@ class TreasureHunt:
                 self.actions.clickButton(treasure_hunt_banner)
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
+        self.actions.sleep(1, 1, forceTime=True, randomMouseMovement=False)
 
     def generateMapImage(self):
         back_button_image = self.images.image('back_button')
