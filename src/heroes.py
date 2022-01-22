@@ -33,44 +33,55 @@ class Heroes:
         self.log = Log()
         self.treasureHunt = TreasureHunt()
 
-    def getMoreHeroes(self, heroesMode = None):
+    def getMoreHeroes(self, heroesMode=None):
 
         global next_refresh_heroes
         global heroes_clicked
 
         self.importLibs()
-        self.log.console('Search for heroes to work', emoji='🏢', color='green')
+
+        mode = self.config['heroes']['mode']
+        if mode in ["all", 'workall', 'full', 'green']:
+          self.log.console('Search for heroes to work', emoji='🏢', color='green')
 
         self.goToHeroes()
 
-        mode = self.config['heroes']['mode']
         if heroesMode is not None:
-          mode = heroesMode
+            mode = heroesMode
 
         if mode == 'all' or mode == 'workall':
             self.log.console('Sending all heroes to work!',
                              services=True, emoji='⚒️', color='green')
         elif mode == 'full':
             self.log.console(
-                'Sending heroes with full stamina bar to work!', emoji='⚒️', color='green')
+                'Sending heroes with full stamina bar to work!',
+                services=True,
+                emoji='⚒️',
+                color='green')
         elif mode == 'green':
             self.log.console(
-                'Sending heroes with green stamina bar to work!', emoji='⚒️', color='green')
-        elif mode == 'green':
+                'Sending heroes with green stamina bar to work!',
+                services=True,
+                emoji='⚒️',
+                color='green')
+        elif mode == 'restall':
             self.log.console(
-                'Sending heroes with green stamina bar to work!', emoji='⚒️', color='green')
+                'Put the heroes to rest',
+                services=True,
+                emoji='💤',
+                color='green')
         else:
             self.log.console('Sending all heroes to work!',
-                             emoji='⚒️', color='green')
+                             services=True,
+                             emoji='⚒️',
+                             color='green')
 
         if mode == 'all' or mode == 'workall':
             self.clickSendAllButton()
-            self.treasureHunt.goToMap()
             return
 
         if mode == 'restall':
             self.clickRestAllButton()
-            self.treasureHunt.goToMap()
             return
 
         scrolls_attempts = self.config['heroes']['list']['scroll_attempts']
@@ -98,7 +109,9 @@ class Heroes:
 
         self.log.console('{} total heroes sent since the bot started'.format(
             heroes_clicked_total), services=True, emoji='🦸', color='yellow')
-        self.treasureHunt.goToMap()
+
+        close_button = self.images.image('close_button')
+        self.actions.clickButton(close_button)
 
     def goToHeroes(self):
         self.importLibs()
