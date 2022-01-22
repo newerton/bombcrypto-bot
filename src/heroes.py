@@ -78,10 +78,12 @@ class Heroes:
 
         if mode == 'all' or mode == 'workall':
             self.clickSendAllButton()
+            self.treasureHunt.goToMap()
             return
 
         if mode == 'restall':
             self.clickRestAllButton()
+            self.treasureHunt.goToMap()
             return
 
         scrolls_attempts = self.config['heroes']['list']['scroll_attempts']
@@ -111,7 +113,7 @@ class Heroes:
             heroes_clicked_total), services=True, emoji='🦸', color='yellow')
 
         self.treasureHunt.goToMap()
-        # pyautogui.hotkey('ctrl', 'shift', 'r') # bug - no broken last item
+        pyautogui.hotkey('ctrl', 'shift', 'r') # bug - no broken last item
 
     def goToHeroes(self):
         self.importLibs()
