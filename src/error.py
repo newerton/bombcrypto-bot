@@ -31,9 +31,7 @@ class Errors:
                              services=True, emoji='💥', color='red')
             self.telegram.sendPrint()
             self.actions.clickButton(ok_button)
-            self.log.console('Refreshing page', services=True,
-                             emoji='🔃', color='green')
-            pyautogui.hotkey('ctrl', 'shift', 'r')
+            self.actions.refreshPage()
             self.recognition.waitForImage(connect_wallet_button)
             self.auth.login()
         else:

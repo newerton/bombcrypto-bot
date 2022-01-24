@@ -83,16 +83,7 @@ class Auth:
                 self.log.console('+3 login attempts, retrying',
                                  services=True, emoji='🔃', color='red')
                 login_attempts = 0
-                self.errors.verify()
-
-                if self.actions.clickButton(metamask_cancel_button):
-                    self.log.console(
-                        'Metamask is glitched, fixing', emoji='🙀', color='yellow')
-
-                self.recognition.waitForImage(connect_wallet_button)
-
-            self.login()
-
+                self.actions.refreshPage()
         self.errors.verify()
 
     def checkLogout(self):
@@ -108,17 +99,14 @@ class Auth:
                 self.telegram.sendPrint()
                 self.log.console('Logout detected',
                                  services=True, emoji='😿', color='red')
-                self.log.console('Refreshing page',
-                                 services=True, emoji='🔃', color='green')
-                pyautogui.hotkey('ctrl', 'shift', 'r')
-                self.recognition.waitForImage(connect_wallet_button)
-                self.login()
+                self.actions.refreshPage()
             elif self.recognition.positions(metamask_sign_button):
                 self.log.console('Sing button detected',
                                  services=True, emoji='✔️', color='green')
                 if self.actions.clickButton(metamask_cancel_button):
                     self.log.console('Metamask is glitched, fixing',
                                      services=True, emoji='🙀', color='yellow')
+                    self.actions.refreshPage()
             else:
                 return False
 
