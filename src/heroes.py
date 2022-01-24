@@ -113,6 +113,7 @@ class Heroes:
             heroes_clicked_total), services=True, emoji='🦸', color='yellow')
 
         self.treasureHunt.goToMap()
+        # pyautogui.hotkey('ctrl', 'shift', 'r') # bug - no broken last item
 
     def goToHeroes(self):
         self.importLibs()

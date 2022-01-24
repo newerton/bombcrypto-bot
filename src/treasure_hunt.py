@@ -39,7 +39,6 @@ class TreasureHunt:
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
         self.actions.sleep(1, 1, forceTime=True, randomMouseMovement=False)
-        # pyautogui.hotkey('ctrl', 'shift', 'r') # bug - no broken last item
 
     def generateMapImage(self):
         back_button_image = self.images.image('back_button')
