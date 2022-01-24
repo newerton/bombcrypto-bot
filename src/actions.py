@@ -50,7 +50,8 @@ class Actions:
                 continue
 
             x, y, w, h = matches[0]
-            self.move((int(random.uniform(x, x+w)), int(random.uniform(y, y+h))), 1)
+            self.move((int(random.uniform(x, x+w)),
+                      int(random.uniform(y, y+h))), 1)
             humanClicker.click()
             return True
 
@@ -119,6 +120,11 @@ class Actions:
         self.bcoins.openYourChestWindow()
         self.telegram.sendBCoinReport(callTreasureHuntMethods=False)
         self.bcoins.getBcoins()
+
+    def refreshPage(self):
+        self.log.console('Refreshing page', services=True,
+                         emoji='🔃', color='green')
+        pyautogui.hotkey('ctrl', 'shift', 'r')
 
     def show(self, img):
         cv2.imshow('img', img)
