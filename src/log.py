@@ -68,7 +68,7 @@ class Log:
     def mapClicked(self):
         self.importLibs()
         if self.actions.clickButton(new_map_btn_img):
-            self.console('🗺️ New Map button clicked!')
+            self.console('New Map button clicked!', emoji='🗺️')
             file = open("./logs/new-map.log", "a", encoding='utf-8')
             file.write(self.date.dateFormatted() + '\n')
             file.close()

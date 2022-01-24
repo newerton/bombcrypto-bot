@@ -30,7 +30,6 @@ class Auth:
         metamaskData = self.config['metamask']
 
         connect_wallet_button = self.images.image('connect_wallet_button')
-        metamask_cancel_button = self.images.image('metamask_cancel_button')
         metamask_sign_button = self.images.image('metamask_sign_button')
         metamask_unlock_button = self.images.image('metamask_unlock_button')
         treasure_hunt_banner = self.images.image('treasure_hunt_banner')
@@ -83,7 +82,11 @@ class Auth:
                 self.log.console('+3 login attempts, retrying',
                                  services=True, emoji='🔃', color='red')
                 login_attempts = 0
+                self.errors.verify()
                 self.actions.refreshPage()
+                self.actions.sleep(1, 1, forceTime=True, randomMouseMovement=False)
+            self.login()
+
         self.errors.verify()
 
     def checkLogout(self):
@@ -100,13 +103,13 @@ class Auth:
                 self.log.console('Logout detected',
                                  services=True, emoji='😿', color='red')
                 self.actions.refreshPage()
+                self.login()
             elif self.recognition.positions(metamask_sign_button):
                 self.log.console('Sing button detected',
                                  services=True, emoji='✔️', color='green')
                 if self.actions.clickButton(metamask_cancel_button):
                     self.log.console('Metamask is glitched, fixing',
                                      services=True, emoji='🙀', color='yellow')
-                    self.actions.refreshPage()
             else:
                 return False
 

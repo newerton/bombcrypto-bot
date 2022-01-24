@@ -122,6 +122,7 @@ class Actions:
         self.bcoins.getBcoins()
 
     def refreshPage(self):
+        self.importLibs()
         self.log.console('Refreshing page', services=True,
                          emoji='🔃', color='green')
         pyautogui.hotkey('ctrl', 'shift', 'r')
