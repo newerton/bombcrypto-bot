@@ -85,25 +85,32 @@ class Telegram:
         self.bot.set_my_commands(Commands, language_code='en')
 
         def sendPrint(update: Update, context: CallbackContext) -> None:
-            self.commandSendPrint(update)
+            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+                self.commandSendPrint(update)
 
         def sendChatId(update: Update, context: CallbackContext) -> None:
-            self.commandSendChatId(update)
+            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+                self.commandSendChatId(update)
 
         def sendMap(update: Update, context: CallbackContext) -> None:
-            self.commandSendMap(update)
+            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+                self.commandSendMap(update)
 
         def sendBcoin(update: Update, context: CallbackContext) -> None:
-            self.commandSendBcoin(update)
+            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+                self.commandSendBcoin(update)
 
         def sendDonation(update: Update, context: CallbackContext) -> None:
-            self.commandSendDonation(update)
+            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+                self.commandSendDonation(update)
 
         def sendAllHeroesToWork(update: Update, context: CallbackContext) -> None:
-            self.commandAllHeroesToWork(update)
+            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+                self.commandAllHeroesToWork(update)
 
         def sendAllHeroesToRest(update: Update, context: CallbackContext) -> None:
-            self.commandAllHeroesToRest(update)
+            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+                self.commandAllHeroesToRest(update)
 
         commands = [
             ['chat_id', sendChatId],
