@@ -84,32 +84,35 @@ class Telegram:
         self.bot = Bot(botFatherToken)
         self.bot.set_my_commands(Commands, language_code='en')
 
+        def userHasPermission(self, update: Update):
+            return True if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids'] else False
+
         def sendPrint(update: Update, context: CallbackContext) -> None:
-            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
-                self.commandSendPrint(update)
+          if userHasPermission(self, update):
+            self.commandSendPrint(update)
 
         def sendChatId(update: Update, context: CallbackContext) -> None:
-            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+            if userHasPermission(self, update):
                 self.commandSendChatId(update)
 
         def sendMap(update: Update, context: CallbackContext) -> None:
-            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+            if userHasPermission(self, update):
                 self.commandSendMap(update)
 
         def sendBcoin(update: Update, context: CallbackContext) -> None:
-            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+            if userHasPermission(self, update):
                 self.commandSendBcoin(update)
 
         def sendDonation(update: Update, context: CallbackContext) -> None:
-            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+            if userHasPermission(self, update):
                 self.commandSendDonation(update)
 
         def sendAllHeroesToWork(update: Update, context: CallbackContext) -> None:
-            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+            if userHasPermission(self, update):
                 self.commandAllHeroesToWork(update)
 
         def sendAllHeroesToRest(update: Update, context: CallbackContext) -> None:
-            if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids']:
+            if userHasPermission(self, update):
                 self.commandAllHeroesToRest(update)
 
         commands = [
