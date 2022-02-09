@@ -88,8 +88,8 @@ class Telegram:
             return True if f'{update.message.from_user.id}' in self.telegramConfig['chat_ids'] else False
 
         def sendPrint(update: Update, context: CallbackContext) -> None:
-          if userHasPermission(self, update):
-            self.commandSendPrint(update)
+            if userHasPermission(self, update):
+                self.commandSendPrint(update)
 
         def sendChatId(update: Update, context: CallbackContext) -> None:
             if userHasPermission(self, update):
