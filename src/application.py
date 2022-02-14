@@ -10,9 +10,11 @@ import yaml
 class Application:
     def __init__(self):
         from src.config import Config
+        from src.images import Images
         from src.services.telegram import Telegram
         self.config = Config().read()
         self.configThreshold = self.config['threshold']
+        self.images = Images()
         self.telegram = Telegram()
 
     def importLibs(self):
@@ -22,13 +24,15 @@ class Application:
     def start(self):
         pyautogui.FAILSAFE = False
 
-        self.compareYamlConfig()
-        self.checkUpdate()
-        self.getVersions()
+        if self.config['app']['verify_version'] == True:
+            self.compareYamlConfig()
+            self.checkUpdate()
+            self.getVersions()
 
         input('Press Enter to start the bot...\n')
         self.log.console('Starting bot...', services=True,
                          emoji='🤖', color='green')
+        self.signTheTerm()
 
     def stop(self):
         self.telegram.stop()
@@ -171,3 +175,21 @@ Versions
                 except KeyError:
                     print('Erro in validation configs')
                     exit()
+
+    def signTheTerm(self):
+        self.importLibs()
+
+        from src.actions import Actions
+        self.actions = Actions()
+
+        checkbox_terms_and_service = self.images.image(
+            'checkbox_terms_and_service')
+        accept_button = self.images.image('accept_button')
+        if self.actions.clickButton(checkbox_terms_and_service):
+            if self.actions.clickButton(accept_button):
+                self.log.console(
+                    'Terms and Service accepted', emoji='✅', color='green')
+                return True
+        else:
+            self.log.console(
+                'Terms and Service accepted in cache', emoji='✅', color='green')
