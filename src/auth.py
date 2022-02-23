@@ -30,15 +30,22 @@ class Auth:
         metamaskData = self.config['metamask']
 
         connect_wallet_button = self.images.image('connect_wallet_button')
+        connect_metamask_button = self.images.image('connect_metamask_button')
         metamask_sign_button = self.images.image('metamask_sign_button')
         metamask_unlock_button = self.images.image('metamask_unlock_button')
         treasure_hunt_banner = self.images.image('treasure_hunt_banner')
 
         if self.actions.clickButton(connect_wallet_button):
             self.log.console(
-                'Connect wallet button detected, logging in!', emoji='🎉', color='green')
+                'Connect game button detected', emoji='👍', color='green')
             self.actions.sleep(1, 2)
             # checkCaptcha()
+            self.recognition.waitForImage(connect_metamask_button)
+
+        if self.actions.clickButton(connect_metamask_button):
+            self.log.console(
+                'Connect metamask button detected, logging in!', emoji='🎉', color='green')
+            self.actions.sleep(1, 2)
             self.recognition.waitForImage(
                 (metamask_sign_button, metamask_unlock_button), multiple=True)
 
@@ -84,7 +91,8 @@ class Auth:
                 login_attempts = 0
                 self.errors.verify()
                 self.actions.refreshPage()
-                self.actions.sleep(1, 1, forceTime=True, randomMouseMovement=False)
+                self.actions.sleep(1, 1, forceTime=True,
+                                   randomMouseMovement=False)
             self.login()
 
         self.errors.verify()
