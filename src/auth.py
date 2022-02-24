@@ -27,13 +27,18 @@ class Auth:
         self.importLibs()
 
         self.actions.randomMouseMovement()
+        threshold = self.config['threshold']
         metamaskData = self.config['metamask']
+        authData = self.config['auth']
 
         connect_wallet_button = self.images.image('connect_wallet_button')
         connect_metamask_button = self.images.image('connect_metamask_button')
         metamask_sign_button = self.images.image('metamask_sign_button')
         metamask_unlock_button = self.images.image('metamask_unlock_button')
         treasure_hunt_banner = self.images.image('treasure_hunt_banner')
+        username_field = self.images.image('username_field')
+        password_field = self.images.image('password_field')
+        login_button = self.images.image('login_button')
 
         if self.actions.clickButton(connect_wallet_button):
             self.log.console(
@@ -41,6 +46,21 @@ class Auth:
             self.actions.sleep(1, 2)
             # checkCaptcha()
             self.recognition.waitForImage(connect_metamask_button)
+
+        if(authData["enable"] is True):
+            if self.actions.clickButton(username_field, threshold=threshold['auth_input']):
+                self.actions.sleep(1, 1)
+                pyautogui.typewrite(authData['username'], interval=0.1)
+                self.actions.sleep(1, 1)
+            if self.actions.clickButton(password_field, threshold=threshold['auth_input']):
+                self.actions.sleep(1, 1)
+                pyautogui.typewrite(authData['password'], interval=0.1)
+                self.actions.sleep(1, 1)
+            if self.actions.clickButton(login_button):
+                self.log.console(
+                    'Found login button. Waiting to check if logged in', emoji='✔️', color='green')
+                self.recognition.waitForImage(treasure_hunt_banner, timeout=30)
+                self.errors.verify()
 
         if self.actions.clickButton(connect_metamask_button):
             self.log.console(
@@ -52,7 +72,7 @@ class Auth:
         metamask_unlock_coord = self.recognition.positions(
             metamask_unlock_button)
         if metamask_unlock_coord is not False:
-            if(metamaskData["enable_login_metamask"] is False):
+            if(metamaskData["enable"] is False):
                 self.log.console(
                     'Metamask locked! But login with password is disabled, exiting', emoji='🔒', color='red')
                 self.application.stop()

@@ -1,15 +1,15 @@
 app:
-  theme: 'default'
+  theme: "default"
   verify_version: true
   emoji: false
   terminal_colorful: false
   run_time_app: 1
   monitor_to_use: 1
   captcha: false
-  speed: 'normal'
+  speed: "normal"
   multi_account:
     enable: false
-    window_title: 'bombcrypto'
+    window_title: "bombcrypto"
     window_fullscreen: false
 
 time_intervals:
@@ -34,9 +34,10 @@ threshold:
   heroes_rest_all: 0.9
   chest: 0.65
   jail: 0.8
+  auth_input: 0.9
 
 heroes:
-  mode: 'green'
+  mode: "green"
   list:
     scroll_attempts: 3
 
@@ -45,8 +46,13 @@ offsets:
   work_button_full: [90, 110] # [min value, max value]
 
 metamask:
-  enable_login_metamask: false
-  password: 'METAMASK PASSWORD'
+  enable: false
+  password: ""
+
+auth:
+  enable: false
+  username: ""
+  password: ""
 
 services:
   telegram: false

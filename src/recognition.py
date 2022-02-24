@@ -88,12 +88,15 @@ class Recognition:
         treasure_hunt_banner = self.images.image('treasure_hunt_banner')
         connect_wallet_button = self.images.image('connect_wallet_button')
         title_heroes_list = self.images.image('title_heroes_list', theme=True)
+        title_login = self.images.image('title_login', theme=True)
 
         if self.recognition.positions(back_button) is not False:
             return "treasure_hunt"
         elif self.recognition.positions(treasure_hunt_banner) is not False:
             return "main"
         elif self.recognition.positions(connect_wallet_button) is not False:
+            return "login"
+        elif self.recognition.positions(title_login) is not False:
             return "login"
         elif self.recognition.positions(title_heroes_list) is not False:
             return "character"

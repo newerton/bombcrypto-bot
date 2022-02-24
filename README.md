@@ -171,8 +171,12 @@ Python 3.8.10
 | work_button_green | array - [int, int] | Offset for mouse click on WORK button |
 | work_button_full | array - [int, int] | Offset for mouse click on WORK button |
 | **metamask** | - | - |
-| enable_login_metamask | bollean - true/false | Enable/Disable Metamask Auto Login |
+| enable | bollean - true/false | Enable/Disable Metamask Auto Login |
 | password | string | Password to unlock Metamask to login to the game |
+| **auth** | - | - |
+| enable | bollean - true/false | Enable/Disable Metamask Auto Login |
+| username | string | Username to unlock auth to login to the game |
+| password | string | Password to unlock auth to login to the game |
 | **services** | - | - |
 | telegram | bollean - true/false | Enable/Disable the message sending service for Telegram |
 | **log** | |
