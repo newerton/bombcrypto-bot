@@ -18,7 +18,7 @@ class Config:
 
     def readGitHubExample(self):
         data = requests.get(
-            'https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/config/EXAMPLE-config.yaml')
+            url='https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/config/EXAMPLE-config.yaml', timeout=2)
         try:
             configExample = yaml.safe_load(data.text)
         except FileNotFoundError:

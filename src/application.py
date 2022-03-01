@@ -22,6 +22,7 @@ class Application:
         self.log = Log()
 
     def start(self):
+        self.importLibs()
         pyautogui.FAILSAFE = False
 
         if self.config['app']['verify_version'] == True:
@@ -39,13 +40,10 @@ class Application:
         exit()
 
     def getVersions(self):
-        self.importLibs()
+        gitHubVersion = self.gitHubVersion()
+        localVersion = self.localVersion()
 
-        if self.config['app']['verify_version'] == True:
-            gitHubVersion = self.gitHubVersion()
-            localVersion = self.localVersion()
-
-            banner = """
+        banner = """
 Versions
   Local
     App: {}
@@ -55,7 +53,7 @@ Versions
     Config File: {}
 """.format(localVersion[0], localVersion[1], gitHubVersion[0], gitHubVersion[1])
 
-            print(banner)
+        print(banner)
 
     def checkUpdate(self):
 
@@ -87,7 +85,7 @@ Versions
     def gitHubVersion(self):
         self.importLibs()
         data = requests.get(
-            'https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/config/version.yaml')
+            url='https://raw.githubusercontent.com/newerton/bombcrypto-bot/main/config/version.yaml', timeout=2)
         try:
             streamVersionGithub = yaml.safe_load(data.text)
             versionData = streamVersionGithub['version']
