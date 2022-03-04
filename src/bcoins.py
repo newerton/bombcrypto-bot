@@ -24,7 +24,11 @@ class Bcoins:
     def getBcoins(self):
         self.importLibs()
         image = cv2.imread(self.BCOIN_BOX_IMAGE)
-        cropped = image[193:228, 26:200]
+        y = 5
+        x = 230
+        h = 30
+        w = 150
+        cropped = image[y:y+h, x:x+w]
         digits = self.getDigits(cropped)
         headers = ['date', 'bcoins']
         content = [self.date.dateFormatted(), digits.replace('.', ',')]
@@ -44,7 +48,7 @@ class Bcoins:
         if len(box_bcoins_positions) > 0:
             x, y, w, h = box_bcoins_positions[0]
             screenshot = self.desktop.printScreen()
-            cropped = screenshot[y: y + h, x: x + w]
+            cropped = screenshot[y: y + h, x: x + (w + 250)]
             cv2.imwrite(self.BCOIN_BOX_IMAGE, cropped)
             self.log.console('Your Chest image created',
                              services=False, emoji='🪟')
@@ -73,7 +77,7 @@ class Bcoins:
 
         self.log.console('Opening modal Your Chest', services=False, emoji='🪟')
         self.actions.clickButton(treasure_chest_button)
-        seconds = 10
+        seconds = 5
         message = 'Wait for {} seconds, to show your BCOIN'.format(seconds)
         self.log.console(message, services=False, emoji='⏳')
         self.actions.sleep(seconds, seconds, forceTime=True)
@@ -86,8 +90,8 @@ class Bcoins:
             targets[file.replace('.png', '')] = cv2.imread(path)
         return targets
 
-    def getDigits(self, img, threshold=0.95):
-        d = self.loadImages('./images/themes/default/your_chest/')
+    def getDigits(self, img, threshold=0.94):
+        d = self.loadImages('./images/themes/default/your_chest/v2/')
         digits = []
         for i in range(10):
             template = d[str(i)]
