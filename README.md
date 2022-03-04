@@ -57,7 +57,7 @@ Features:
 * Bcoins report after finalizing the map
 * New map estimation added
 * Telegram new commands (workall, restall)
-* Multi account with  Multi auth
+* Multi account with Multi auth
 
 ## 🎁 <a id="donation"></a>Donation
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
