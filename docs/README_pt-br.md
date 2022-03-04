@@ -22,6 +22,7 @@ Não me responsabilizo por eventuais penalidades sofridas por quem usar o bot, u
   * [Testes](#tests)
   * [Temas](#themes)
   * [Configurações](#configs)
+    * 🆕 [Autenticação com usuário e senha](#auth-with-user-and-pass)
   * [Como configurar o bot](#how-config-bot)
     * [Quais são os problemas](#what-are-problems)
     * [Threshold no arquivo de configuração](#threshold-config)
@@ -51,6 +52,7 @@ Recursos:
 * Relatório de Bcoins, depois de finalizar o mapa
 * Novas estimativa do mapa adicionada
 * Novos comandos no Telegram (workall, restall)
+* Multi contas com Multi autenticação
 
 ## 🎁 <a id="donation"></a>Doação
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
@@ -132,17 +134,19 @@ Python 3.8.10
 |:-------------:	|:-----:	|:-----:	|
 | **app** | - | - |
 | theme | string | Tema atual do jogo, para reconhecer os titulos de erros e lista de heróis. Valores na tabela de [temas](#themes) |
-| verify_version | bollean - true/false | Verificar a versão do app a cada 1h, recomendado para manter atualizado |
-| emoji | bollean - true/false | Ativar/Desativar mostrar emoji nas mensagens do console |
-| terminal_colorful | bollean - true/false | Ativar/Desativar mostrar mensagens coloridas no terminal |
+| verify_version | boolean - true/false | Verificar a versão do app a cada 1h, recomendado para manter atualizado |
+| emoji | boolean - true/false | Ativar/Desativar mostrar emoji nas mensagens do console |
+| terminal_colorful | boolean - true/false | Ativar/Desativar mostrar mensagens coloridas no terminal |
 | run_time_app |  int | Tempo de execução do loop do bot |
 | monitor_to_use | int | Monitor que o bot usa como referência |
-| captcha |  bollean - true/false | Ativar/Desativar o reconhecimento do captcha no jogo |
+| captcha |  boolean - true/false | Ativar/Desativar o reconhecimento do captcha no jogo |
 | speed | string - normal/fast | Dois modos de velocidade do bot, o modo fast é entre 1~3 minutos mais rápido |
+| authenticate | boolean - true/false | Ativar/Desativar o login com usuário e senha |
+| max_accounts | int | Máximo de contas |
 | **multi_account** | - | - |
-| enable | bollean - true/false | Ativar/Desaativar a funcionalidade de Multi Account  |
+| enable | boolean - true/false | Ativar/Desativar a funcionalidade de Multi Account  |
 | window_title | string | Título da janela, para identificação do jogo ativo pelo bot |
-| window_fullscreen | bollean - true/false | Ativar/Desativar o modo Fullscreen, recomendado para monitores pequenos |
+| window_fullscreen | boolean - true/false | Ativar/Desativar o modo Fullscreen, recomendado para monitores pequenos |
 | **time_intervals** | - | - |
 | send_heroes_for_work | array - [int, int] | Intervalo inicial e final para o bot buscar heróis para trabalhar |
 | refresh_heroes_positions | array - [int, int] | Intervalo inicial e final para o bot atualizar o mapa |
@@ -170,18 +174,32 @@ Python 3.8.10
 | work_button_green | array - [int, int] | Offset para o click do mouse no botão de WORK |
 | work_button_full | array - [int, int] | Offset para o click do mouse no botão de WORK |
 | **metamask** | - | - |
-| enable | bollean - true/false | Ativar/Desativar o auto login da Metamask |
+| enable | boolean - true/false | Ativar/Desativar o auto login da Metamask |
 | password | string | Senha para desbloquear a Metamask para logar no jogo |
-| **auth** | - | - |
-| enable | bollean - true/false | Ativar/Desativar o auto login da Metamask |
-| username | string | usuário para desbloquear a Autenticação para logar no jogo |
-| password | string | Senha para desbloquear a Autenticação para logar no jogo |
 | **services** | - | - |
-| telegram | bollean - true/false | Ativar/Desativar o serviço de envio de mensagem para o Telegram |
+| telegram | boolean - true/false | Ativar/Desativar o serviço de envio de mensagem para o Telegram |
 | **log** | |
-| save_to_file | bollean - true/false | Ativar/Desativar salvar o log do console no arquivo logger.log |
-| debug | bollean - true/false | Ativar/Desativar a depuração de algumas informações do bot |
+| save_to_file | boolean - true/false | Ativar/Desativar salvar o log do console no arquivo logger.log |
+| debug | boolean - true/false | Ativar/Desativar a depuração de algumas informações do bot |
 
+## <a id="auth-with-user-and-pass"></a>👥 Autenticação com usuário e senha
+
+
+### ⚠️ Não esqueça de renomear o arquivo /config/EXAMPLE-accounts.yaml, para /config/accounts.yaml.  
+
+
+Uma conta ( max_accounts: 1 )
+```
+1: {username: "seu usuário", password: "sua senha"}
+```
+
+Várias contas ( max_accounts: 3 )
+
+```
+1: {username: "seu usuário", password: "sua senha"}
+2: {username: "seu usuário", password: "sua senha"}
+3: {username: "seu usuário", password: "sua senha"}
+```
 
 
 ## ⚠️ <a id="how-config-bot"></a>Ajustando o bot

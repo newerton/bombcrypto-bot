@@ -27,6 +27,7 @@ I am not responsible for any penalties incurred by those who use the bot, use it
   * [Tests](#tests)
   * [Themes](#themes)
   * [Configs](#configs)
+    * 🆕 [Auth with user and pass](#auth-with-user-and-pass)
   * [How config the bot](#how-config-bot)
     * [What are the problems](#what-are-problems)
     * [Threshold in config file](#threshold-config)
@@ -56,6 +57,7 @@ Features:
 * Bcoins report after finalizing the map
 * New map estimation added
 * Telegram new commands (workall, restall)
+* Multi account with  Multi auth
 
 ## 🎁 <a id="donation"></a>Donation
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
@@ -134,17 +136,19 @@ Python 3.8.10
 |:-------------: |:-----: |:-----: |
 | **app** | - | - |
 | theme | string | Current game theme, to recognize bug titles and hero list. Values in the [Themes](#themes) table |
-| verify_version | bollean - true/false | Check app version every 1h, recommended to keep up to date |
-| emoji | bollean - true/false | Enable/Disable show emoji in console messages |
-| terminal_colorful | bollean - true/false | Enable/Disable show colored messages on terminal |
+| verify_version | boolean - true/false | Check app version every 1h, recommended to keep up to date |
+| emoji | boolean - true/false | Enable/Disable show emoji in console messages |
+| terminal_colorful | boolean - true/false | Enable/Disable show colored messages on terminal |
 | run_time_app | int | Bot loop execution time |
 | monitor_to_use | int | Monitor that the bot uses as a reference |
-| captcha | bollean - true/false | Enable/Disable in-game captcha recognition |
+| captcha | boolean - true/false | Enable/Disable in-game captcha recognition |
 | speed | string - normal/fast | Two bot speed modes, fast mode is between 1~3 minutes faster |
+| authenticate | boolean - true/false | Enable/Disable Login with Username and Password |
+| max_accounts | int | Account maximum |
 | **multi_account** | - | - |
-| enable | bollean - true/false | Enable/Disable Multi Account functionality |
+| enable | boolean - true/false | Enable/Disable Multi Account functionality |
 | window_title | string | Window title, for identification of the active game by the bot |
-| window_fullscreen | bollean - true/false | Enable/Disable Fullscreen mode, recommended for small monitors |
+| window_fullscreen | boolean - true/false | Enable/Disable Fullscreen mode, recommended for small monitors |
 | **time_intervals** | - | - |
 | send_heroes_for_work | array - [int, int] | Start and end time for bot to search for heroes to work |
 | refresh_heroes_positions | array - [int, int] | Start and end interval for bot to update map |
@@ -171,19 +175,32 @@ Python 3.8.10
 | work_button_green | array - [int, int] | Offset for mouse click on WORK button |
 | work_button_full | array - [int, int] | Offset for mouse click on WORK button |
 | **metamask** | - | - |
-| enable | bollean - true/false | Enable/Disable Metamask Auto Login |
+| enable | boolean - true/false | Enable/Disable Metamask Auto Login |
 | password | string | Password to unlock Metamask to login to the game |
-| **auth** | - | - |
-| enable | bollean - true/false | Enable/Disable Metamask Auto Login |
-| username | string | Username to unlock auth to login to the game |
-| password | string | Password to unlock auth to login to the game |
 | **services** | - | - |
-| telegram | bollean - true/false | Enable/Disable the message sending service for Telegram |
+| telegram | boolean - true/false | Enable/Disable the message sending service for Telegram |
 | **log** | |
-| save_to_file | bollean - true/false | Enable/Disable save console log to logger.log file |
-| debug | bollean - true/false | Enable/Disable debugging of some bot information |
+| save_to_file | boolean - true/false | Enable/Disable save console log to logger.log file |
+| debug | boolean - true/false | Enable/Disable debugging of some bot information |
 
 
+## <a id="auth-with-user-and-pass"></a>👥 Auth with user and pass
+
+### ⚠️ Don't forget to rename /config/EXAMPLE-accounts.yaml file, to /config/accounts.yaml.  
+
+
+One account ( max_accounts: 1 )
+```
+1: {username: "your username", password: "your password"}
+```
+
+Multi account ( max_accounts: 3 )
+
+```
+1: {username: "your username", password: "your password"}
+2: {username: "your username", password: "your password"}
+3: {username: "your username", password: "your password"}
+```
 
 ## ⚠️ <a id="how-config-bot"></a>Adjusting the bot
 

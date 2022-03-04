@@ -27,3 +27,14 @@ class Config:
             configExample = None
 
         return configExample
+
+    def accounts(self):
+        try:
+            file = open("./config/accounts.yaml", 'r', encoding='utf8')
+        except FileNotFoundError:
+            print(Fore.RED + 'Error: accounts.yaml file not found, rename EXAMPLE-accounts.yaml to accounts.yaml inside /config folder' + Fore.RESET)
+            exit()
+
+        with file as s:
+            stream = s.read()
+        return yaml.safe_load(stream)
