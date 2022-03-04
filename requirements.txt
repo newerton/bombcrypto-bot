@@ -1,6 +1,7 @@
 autopep8==1.6.0
 colorama==0.4.4
 deepdiff==5.7.0
+ewmh==0.1.6
 mss==6.1.0
 numpy==1.21.4
 opencv-python==4.5.4.60

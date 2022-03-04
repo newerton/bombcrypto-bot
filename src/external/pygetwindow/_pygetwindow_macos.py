@@ -8,9 +8,9 @@ import sys
 import time
 import AppKit
 import Quartz
-from pygetwindow import PyGetWindowException, pointInRect, BaseWindow, Rect, Point, Size
+from src.external.pygetwindow import PyGetWindowException, pointInRect, BaseWindow, Rect, Point, Size
 
-""" 
+"""
 IMPORTANT NOTICE:
     This script uses NSWindow objects, so you have to pass the app object (NSApp()) when instantiating the class.
     To manage other apps windows, this script uses Apple Script. Bear this in mind:
@@ -179,7 +179,7 @@ class MacOSWindow(BaseWindow):
 
         Use 'force' option to close the entire app in case window can't be closed"""
         self.show()
-        cmd = """osascript -e 'tell application "%s" 
+        cmd = """osascript -e 'tell application "%s"
                                     try
                                         tell window "%s" to close
                                     end try
@@ -194,7 +194,7 @@ class MacOSWindow(BaseWindow):
         Use 'wait' option to confirm action requested (in a reasonable time).
 
         Returns ''True'' if window was minimized"""
-        cmd = """osascript -e 'tell application "System Events" to tell application process "%s" 
+        cmd = """osascript -e 'tell application "System Events" to tell application process "%s"
                                 try
                                     set value of attribute "AXMinimized" of window "%s" to true
                                 end try
@@ -214,7 +214,7 @@ class MacOSWindow(BaseWindow):
         # Thanks to: macdeport (for this piece of code, his help, and the moral support!!!)
         if not self.isMaximized:
             if self.use_zoom:
-                cmd = """osascript -e 'tell application "System Events" to tell application "%s" 
+                cmd = """osascript -e 'tell application "System Events" to tell application "%s"
                                             try
                                                 tell window "%s" to set zoomed to true
                                             end try
@@ -239,21 +239,21 @@ class MacOSWindow(BaseWindow):
         Returns ''True'' if window was restored"""
         if self.isMaximized:
             if self.use_zoom:
-                cmd = """osascript -e 'tell application "System Events" to tell application "%s" 
+                cmd = """osascript -e 'tell application "System Events" to tell application "%s"
                                             try
                                                 tell window "%s" to set zoomed to false
                                             end try
                                         end tell'""" % (self.appName, self.title)
                 os.system(cmd)
             else:
-                cmd = """osascript -e 'tell application "System Events" to tell application process "%s" 
+                cmd = """osascript -e 'tell application "System Events" to tell application process "%s"
                                             try
                                                 set value of attribute "AXFullScreen" of window 1 to false
                                             end try
                                         end tell'""" % self.appName
                 os.system(cmd)
         if self.isMinimized:
-            cmd = """osascript -e 'tell application "System Events" to tell application process "%s" 
+            cmd = """osascript -e 'tell application "System Events" to tell application process "%s"
                                         try
                                             set value of attribute "AXMinimized" of window "%s" to false
                                         end try
@@ -327,7 +327,7 @@ class MacOSWindow(BaseWindow):
                                         set visible to true
                                         activate
                                         set winName to "%s"
-                                        tell window winName to set visible to true 
+                                        tell window winName to set visible to true
                                         tell window winName to set index to 1
                                     end try
                                 end tell'""" % (self.appName, self.title)
@@ -414,7 +414,7 @@ class MacOSWindow(BaseWindow):
     @property
     def isMinimized(self):
         """Returns ``True`` if the window is currently minimized."""
-        cmd = """osascript -e 'tell application "System Events" to tell application process "%s" 
+        cmd = """osascript -e 'tell application "System Events" to tell application process "%s"
                                     set isMin to false
                                     try
                                         set isMin to value of attribute "AXMinimized" of window "%s"
@@ -428,12 +428,12 @@ class MacOSWindow(BaseWindow):
     def isMaximized(self):
         """Returns ``True`` if the window is currently maximized (full screen)."""
         if self.use_zoom:
-            cmd = """osascript -e 'tell application "System Events" to tell application "%s" 
+            cmd = """osascript -e 'tell application "System Events" to tell application "%s"
                                         set isZoomed to false
                                         try
                                             set isZoomed to zoomed of window "%s"
                                         end try
-                                    end tell 
+                                    end tell
                                     return (isZoomed as string)'""" % (self.appName, self.title)
         else:
             cmd = """osascript -e 'tell application "System Events" to tell application process "%s"

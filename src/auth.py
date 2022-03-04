@@ -49,13 +49,11 @@ class Auth:
 
         if(authData["enable"] is True):
             if self.actions.clickButton(username_field, threshold=threshold['auth_input']):
-                self.actions.sleep(1, 1)
+                self.actions.sleep(2, 2, forceTime=True)
                 pyautogui.typewrite(authData['username'], interval=0.1)
-                self.actions.sleep(1, 1)
             if self.actions.clickButton(password_field, threshold=threshold['auth_input']):
-                self.actions.sleep(1, 1)
+                self.actions.sleep(2, 2, forceTime=True)
                 pyautogui.typewrite(authData['password'], interval=0.1)
-                self.actions.sleep(1, 1)
             if self.actions.clickButton(login_button):
                 self.log.console(
                     'Found login button. Waiting to check if logged in', emoji='✔️', color='green')
