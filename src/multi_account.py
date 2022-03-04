@@ -4,9 +4,8 @@ import os
 import sys
 import time
 
-if os.name == 'nt':
-    import pygetwindow as botMultiAccount
-    from pygetwindow import PyGetWindowException
+import src.external.pygetwindow as botMultiAccount
+from src.external.pygetwindow import PyGetWindowException
 
 humanClicker = HumanClicker()
 
@@ -51,11 +50,11 @@ class MultiAccount:
 
         if multiAccount == True and os.name == 'nt':
             self.log.console('Multi account enabled', emoji='🧾', color='cyan')
-            self.botMultiAccountWindows()
+            self.botMultiAccount()
 
         if os.name == 'posix':
-            self.log.console('Multi account DISABLE', emoji='🧾', color='cyan')
-            self.botSingle()
+            self.log.console('Multi account enabled', emoji='🧾', color='cyan')
+            self.botMultiAccount()
 
     def startOnlyMapAction(self):
         self.importLibs()
@@ -84,13 +83,14 @@ class MultiAccount:
         while True:
             self.stepsOnlyMap(last)
 
-    def botMultiAccountWindows(self):
+    def botMultiAccount(self):
         title = self.config['app']['multi_account']['window_title']
 
         try:
             windows = []
             for w in botMultiAccount.getAllWindows():
-                lowerTitle = w.title.strip().lower().startswith(title)
+                browserTitle = self.browserTitle(w.title)
+                lowerTitle = browserTitle.lower().startswith(title)
                 if lowerTitle == True:
                     windows.append({
                         "window": w,
@@ -109,7 +109,7 @@ class MultiAccount:
         except PyGetWindowException:
             self.log.console(
                 'Error: Multi Account (PyGetWindow): Trying to resolve, check your farm.', emoji='💥', color='cyan')
-            self.botMultiAccountWindows()
+            self.botMultiAccount()
 
     def steps(self, last):
         new_map_button = self.images.image('new_map_button')
@@ -173,19 +173,20 @@ class MultiAccount:
 
     def activeWindow(self, last, window):
         window_fullscreen = self.config['app']['multi_account']['window_fullscreen']
+        browserTitle = self.browserTitle(window.title)
 
         window = last["window"]
         windowLeft = window.left
         windowTop = window.top
         windowWidth = window.width
         windowHeight = window.height
+        window.maximize()
         if window_fullscreen is not True:
             self.actions.move(window.center, 0)
             humanClicker.click()
-            self.actions.sleep(0.5, 0.5, forceTime=True)
-        window.maximize()
+            self.actions.sleep(1, 1, forceTime=True)
         window.activate()
-        self.log.console('Browser Active: ' + window.title,
+        self.log.console('Browser Active: ' + browserTitle,
                          emoji='🪟', color='cyan')
         self.actions.sleep(2, 2, forceTime=True)
         self.steps(last)
@@ -194,3 +195,41 @@ class MultiAccount:
             window.resizeTo(windowWidth, windowHeight)
             window.moveTo(windowLeft, windowTop)
             self.actions.sleep(1, 1, forceTime=True)
+
+    def browserTitle(self, title):
+        titleFormatter = self.unicodeToAscii(title)
+        if(titleFormatter.startswith("b'") and titleFormatter.endswith("'")):
+            titleFormatter = titleFormatter[2:-1]
+        return titleFormatter.strip()
+
+    def unicodeToAscii(self, text):
+        return (
+            str(text)
+            .replace('\\xc3\\xa9', 'e')
+            .replace('\\xc2\\xb7', '·')
+            .replace('\\xe2\\x80\\x99', "'")
+            .replace('\\xe2\\x80\\x9c', '"')
+            .replace('\\xe2\\x80\\x9d', '"')
+            .replace('\\xe2\\x80\\x9e', '"')
+            .replace('\\xe2\\x80\\x9f', '"')
+            .replace('\\xe2\\x80\\x9c', '"')
+            .replace('\\xe2\\x80\\x93', '-')
+            .replace('\\xe2\\x80\\x92', '-')
+            .replace('\\xe2\\x80\\x94', '-')
+            .replace('\\xe2\\x80\\x94', '-')
+            .replace('\\xe2\\x80\\x98', "'")
+            .replace('\\xe2\\x80\\x9b', "'")
+            .replace('\\xe2\\x80\\x90', '-')
+            .replace('\\xe2\\x80\\x91', '-')
+            .replace('\\xe2\\x80\\xb2', "'")
+            .replace('\\xe2\\x80\\xb3', "'")
+            .replace('\\xe2\\x80\\xb4', "'")
+            .replace('\\xe2\\x80\\xb5', "'")
+            .replace('\\xe2\\x80\\xb6', "'")
+            .replace('\\xe2\\x80\\xb7', "'")
+            .replace('\\xe2\\x81\\xba', " ")
+            .replace('\\xe2\\x81\\xbb', "-")
+            .replace('\\xe2\\x81\\xbc', "=")
+            .replace('\\xe2\\x81\\xbd', "(")
+            .replace('\\xe2\\x81\\xbe', ")")
+        )
