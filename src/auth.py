@@ -56,7 +56,6 @@ class Auth:
             username_icon_position = self.recognition.positions(username_icon)
             password_icon_position = self.recognition.positions(password_icon)
 
-
             if username_icon_position is not False:
               username = self.accounts[account_active]['username']
               x, y, _, _ = username_icon_position[0]
