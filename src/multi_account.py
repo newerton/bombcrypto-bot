@@ -58,7 +58,7 @@ class MultiAccount:
     def start(self):
         self.importLibs()
         multiAccount = self.config['app']['multi_account']['enable']
-        if multiAccount != True and os.name == 'nt':
+        if multiAccount != True:
             self.log.console('Multi account disabled', emoji='🧾', color='cyan')
             self.botSingle()
 
@@ -66,7 +66,7 @@ class MultiAccount:
             self.log.console('Multi account enabled', emoji='🧾', color='cyan')
             self.botMultiAccount()
 
-        if os.name == 'posix':
+        if multiAccount == True and os.name == 'posix':
             self.log.console('Multi account enabled', emoji='🧾', color='cyan')
             self.botMultiAccount()
 
