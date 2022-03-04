@@ -29,6 +29,10 @@ class Actions:
         self.treasure_hunt = TreasureHunt()
         self.telegram = Telegram()
 
+    def click(self):
+      humanClicker.click()
+      return True
+
     def clickButton(self, image, name=None, timeout=3, threshold=None):
         self.importLibs()
         if(threshold == None):
@@ -79,7 +83,7 @@ class Actions:
             movementInSeconds = 0.5
         humanClicker.move(coords, movementInSeconds)
 
-    def moveTo(self, coords, movementInSeconds, forceTime):
+    def moveTo(self, coords, movementInSeconds, forceTime=False):
         self.importLibs()
         speed = self.config['app']['speed']
         if speed == 'fast' and forceTime == False:

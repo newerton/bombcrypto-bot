@@ -3,6 +3,7 @@ import pyautogui
 login_attempts = 0
 account_active = None
 
+
 class Auth:
     def importLibs(self):
         from src.actions import Actions
@@ -40,8 +41,8 @@ class Auth:
         metamask_sign_button = self.images.image('metamask_sign_button')
         metamask_unlock_button = self.images.image('metamask_unlock_button')
         treasure_hunt_banner = self.images.image('treasure_hunt_banner')
-        username_field = self.images.image('username_field')
-        password_field = self.images.image('password_field')
+        username_icon = self.images.image('username_icon')
+        password_icon = self.images.image('password_icon')
         login_button = self.images.image('login_button')
 
         if self.actions.clickButton(connect_wallet_button):
@@ -52,15 +53,28 @@ class Auth:
             self.recognition.waitForImage(connect_metamask_button)
 
         if(authenticate is True):
-            username = self.accounts[account_active]['username']
-            password = self.accounts[account_active]['password']
+            username_icon_position = self.recognition.positions(username_icon)
+            password_icon_position = self.recognition.positions(password_icon)
 
-            if self.actions.clickButton(username_field, threshold=threshold['auth_input']):
-                self.actions.sleep(1, 1, forceTime=True)
-                pyautogui.typewrite(username, interval=0.1)
-            if self.actions.clickButton(password_field, threshold=threshold['auth_input']):
-                self.actions.sleep(1, 1, forceTime=True)
-                pyautogui.typewrite(password, interval=0.1)
+
+            if username_icon_position is not False:
+              username = self.accounts[account_active]['username']
+              x, y, _, _ = username_icon_position[0]
+              self.actions.move((int(x+100), int(y+10)), 1)
+              if(self.actions.click()):
+                  self.actions.sleep(1, 1, forceTime=True)
+                  pyautogui.hotkey('del')
+                  pyautogui.typewrite(username, interval=0.1)
+
+            if password_icon_position is not False:
+              password = self.accounts[account_active]['password']
+              x, y, _, _ = password_icon_position[0]
+              self.actions.move((int(x+100), int(y+10)), 1)
+              if(self.actions.click()):
+                  self.actions.sleep(1, 1, forceTime=True)
+                  pyautogui.hotkey('del')
+                  pyautogui.typewrite(password, interval=0.1)
+
             if self.actions.clickButton(login_button):
                 self.log.console(
                     'Found login button. Waiting to check if logged in', emoji='✔️', color='green')
