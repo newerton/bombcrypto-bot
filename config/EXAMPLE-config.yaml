@@ -6,7 +6,9 @@ app:
   run_time_app: 1
   monitor_to_use: 1
   captcha: false
-  speed: "normal"
+  speed: "fast"
+  authenticate: false
+  max_accounts: 1
   multi_account:
     enable: false
     window_title: "bombcrypto"
@@ -47,11 +49,6 @@ offsets:
 
 metamask:
   enable: false
-  password: ""
-
-auth:
-  enable: false
-  username: ""
   password: ""
 
 services:

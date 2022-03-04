@@ -6,5 +6,6 @@
 /.history
 
 # config file
+/config/accounts.yaml
 /config/config.yaml
 /config/services/telegram.yaml

@@ -1,7 +1,7 @@
 import pyautogui
 
 login_attempts = 0
-
+account_active = None
 
 class Auth:
     def importLibs(self):
@@ -13,6 +13,7 @@ class Auth:
         from src.recognition import Recognition
         from src.log import Log
         from src.services.telegram import Telegram
+        self.accounts = Config().accounts()
         self.actions = Actions()
         self.application = Application()
         self.config = Config().read()
@@ -22,14 +23,17 @@ class Auth:
         self.log = Log()
         self.telegram = Telegram()
 
-    def login(self):
+    def login(self, account):
         global login_attempts
+        global account_active
         self.importLibs()
+
+        account_active = account
 
         self.actions.randomMouseMovement()
         threshold = self.config['threshold']
         metamaskData = self.config['metamask']
-        authData = self.config['auth']
+        authenticate = self.config['app']['authenticate']
 
         connect_wallet_button = self.images.image('connect_wallet_button')
         connect_metamask_button = self.images.image('connect_metamask_button')
@@ -47,13 +51,16 @@ class Auth:
             # checkCaptcha()
             self.recognition.waitForImage(connect_metamask_button)
 
-        if(authData["enable"] is True):
+        if(authenticate is True):
+            username = self.accounts[account_active]['username']
+            password = self.accounts[account_active]['password']
+
             if self.actions.clickButton(username_field, threshold=threshold['auth_input']):
-                self.actions.sleep(2, 2, forceTime=True)
-                pyautogui.typewrite(authData['username'], interval=0.1)
+                self.actions.sleep(1, 1, forceTime=True)
+                pyautogui.typewrite(username, interval=0.1)
             if self.actions.clickButton(password_field, threshold=threshold['auth_input']):
-                self.actions.sleep(2, 2, forceTime=True)
-                pyautogui.typewrite(authData['password'], interval=0.1)
+                self.actions.sleep(1, 1, forceTime=True)
+                pyautogui.typewrite(password, interval=0.1)
             if self.actions.clickButton(login_button):
                 self.log.console(
                     'Found login button. Waiting to check if logged in', emoji='✔️', color='green')
@@ -111,12 +118,13 @@ class Auth:
                 self.actions.refreshPage()
                 self.actions.sleep(1, 1, forceTime=True,
                                    randomMouseMovement=False)
-            self.login()
+            self.login(account)
 
         self.errors.verify()
 
     def checkLogout(self):
         self.importLibs()
+        global account_active
 
         connect_wallet_button = self.images.image('connect_wallet_button')
         metamask_cancel_button = self.images.image('metamask_cancel_button')
@@ -129,7 +137,7 @@ class Auth:
                 self.log.console('Logout detected',
                                  services=True, emoji='😿', color='red')
                 self.actions.refreshPage()
-                self.login()
+                self.login(account_active)
             elif self.recognition.positions(metamask_sign_button):
                 self.log.console('Sing button detected',
                                  services=True, emoji='✔️', color='green')

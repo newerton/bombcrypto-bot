@@ -13,7 +13,20 @@ humanClicker = HumanClicker()
 class MultiAccount:
     def __init__(self):
         from src.config import Config
+        from src.log import Log
         self.config = Config().read()
+        self.log = Log()
+        self.accounts = None
+        if(self.config['app']['multi_account']['enable'] == True):
+            self.accounts = Config().accounts()
+            max_accounts = self.config['app']['max_accounts']
+            total_accounts = len(self.accounts)
+            if(max_accounts != total_accounts):
+                self.log.console(
+                    'Multi account error: max_accounts ' +
+                    str(max_accounts) + ' in config.yaml, found ' +
+                    str(total_accounts) + ' in accounts.yaml.', emoji='💥', color='red')
+                exit()
 
         self.check_for_updates = 60
         self.next_refresh_heroes = self.config['time_intervals']['send_heroes_for_work'][0]
@@ -23,11 +36,11 @@ class MultiAccount:
         from src.actions import Actions
         from src.application import Application
         from src.auth import Auth
+        from src.auth import account_active
         from src.captcha import Captcha
         from src.error import Errors
         from src.heroes import Heroes
         from src.images import Images
-        from src.log import Log
         from src.recognition import Recognition
         from src.treasure_hunt import TreasureHunt
         self.actions = Actions()
@@ -37,9 +50,10 @@ class MultiAccount:
         self.errors = Errors()
         self.heroes = Heroes()
         self.images = Images()
-        self.log = Log()
         self.recognition = Recognition()
         self.treasure_hunt = TreasureHunt()
+
+        self.account_active = account_active
 
     def start(self):
         self.importLibs()
@@ -64,6 +78,7 @@ class MultiAccount:
     def botSingle(self):
 
         last = {
+            "account": 1,
             "login": 0,
             "heroes": 0,
             "new_map": 0,
@@ -85,14 +100,17 @@ class MultiAccount:
 
     def botMultiAccount(self):
         title = self.config['app']['multi_account']['window_title']
+        total_accounts = len(self.accounts)
 
         try:
             windows = []
+            count = 1
             for w in botMultiAccount.getAllWindows():
                 browserTitle = self.browserTitle(w.title)
                 lowerTitle = browserTitle.lower().startswith(title)
-                if lowerTitle == True:
+                if lowerTitle == True and count <= total_accounts:
                     windows.append({
+                        "account": (count),
                         "window": w,
                         "login": 0,
                         "heroes": 0,
@@ -100,6 +118,7 @@ class MultiAccount:
                         "refresh_heroes": 0,
                         "check_updates": 0
                     })
+                    count += 1
 
             while True:
                 for last in windows:
@@ -118,7 +137,7 @@ class MultiAccount:
         currentScreen = self.recognition.currentScreen()
 
         if currentScreen == "login":
-            self.auth.login()
+            self.auth.login(last['account'])
 
         self.errors.verify()
 
