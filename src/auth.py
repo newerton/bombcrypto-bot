@@ -131,7 +131,7 @@ class Auth:
                 self.actions.refreshPage()
                 self.actions.sleep(1, 1, forceTime=True,
                                    randomMouseMovement=False)
-            self.login(account)
+            self.login(account_active)
 
         self.errors.verify()
 
