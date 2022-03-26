@@ -79,7 +79,10 @@ class Recognition:
                     if hast_timed_out is not False:
                         return False
                     continue
-                return True
+                elif matches is not False:
+                    return True
+                else:
+                    return False
 
     def currentScreen(self):
         self.importLibs()

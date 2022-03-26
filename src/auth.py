@@ -77,41 +77,46 @@ class Auth:
             if self.actions.clickButton(login_button):
                 self.log.console(
                     'Found login button. Waiting to check if logged in', emoji='✔️', color='green')
+
+                self.actions.sleep(1, 3, forceTime=True)
+                self.application.loggingWithUsernameAndPasswordNotAllowTransactions()
+
                 self.recognition.waitForImage(treasure_hunt_banner, timeout=30)
                 self.errors.verify()
-
-        if self.actions.clickButton(connect_metamask_button):
-            self.log.console(
-                'Connect metamask button detected, logging in!', emoji='🎉', color='green')
-            self.actions.sleep(1, 2)
-            self.recognition.waitForImage(
-                (metamask_sign_button, metamask_unlock_button), multiple=True)
-
-        metamask_unlock_coord = self.recognition.positions(
-            metamask_unlock_button)
-        if metamask_unlock_coord is not False:
-            if(metamaskData["enable"] is False):
+        else:
+            if self.actions.clickButton(connect_metamask_button):
                 self.log.console(
-                    'Metamask locked! But login with password is disabled, exiting', emoji='🔒', color='red')
-                self.application.stop()
-            self.log.console(
-                'Found unlock button. Waiting for password', emoji='🔓', color='yellow')
-            password = metamaskData["password"]
-            pyautogui.typewrite(password, interval=0.1)
-            self.actions.sleep(1, 2)
-            if self.actions.clickButton(metamask_unlock_button):
-                self.log.console('Unlock button clicked',
-                                 emoji='🔓', color='green')
+                    'Connect metamask button detected, logging in!', emoji='🎉', color='green')
+                self.actions.sleep(1, 2)
+                self.recognition.waitForImage(
+                    (metamask_sign_button, metamask_unlock_button), multiple=True)
 
-        if self.actions.clickButton(metamask_sign_button):
-            self.log.console(
-                'Found sign button. Waiting to check if logged in', emoji='✔️', color='green')
-            self.actions.sleep(5, 7, forceTime=True)
+            metamask_unlock_coord = self.recognition.positions(
+                metamask_unlock_button)
+            if metamask_unlock_coord is not False:
+                if(metamaskData["enable"] is False):
+                    self.log.console(
+                        'Metamask locked! But login with password is disabled, exiting', emoji='🔒', color='red')
+                    self.application.stop()
+                self.log.console(
+                    'Found unlock button. Waiting for password', emoji='🔓', color='yellow')
+                password = metamaskData["password"]
+                pyautogui.typewrite(password, interval=0.1)
+                self.actions.sleep(1, 2)
+                if self.actions.clickButton(metamask_unlock_button):
+                    self.log.console('Unlock button clicked',
+                                    emoji='🔓', color='green')
+
             if self.actions.clickButton(metamask_sign_button):
                 self.log.console(
-                    'Found glitched sign button. Waiting to check if logged in', emoji='✔️', color='yellow')
-            self.recognition.waitForImage(treasure_hunt_banner, timeout=30)
-            self.errors.verify()
+                    'Found sign button. Waiting to check if logged in', emoji='✔️', color='green')
+                self.actions.sleep(5, 7, forceTime=True)
+
+                if self.actions.clickButton(metamask_sign_button):
+                    self.log.console(
+                        'Found glitched sign button. Waiting to check if logged in', emoji='✔️', color='yellow')
+                self.recognition.waitForImage(treasure_hunt_banner, timeout=30)
+                self.errors.verify()
 
         if self.recognition.currentScreen() == "main":
             self.log.console('Logged in', services=True,

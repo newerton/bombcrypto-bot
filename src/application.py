@@ -191,3 +191,21 @@ Versions
         else:
             self.log.console(
                 'Terms and Service accepted in cache', emoji='✅', color='green')
+
+    def loggingWithUsernameAndPasswordNotAllowTransactions(self):
+        self.importLibs()
+
+        from src.actions import Actions
+        from src.recognition import Recognition
+        self.actions = Actions()
+        self.recognition = Recognition()
+
+        checkbox_logging_with_usernameandpassword_not_allow_transaction = self.images.image(
+            'checkbox_logging_with_usernameandpassword_not_allow_transaction')
+        ok_button = self.images.image('ok_button')
+
+        if self.recognition.waitForImage(checkbox_logging_with_usernameandpassword_not_allow_transaction, timeout=3, threshold=0.8) == True:
+            if self.actions.clickButton(ok_button):
+                self.log.console(
+                    'Logging with username and password does not allow transactions in game accepted', emoji='✅', color='green')
+                return True

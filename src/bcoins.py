@@ -90,7 +90,7 @@ class Bcoins:
             targets[file.replace('.png', '')] = cv2.imread(path)
         return targets
 
-    def getDigits(self, img, threshold=0.94):
+    def getDigits(self, img, threshold=0.90):
         d = self.loadImages('./images/themes/default/your_chest/v2/')
         digits = []
         for i in range(10):
