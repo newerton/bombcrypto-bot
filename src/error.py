@@ -1,11 +1,9 @@
-import pyautogui
-
+import os
 
 class Errors:
     def importLibs(self):
         from src.actions import Actions
         from src.auth import Auth
-        from src.auth import account_active
         from src.config import Config
         from src.recognition import Recognition
         from src.images import Images
@@ -18,8 +16,6 @@ class Errors:
         self.images = Images()
         self.log = Log()
         self.telegram = Telegram()
-
-        self.account_active = account_active
 
     def verify(self):
         self.importLibs()
@@ -36,6 +32,6 @@ class Errors:
             self.actions.clickButton(ok_button)
             self.actions.refreshPage()
             self.recognition.waitForImage(connect_wallet_button)
-            self.auth.login(self.account_active)
+            self.auth.login()
         else:
             return False
