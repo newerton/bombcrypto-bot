@@ -53,6 +53,7 @@ Recursos:
 * Novas estimativa do mapa adicionada
 * Novos comandos no Telegram (workall, restall)
 * Multi contas com Multi autenticação
+* Envia os heróis para a **Casa** por raridade
 
 ## 🎁 <a id="donation"></a>Doação
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
@@ -142,7 +143,6 @@ Python 3.8.10
 | captcha |  boolean - true/false | Ativar/Desativar o reconhecimento do captcha no jogo |
 | speed | string - normal/fast | Dois modos de velocidade do bot, o modo fast é entre 1~3 minutos mais rápido |
 | authenticate | boolean - true/false | Ativar/Desativar o login com usuário e senha |
-| max_accounts | int | Máximo de contas |
 | **multi_account** | - | - |
 | enable | boolean - true/false | Ativar/Desativar a funcionalidade de Multi Account  |
 | window_title | string | Título da janela, para identificação do jogo ativo pelo bot |
@@ -161,11 +161,23 @@ Python 3.8.10
 | default | decimal | Valor padrão de confiança |
 | error_message | decimal | Valor de confiança do título da janela de erro |
 | back_button | decimal | Valor de confiança do botão de voltar do mapa |
-| heroes_green_bar | decimal | Valor de confiança da barra parcial de energia do herói |
-| heroes_full_bar | decimal | Valor de confiança da barra completa de energia do herói |
+| work_button | decimal | Valor de confiança do botão de WORK |
+| home_enable_button | decimal | Valor de confiança do botão de HOME habilitado |
+| heroes_green_bar | decimal | Valor de confiança da barra verde parcial de energia do herói |
+| heroes_red_bar | decimal | Valor de confiança da barra vermelha parcial de energia do herói |
+| heroes_full_bar | decimal | Valor de confiança da barra completa de 
+energia do herói |
 | heroes_send_all | decimal | Valor de confiança do botão de enviar todos para trabalhar |
+| heroes_rest_all | decimal | Valor de confiança do botão de enviar todos para descansar |
 | chest | decimal | Valor de confiança dos baús, para calcular o total de BCOINS do mapa |
 | jail | decimal | Valor de confiança dos baús, para calcular o total de jaula do mapa |
+| auth_input | decimal | Valor de confiança do campo de login |
+| heroes.common | decimal | Valor de confiança da tag de raridade - common |
+| heroes.rare | decimal | Valor de confiança da tag de raridade - rare |
+| heroes.super_rare | decimal | Valor de confiança da tag de raridade - super_rare |
+| heroes.epic | decimal | Valor de confiança da tag de raridade - epic |
+| heroes.legend | decimal | Valor de confiança da tag de raridade - legend |
+| heroes.super_legend | decimal | Valor de confiança da tag de raridade - super_legend |
 | **heroes** | - | - |
 | mode | string - all, green, full | Modo de enviar os heróis para o trabalho.<br />**all** - Envia todos os heróis, sem critério.<br />**green** - Envia os heróis com energia parcialmente verde<br />**full** - Envia os heróis com energia completa|
 | **list** | - | - |
@@ -180,7 +192,8 @@ Python 3.8.10
 | telegram | boolean - true/false | Ativar/Desativar o serviço de envio de mensagem para o Telegram |
 | **log** | |
 | save_to_file | boolean - true/false | Ativar/Desativar salvar o log do console no arquivo logger.log |
-| debug | boolean - true/false | Ativar/Desativar a depuração de algumas informações do bot |
+| console | boolean - true/false | Ativar/Desativar a depuração de algumas informações do bot |
+| show_print | boolean - true/false | Ativar/Desativar mostrar o printscreen da analise do bot |
 
 ## <a id="auth-with-user-and-pass"></a>👥 Autenticação com usuário e senha
 
@@ -188,19 +201,31 @@ Python 3.8.10
 ### ⚠️ Não esqueça de renomear o arquivo /config/EXAMPLE-accounts.yaml, para /config/accounts.yaml.  
 
 
-Uma conta ( max_accounts: 1 )
+Uma conta sem a Casa
 ```
-1: {username: "seu usuário", password: "sua senha"}
-```
-
-Várias contas ( max_accounts: 3 )
-
-```
-1: {username: "seu usuário", password: "sua senha"}
-2: {username: "seu usuário", password: "sua senha"}
-3: {username: "seu usuário", password: "sua senha"}
+1: {username: "seu usuário", password: "sua senha", house: false, rarity: []}
 ```
 
+Uma conta com a Casa
+```
+1: {username: "seu usuário", password: "sua senha", house: true, rarity: ["super_rare", "legend"]}
+```
+
+Várias contas sem a Casa
+
+```
+1: {username: "seu usuário", password: "sua senha", house: false, rarity: []}
+2: {username: "seu usuário", password: "sua senha", house: false, rarity: []}
+3: {username: "seu usuário", password: "sua senha", house: false, rarity: []}
+```
+
+Várias contas com/sem a Casa
+
+```
+1: {username: "seu usuário", password: "sua senha", house: true, rarity: ["rare", "super_rare"]}
+2: {username: "seu usuário", password: "sua senha", house: false, rarity: []}
+3: {username: "seu usuário", password: "sua senha", house: true, rarity: ["super_legend", "legend", "epic"]}
+```
 
 ## ⚠️ <a id="how-config-bot"></a>Ajustando o bot
 

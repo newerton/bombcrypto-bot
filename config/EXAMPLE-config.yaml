@@ -39,7 +39,7 @@ threshold:
   jail: 0.8
   auth_input: 0.9
   heroes:
-    commom: 0.8
+    common: 0.8
     rare: 0.8
     super_rare: 0.8
     epic: 0.8
@@ -50,9 +50,6 @@ heroes:
   mode: "green"
   list:
     scroll_attempts: 3
-
-house:
-  enable: true
 
 offsets:
   work_button_green: [120, 140]

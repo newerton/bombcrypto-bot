@@ -99,6 +99,9 @@ class Heroes:
             self.config['time_intervals']['send_heroes_for_work'][1]
         )
 
+        account_active = int(os.environ['ACTIVE_BROWSER'])
+        houseEnabled = self.accounts[account_active]['house']
+
         buttonsWorkClicked = 0
         buttonsHouseClicked = 0
 
@@ -110,7 +113,7 @@ class Heroes:
                 if buttonsWorkClicked is not None:
                     heroes_work_clicked += buttonsWorkClicked
             elif mode == 'green':
-                if self.config['house']['enable'] is True:
+                if houseEnabled is True:
                     number = 0
                     while number < 2:
                         buttonsHouseClicked = self.clickHouseButtons()
@@ -134,7 +137,7 @@ class Heroes:
 
             self.actions.sleep(1, 1, randomMouseMovement=False, forceTime=True)
 
-        if self.config['house']['enable'] is True:
+        if houseEnabled is True:
             self.log.console('{} total heroes sent to house since the bot started'.format(
                 heroes_house_clicked), services=True, emoji='🦸', color='yellow')
 
