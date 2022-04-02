@@ -17,17 +17,6 @@ class MultiAccount:
         self.config = Config().read()
         self.log = Log()
         self.accounts = None
-        if(self.config['app']['multi_account']['enable'] == True):
-            self.accounts = Config().accounts()
-            max_accounts = self.config['app']['max_accounts']
-            total_accounts = len(self.accounts)
-            if(max_accounts != total_accounts):
-                self.log.console(
-                    'Multi account error: max_accounts ' +
-                    str(max_accounts) + ' in config.yaml, found ' +
-                    str(total_accounts) + ' in accounts.yaml.', emoji='💥', color='red')
-                exit()
-
         self.check_for_updates = 60
         self.next_refresh_heroes = self.config['time_intervals']['send_heroes_for_work'][0]
         self.next_refresh_heroes_positions = self.config['time_intervals']['refresh_heroes_positions'][0]

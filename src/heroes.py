@@ -1,13 +1,17 @@
 from pyclick import HumanClicker
 
 import numpy as np
+import os
 import pyautogui
 import random
 
 humanClicker = HumanClicker()
 
-heroes_clicked = 0
-heroes_clicked_total = 0
+heroes_work_clicked = 0
+heroes_work_clicked_total = 0
+
+heroes_house_clicked = 0
+heroes_house_clicked_total = 0
 
 
 class Heroes:
@@ -20,11 +24,13 @@ class Heroes:
     def importLibs(self):
         from src.actions import Actions
         from src.auth import Auth
+        from src.config import Config
         from src.error import Errors
         from src.images import Images
         from src.recognition import Recognition
         from src.log import Log
         from src.treasure_hunt import TreasureHunt
+        self.accounts = Config().accounts()
         self.actions = Actions()
         self.auth = Auth()
         self.errors = Errors()
@@ -36,13 +42,14 @@ class Heroes:
     def getMoreHeroes(self, heroesMode=None):
 
         global next_refresh_heroes
-        global heroes_clicked
+        global heroes_work_clicked
 
         self.importLibs()
 
         mode = self.config['heroes']['mode']
         if mode in ["all", 'workall', 'full', 'green']:
-          self.log.console('Search for heroes to work', emoji='🏢', color='green')
+            self.log.console('Search for heroes to work',
+                             emoji='🏢', color='green')
 
         self.goToHeroes()
 
@@ -92,25 +99,50 @@ class Heroes:
             self.config['time_intervals']['send_heroes_for_work'][1]
         )
 
-        buttonsClicked = 0
-        heroes_clicked = 0
+        account_active = int(os.environ['ACTIVE_BROWSER'])
+        houseEnabled = self.accounts[account_active]['house']
+
+        buttonsWorkClicked = 0
+        buttonsHouseClicked = 0
+
+        heroes_work_clicked = 0
+        heroes_house_clicked = 0
         while(scrolls_attempts > 0):
             if mode == 'full':
-                buttonsClicked = self.clickFullBarButtons()
-                if buttonsClicked is not None:
-                    heroes_clicked += buttonsClicked
+                buttonsWorkClicked = self.clickFullBarButtons()
+                if buttonsWorkClicked is not None:
+                    heroes_work_clicked += buttonsWorkClicked
             elif mode == 'green':
-                buttonsClicked = self.clickGreenBarButtons()
-                if buttonsClicked is not None:
-                    heroes_clicked += buttonsClicked
+                if houseEnabled is True:
+                    number = 0
+                    while number < 2:
+                        buttonsHouseClicked = self.clickHouseButtons()
+                        if buttonsHouseClicked is not None:
+                            heroes_house_clicked += buttonsHouseClicked
+                            number = number+1
+                        else:
+                            number = 2
 
-            if buttonsClicked == 0 or buttonsClicked is None:
+                        if type(buttonsHouseClicked) == int and buttonsHouseClicked > 0:
+                            self.actions.sleep(
+                                1, 1, randomMouseMovement=False, forceTime=True)
+
+                buttonsWorkClicked = self.clickGreenBarButtons()
+                if buttonsWorkClicked is not None:
+                    heroes_work_clicked += buttonsWorkClicked
+
+            if buttonsWorkClicked == 0 or buttonsWorkClicked is None:
                 scrolls_attempts = scrolls_attempts - 1
                 self.scroll()
+
             self.actions.sleep(1, 1, randomMouseMovement=False, forceTime=True)
 
-        self.log.console('{} total heroes sent since the bot started'.format(
-            heroes_clicked_total), services=True, emoji='🦸', color='yellow')
+        if houseEnabled is True:
+            self.log.console('{} total heroes sent to house since the bot started'.format(
+                heroes_house_clicked), services=True, emoji='🦸', color='yellow')
+
+        self.log.console('{} total heroes sent to work since the bot started'.format(
+            heroes_work_clicked_total), services=True, emoji='🦸', color='yellow')
 
         self.treasureHunt.goToMap()
         # pyautogui.hotkey('ctrl', 'shift', 'r') # bug - no broken last item
@@ -121,7 +153,8 @@ class Heroes:
 
         back_button = self.images.image('back_button')
         menu_heroe_icon = self.images.image('menu_heroe_icon')
-        home_button = self.images.image('home_button')
+        wait_for_this_hero_list_object = self.images.image(
+            'wait_for_this_hero_list_object')
 
         if currentScreen == "treasure_hunt":
             if self.actions.clickButton(back_button):
@@ -129,12 +162,14 @@ class Heroes:
                 if self.actions.clickButton(menu_heroe_icon):
                     self.actions.sleep(1, 1)
                     # checkCaptcha()
-                    self.recognition.waitForImage(home_button)
+                    self.recognition.waitForImage(
+                        wait_for_this_hero_list_object, threshold=0.95)
         if currentScreen == "main":
             if self.actions.clickButton(menu_heroe_icon):
                 self.actions.sleep(1, 1)
                 # checkCaptcha()
-                self.recognition.waitForImage(home_button)
+                self.recognition.waitForImage(
+                    wait_for_this_hero_list_object, threshold=0.95)
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
 
@@ -166,14 +201,28 @@ class Heroes:
         else:
             return False
 
-    def isWorking(self, bar, buttons):
+    def sendToWorking(self, bar, buttons):
         y = bar[1]
         for (_, button_y, _, button_h) in buttons:
             isBelow = y < (button_y + button_h)
             isAbove = y > (button_y - button_h)
             if isBelow and isAbove:
-                return False
-        return True
+                return True
+        return False
+
+    def sendToHome(self, rarities, bar, buttons):
+        y = bar[1]
+        for (_, rarity_y, _, rarity_h) in rarities:
+            isRariryBelow = y < (rarity_y + rarity_h)
+            isRarityAbove = y > (rarity_y - rarity_h)
+            if isRariryBelow and isRarityAbove:
+                for (_, button_y, _, button_h) in buttons:
+                    isBelow = y < (button_y + button_h)
+                    isAbove = y > (button_y - button_h)
+                    if isBelow and isAbove:
+                        return True
+
+        return False
 
     def scroll(self):
         self.importLibs()
@@ -209,7 +258,26 @@ class Heroes:
         bars = self.recognition.positions(
             bar_full_stamina, threshold=threshold['heroes_full_bar'])
 
-        return self.barButtons(bars, workButtons, offset, 'full')
+        return self.sendingToWork(bars, workButtons, offset, 'full')
+
+    def clickHouseButtons(self):
+        self.importLibs()
+        offset = self.config['offsets']['house_button']
+        threshold = self.config['threshold']
+
+        rarities = self.checkHeroesRaritySendToHouseButton()
+        if len(rarities) == 0:
+            return
+
+        homeButtons = self.checkHouseButton()
+        if homeButtons is False:
+            return
+
+        bar_red_stamina = self.images.image('bar_red_stamina')
+        red_bars = self.recognition.positions(
+            bar_red_stamina, threshold=threshold['heroes_red_bar'])
+
+        return self.sendingToHouse(rarities, red_bars, homeButtons, offset, 'red')
 
     def clickGreenBarButtons(self):
         self.importLibs()
@@ -222,9 +290,9 @@ class Heroes:
 
         bar_green_stamina = self.images.image('bar_green_stamina')
         bars = self.recognition.positions(
-            bar_green_stamina, threshold=threshold['heroes_green_bar'], debug=True)
+            bar_green_stamina, threshold=threshold['heroes_green_bar'])
 
-        return self.barButtons(bars, workButtons, offset, 'green')
+        return self.sendingToWork(bars, workButtons, offset, 'green')
 
     def clickSendAllButton(self):
         self.importLibs()
@@ -258,28 +326,28 @@ class Heroes:
         self.actions.clickButton(rest_all_heroes_button)
         self.recognition.waitForImage(send_all_heroes_button)
 
-    def barButtons(self, bars_elements, workButtons, offset, type):
-        if bars_elements is False:
+    def sendingToWork(self, bar_green_elements, workButtons, offset, type):
+        if bar_green_elements is False:
             return
 
-        if self.config['log']['debug'] is not False:
-            self.log.console('%d STAMINA bars detected' %
-                             len(bars_elements), emoji='🟩', color='red')
+        if self.config['log']['console'] is not False:
+            self.log.console('%d GREEN STAMINA bars detected' %
+                             len(bar_green_elements), emoji='🟩', color='red')
             self.log.console('%d WORK buttons detected' %
                              len(workButtons), emoji='🔳', color='red')
 
-        not_working_bars = []
-        for bar in bars_elements:
-            isWorking = self.isWorking(bar, workButtons)
-            if not isWorking:
-                not_working_bars.append(bar)
+        working_bars = []
+        for bar in bar_green_elements:
+            sendToWorking = self.sendToWorking(bar, workButtons)
+            if sendToWorking is True:
+                working_bars.append(bar)
 
-        if len(not_working_bars) > 0:
+        if len(working_bars) > 0:
             message = 'Clicking in {} heroes with {} bar detected.'.format(
-                len(not_working_bars), type)
+                len(working_bars), type)
             self.log.console(message, emoji='👆', color='green')
 
-        for (x, y, w, h) in not_working_bars:
+        for (x, y, w, h) in working_bars:
             offset_random = random.uniform(offset[0], offset[1])
             self.actions.move(
                 (int(x+offset_random+(w/2)), int(y+(h/2))),
@@ -287,19 +355,80 @@ class Heroes:
             )
             humanClicker.click()
 
-            global heroes_clicked_total
-            global heroes_clicked
+            global heroes_work_clicked_total
+            global heroes_work_clicked
 
-            heroes_clicked_total = heroes_clicked_total + 1
-            if heroes_clicked > 15:
+            heroes_work_clicked_total = heroes_work_clicked_total + 1
+            if heroes_work_clicked > 15:
                 self.log.console('Too many hero clicks, try to increase the back_button threshold',
                                  services=True, emoji='⚠️', color='yellow')
                 return
             self.actions.sleep(1, 2)
-        return len(not_working_bars)
+        return len(working_bars)
+
+    def sendingToHouse(self, rarities, bar_red_elements, homeButtons, offset, type):
+        if bar_red_elements is False:
+            return
+
+        if self.config['log']['console'] is not False:
+            self.log.console('%d RED STAMINA bars detected' %
+                             len(bar_red_elements), emoji='🥵', color='red')
+            self.log.console('%d HOME buttons detected' %
+                             len(homeButtons), emoji='🔳', color='red')
+
+        red_bars = []
+        for bar in bar_red_elements:
+            sendHome = self.sendToHome(rarities, bar, homeButtons)
+            if sendHome is True:
+                red_bars.append(bar)
+
+        if len(red_bars) > 0:
+            message = 'Sending {} heroes to house.'.format(
+                len(red_bars), type)
+            self.log.console(message, emoji='🏠', color='green')
+
+        for (x, y, w, h) in red_bars:
+            offset_random = random.uniform(offset[0], offset[1])
+            self.actions.move(
+                (int(x+offset_random+(w/2)), int(y+(h/2))),
+                np.random.randint(1, 2)
+            )
+            humanClicker.click()
+
+            global heroes_house_clicked
+            global heroes_house_clicked_total
+
+            heroes_house_clicked_total = heroes_house_clicked_total + 1
+            if heroes_house_clicked > 4:
+                self.log.console('Too many hero clicks to send house, try to increase the back_button threshold',
+                                 services=True, emoji='⚠️', color='yellow')
+                return
+            self.actions.sleep(1, 2)
+        return len(red_bars)
 
     def checkWorkButton(self):
         threshold = self.config['threshold']
         work_button = self.images.image('work_button')
         return self.recognition.positions(
-            work_button, threshold=threshold['work_button'], debug=True)
+            work_button, threshold=threshold['work_button'])
+
+    def checkHouseButton(self):
+        threshold = self.config['threshold']
+        home_enable_button = self.images.image('home_enable_button')
+        return self.recognition.positions(
+            home_enable_button, threshold=threshold['home_enable_button'])
+
+    def checkHeroesRaritySendToHouseButton(self):
+        threshold = self.config['threshold']
+        account_active = int(os.environ['ACTIVE_BROWSER'])
+        rarities = self.accounts[account_active]['rarity']
+
+        positions = []
+        for rarity in rarities:
+            label_rarity = self.images.image('/heroes_types/'+rarity)
+            position = self.recognition.positions(
+                label_rarity, threshold=threshold['heroes'][rarity])
+            if position is not False:
+                positions.append(position[0])
+
+        return positions

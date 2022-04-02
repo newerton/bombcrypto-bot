@@ -58,6 +58,7 @@ Features:
 * New map estimation added
 * Telegram new commands (workall, restall)
 * Multi account with Multi auth
+* Send heroes to **House** for rarity
 
 ## 🎁 <a id="donation"></a>Donation
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
@@ -144,7 +145,6 @@ Python 3.8.10
 | captcha | boolean - true/false | Enable/Disable in-game captcha recognition |
 | speed | string - normal/fast | Two bot speed modes, fast mode is between 1~3 minutes faster |
 | authenticate | boolean - true/false | Enable/Disable Login with Username and Password |
-| max_accounts | int | Account maximum |
 | **multi_account** | - | - |
 | enable | boolean - true/false | Enable/Disable Multi Account functionality |
 | window_title | string | Window title, for identification of the active game by the bot |
@@ -162,11 +162,22 @@ Python 3.8.10
 | default | decimal | Confidence default value |
 | error_message | decimal | Confidence Value of Error Window Title |
 | back_button | decimal | Confidence value of map back button |
-| heroes_green_bar | decimal | Hero's partial energy bar confidence value |
+| work_button | decimal | Confidence value of work button |
+| home_enable_button | decimal | Confidence value of home enable button |
+| heroes_green_bar | decimal | Hero's partial green energy bar confidence value |
+| heroes_red_bar | decimal | Hero's partial red energy bar confidence value |
 | heroes_full_bar | decimal | Hero's full energy bar confidence value |
-| heroes_send_all | decimal | Trust value of the send all button to work |
+| heroes_send_all | decimal | Trust value of the send all heroes to work |
+| heroes_rest_all | decimal | Trust value of the send all heroes to rest |
 | chest | decimal | Confidence value of the chests to calculate the total BCOINS of the map |
 | jail | decimal | Confidence value of the chests to calculate the total jail of the map |
+| auth_input | decimal | Confidence value of the input of login |
+| heroes.common | decimal | Confidence value of the rarity tag - common |
+| heroes.rare | decimal | Confidence value of the rarity tag - rare |
+| heroes.super_rare | decimal | Confidence value of the rarity tag - super_rare |
+| heroes.epic | decimal | Confidence value of the rarity tag - epic |
+| heroes.legend | decimal | Confidence value of the rarity tag - legend |
+| heroes.super_legend | decimal | Confidence value of the rarity tag - super_legend |
 | **heroes** | - | - |
 | mode | string - all, green, full | How to send heroes to work.<br />**all** - Sends all heroes without criteria.<br />**green** - Sends heroes with partially green energy<br />**full** - Sends heroes with full energy|
 | **list** | - | - |
@@ -181,7 +192,8 @@ Python 3.8.10
 | telegram | boolean - true/false | Enable/Disable the message sending service for Telegram |
 | **log** | |
 | save_to_file | boolean - true/false | Enable/Disable save console log to logger.log file |
-| debug | boolean - true/false | Enable/Disable debugging of some bot information |
+| console | boolean - true/false | Enable/Disable debugging of some bot information |
+| show_print | boolean - true/false | Enable/Disable show a screenshot of the bot analysis |
 
 
 ## <a id="auth-with-user-and-pass"></a>👥 Auth with user and pass
@@ -189,17 +201,30 @@ Python 3.8.10
 ### ⚠️ Don't forget to rename /config/EXAMPLE-accounts.yaml file, to /config/accounts.yaml.  
 
 
-One account ( max_accounts: 1 )
+One account without House
 ```
-1: {username: "your username", password: "your password"}
+1: {username: "your username", password: "your password", house: false, rarity: []}
 ```
 
-Multi account ( max_accounts: 3 )
+One account with House
+```
+1: {username: "your username", password: "your password", house: true, rarity: ["super_rare", "legend"]}
+```
+
+Multi account without House
 
 ```
-1: {username: "your username", password: "your password"}
-2: {username: "your username", password: "your password"}
-3: {username: "your username", password: "your password"}
+1: {username: "your username", password: "your password", house: false, rarity: []}
+2: {username: "your username", password: "your password", house: false, rarity: []}
+3: {username: "your username", password: "your password", house: false, rarity: []}
+```
+
+Multi account with/without House
+
+```
+1: {username: "your username", password: "your password", house: true, rarity: ["rare", "super_rare"]}
+2: {username: "your username", password: "your password", house: false, rarity: []}
+3: {username: "your username", password: "your password", house: true, rarity: ["super_legend", "legend", "epic"]}
 ```
 
 ## ⚠️ <a id="how-config-bot"></a>Adjusting the bot

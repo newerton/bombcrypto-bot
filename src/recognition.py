@@ -17,7 +17,7 @@ class Recognition:
         self.images = Images()
         self.recognition = Recognition()
 
-    def positions(self, target, threshold=None, baseImage=None, returnArray=False, debug=False):
+    def positions(self, target, threshold=None, baseImage=None, returnArray=False):
         self.importLibs()
         if threshold == None:
             threshold = self.config['threshold']['default']
@@ -41,13 +41,14 @@ class Recognition:
 
         rectangles, _ = cv2.groupRectangles(rectangles, 1, 0.2)
 
-        if self.config['log']['debug'] is not False and debug == True:
+        if self.config['log']['show_print'] is not False:
             img2 = img.copy()
             for r in rectangles:
                 cv2.rectangle(img2, (r[0], r[1]),
                               (r[0]+w, r[1]+h), (0, 0, 255), 2)
             cv2.imshow("detected", img2)
             cv2.waitKey(0)
+            self.actions.sleep(1, 1, forceTime=True)
 
         if returnArray is False:
             if len(rectangles) > 0:

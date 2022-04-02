@@ -8,7 +8,6 @@ app:
   captcha: false
   speed: "fast"
   authenticate: false
-  max_accounts: 1
   multi_account:
     enable: false
     window_title: "bombcrypto"
@@ -30,13 +29,22 @@ threshold:
   error_message: 0.7
   back_button: 0.9
   work_button: 0.9
+  home_enable_button: 0.98
   heroes_green_bar: 0.9
+  heroes_red_bar: 0.9
   heroes_full_bar: 0.9
   heroes_send_all: 0.9
   heroes_rest_all: 0.9
   chest: 0.65
   jail: 0.8
   auth_input: 0.9
+  heroes:
+    common: 0.8
+    rare: 0.8
+    super_rare: 0.8
+    epic: 0.8
+    legend: 0.8
+    super_legend: 0.8
 
 heroes:
   mode: "green"
@@ -44,8 +52,9 @@ heroes:
     scroll_attempts: 3
 
 offsets:
-  work_button_green: [120, 140] # [min value, max value]
-  work_button_full: [90, 110] # [min value, max value]
+  work_button_green: [120, 140]
+  work_button_full: [90, 110]
+  house_button: [260, 280]
 
 metamask:
   enable: false
@@ -56,4 +65,5 @@ services:
 
 log:
   save_to_file: false
-  debug: false
+  console: false
+  show_print: false
