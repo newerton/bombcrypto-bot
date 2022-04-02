@@ -1,7 +1,7 @@
 import pyautogui
+import os
 
 login_attempts = 0
-account_active = None
 
 
 class Auth:
@@ -24,12 +24,11 @@ class Auth:
         self.log = Log()
         self.telegram = Telegram()
 
-    def login(self, account):
+    def login(self):
         global login_attempts
-        global account_active
         self.importLibs()
 
-        account_active = account
+        account_active = int(os.environ['ACTIVE_BROWSER'])
 
         self.actions.randomMouseMovement()
         threshold = self.config['threshold']
@@ -57,22 +56,22 @@ class Auth:
             password_icon_position = self.recognition.positions(password_icon)
 
             if username_icon_position is not False:
-              username = self.accounts[account_active]['username']
-              x, y, _, _ = username_icon_position[0]
-              self.actions.move((int(x+100), int(y+10)), 1)
-              if(self.actions.click()):
-                  self.actions.sleep(1, 1, forceTime=True)
-                  pyautogui.hotkey('del')
-                  pyautogui.typewrite(username, interval=0.1)
+                username = self.accounts[account_active]['username']
+                x, y, _, _ = username_icon_position[0]
+                self.actions.move((int(x+100), int(y+10)), 1)
+                if(self.actions.click()):
+                    self.actions.sleep(1, 1, forceTime=True)
+                    pyautogui.hotkey('del')
+                    pyautogui.typewrite(username, interval=0.1)
 
             if password_icon_position is not False:
-              password = self.accounts[account_active]['password']
-              x, y, _, _ = password_icon_position[0]
-              self.actions.move((int(x+100), int(y+10)), 1)
-              if(self.actions.click()):
-                  self.actions.sleep(1, 1, forceTime=True)
-                  pyautogui.hotkey('del')
-                  pyautogui.typewrite(password, interval=0.1)
+                password = self.accounts[account_active]['password']
+                x, y, _, _ = password_icon_position[0]
+                self.actions.move((int(x+100), int(y+10)), 1)
+                if(self.actions.click()):
+                    self.actions.sleep(1, 1, forceTime=True)
+                    pyautogui.hotkey('del')
+                    pyautogui.typewrite(password, interval=0.1)
 
             if self.actions.clickButton(login_button):
                 self.log.console(
@@ -105,7 +104,7 @@ class Auth:
                 self.actions.sleep(1, 2)
                 if self.actions.clickButton(metamask_unlock_button):
                     self.log.console('Unlock button clicked',
-                                    emoji='🔓', color='green')
+                                     emoji='🔓', color='green')
 
             if self.actions.clickButton(metamask_sign_button):
                 self.log.console(
@@ -136,13 +135,12 @@ class Auth:
                 self.actions.refreshPage()
                 self.actions.sleep(1, 1, forceTime=True,
                                    randomMouseMovement=False)
-            self.login(account_active)
+            self.login()
 
         self.errors.verify()
 
     def checkLogout(self):
         self.importLibs()
-        global account_active
 
         connect_wallet_button = self.images.image('connect_wallet_button')
         metamask_cancel_button = self.images.image('metamask_cancel_button')
@@ -155,7 +153,9 @@ class Auth:
                 self.log.console('Logout detected',
                                  services=True, emoji='😿', color='red')
                 self.actions.refreshPage()
-                self.login(account_active)
+                self.actions.sleep(4, 4, forceTime=True)
+                self.recognition.waitForImage(connect_wallet_button)
+                self.login()
             elif self.recognition.positions(metamask_sign_button):
                 self.log.console('Sing button detected',
                                  services=True, emoji='✔️', color='green')

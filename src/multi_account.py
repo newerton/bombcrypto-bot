@@ -36,7 +36,6 @@ class MultiAccount:
         from src.actions import Actions
         from src.application import Application
         from src.auth import Auth
-        from src.auth import account_active
         from src.captcha import Captcha
         from src.error import Errors
         from src.heroes import Heroes
@@ -52,8 +51,6 @@ class MultiAccount:
         self.images = Images()
         self.recognition = Recognition()
         self.treasure_hunt = TreasureHunt()
-
-        self.account_active = account_active
 
     def start(self):
         self.importLibs()
@@ -131,13 +128,15 @@ class MultiAccount:
             self.botMultiAccount()
 
     def steps(self, last):
+        os.environ['ACTIVE_BROWSER'] = str(last['account'])
+
         new_map_button = self.images.image('new_map_button')
         run_time_app = self.config['app']['run_time_app']
 
         currentScreen = self.recognition.currentScreen()
 
         if currentScreen == "login":
-            self.auth.login(last['account'])
+            self.auth.login()
 
         self.errors.verify()
 
