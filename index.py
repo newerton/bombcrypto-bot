@@ -31,11 +31,9 @@ telegram = Telegram()
 
 
 def main():
-    from src.heroes import Heroes
-    Heroes().getMoreHeroes()
-    # application.start()
-    # telegram.start()
-    # multi_account.start()
+    application.start()
+    telegram.start()
+    multi_account.start()
 
 
 def onlyMap():

@@ -48,6 +48,7 @@ class Recognition:
                               (r[0]+w, r[1]+h), (0, 0, 255), 2)
             cv2.imshow("detected", img2)
             cv2.waitKey(0)
+            self.actions.sleep(1, 1, forceTime=True)
 
         if returnArray is False:
             if len(rectangles) > 0:
