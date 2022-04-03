@@ -16,7 +16,7 @@ class MultiAccount:
         from src.log import Log
         self.config = Config().read()
         self.log = Log()
-        self.accounts = None
+        self.accounts = Config().accounts()
         if(self.config['app']['multi_account']['enable'] == True):
             self.accounts = Config().accounts()
             max_accounts = self.config['app']['max_accounts']
