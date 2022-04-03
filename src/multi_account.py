@@ -14,9 +14,9 @@ class MultiAccount:
     def __init__(self):
         from src.config import Config
         from src.log import Log
+        self.accounts = Config().accounts()
         self.config = Config().read()
         self.log = Log()
-        self.accounts = None
         self.check_for_updates = 60
         self.next_refresh_heroes = self.config['time_intervals']['send_heroes_for_work'][0]
         self.next_refresh_heroes_positions = self.config['time_intervals']['refresh_heroes_positions'][0]
