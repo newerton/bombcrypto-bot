@@ -212,11 +212,11 @@ class Heroes:
 
     def sendToHome(self, rarities, bar, buttons):
         y = bar[1]
-        for (_, rarity_y, _, rarity_h) in rarities:
+        for (_, rarity_y, _, rarity_h) in rarities[::-1]:
             isRariryBelow = y < (rarity_y + rarity_h)
             isRarityAbove = y > (rarity_y - rarity_h)
             if isRariryBelow and isRarityAbove:
-                for (_, button_y, _, button_h) in buttons:
+                for (_, button_y, _, button_h) in buttons[::-1]:
                     isBelow = y < (button_y + button_h)
                     isAbove = y > (button_y - button_h)
                     if isBelow and isAbove:
@@ -377,7 +377,7 @@ class Heroes:
                              len(homeButtons), emoji='🔳', color='red')
 
         red_bars = []
-        for bar in bar_red_elements:
+        for bar in bar_red_elements[::-1]:
             sendHome = self.sendToHome(rarities, bar, homeButtons)
             if sendHome is True:
                 red_bars.append(bar)
