@@ -8,6 +8,8 @@ app:
   captcha: false
   speed: "fast"
   authenticate: false
+  clean_page: false
+  devtools_await_seconds: 2
   multi_account:
     enable: false
     window_title: "bombcrypto"
