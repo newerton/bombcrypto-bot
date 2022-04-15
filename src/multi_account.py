@@ -1,6 +1,7 @@
 from pyclick import HumanClicker
 
 import os
+import pyautogui
 import sys
 import time
 
@@ -43,6 +44,10 @@ class MultiAccount:
 
     def start(self):
         self.importLibs()
+        cleanPage = self.config['app']['clean_page']
+        if cleanPage is True:
+            self.cleanPage()
+
         multiAccount = self.config['app']['multi_account']['enable']
         if multiAccount != True:
             self.log.console('Multi account disabled', emoji='🧾', color='cyan')
@@ -240,3 +245,32 @@ class MultiAccount:
             .replace('\\xe2\\x81\\xbd', "(")
             .replace('\\xe2\\x81\\xbe', ")")
         )
+
+    def cleanPage(self):
+        devtools_await_seconds = self.config['app']['devtools_await_seconds']
+        logo_game = self.images.image('logo_game')
+        logo_game_positions = self.recognition.positions(logo_game)
+        if logo_game_positions is not False:
+            self.actions.clickButton(logo_game)
+
+            pyautogui.press('f12')
+            self.actions.sleep(devtools_await_seconds, devtools_await_seconds, forceTime=True)
+            consoleText = """
+            function getElementByXpath(path) { return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue }
+    const iframe = document.querySelector('iframe[title^="Bomb"]');
+    iframe.scrolling = "no";
+    const iframe_clone = iframe.cloneNode(true);
+    document.querySelectorAll('iframe').forEach(iframe => iframe.remove());
+    if(getElementByXpath('//*[@id="root"]/div')) { getElementByXpath('//*[@id="root"]/div').remove(); }
+    const divRoot = document.getElementById("root");
+    divRoot.style.cssText = 'width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;';
+    document.getElementsByTagName('html')[0].style.cssText = 'width: 100%; height: 100%; background-color: #000;';
+    document.getElementsByTagName('body')[0].style.cssText = 'width: 100%; height: 100%; background-color: #000;';
+    divRoot.appendChild(iframe_clone);
+    getElementByXpath('//*[@id="root"]/iframe').style.cssText = 'width: 965px; height: 645px';
+    """
+            pyautogui.typewrite(consoleText, interval=0.01)
+            self.actions.sleep(1, 1, forceTime=True)
+            pyautogui.press('f12')
+            connect_wallet_button = self.images.image('connect_wallet_button')
+            self.recognition.waitForImage(connect_wallet_button)
