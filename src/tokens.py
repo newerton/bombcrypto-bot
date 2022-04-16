@@ -3,7 +3,7 @@ from os import listdir
 
 
 class Tokens:
-    TOKEN_BOX_IMAGE = './temp/bcoin-box.png'
+    TOKENS_BOX_IMAGE = './temp/tokens-box.png'
 
     def importLibs(self):
         from src.actions import Actions
@@ -23,7 +23,7 @@ class Tokens:
 
     def getSens(self):
         self.importLibs()
-        image = cv2.imread(self.TOKEN_BOX_IMAGE)
+        image = cv2.imread(self.TOKENS_BOX_IMAGE)
         y = 5
         x = 170
         h = 30
@@ -38,7 +38,7 @@ class Tokens:
 
     def getBcoins(self):
         self.importLibs()
-        image = cv2.imread(self.TOKEN_BOX_IMAGE)
+        image = cv2.imread(self.TOKENS_BOX_IMAGE)
         y = 52
         x = 170
         h = 30
@@ -64,7 +64,7 @@ class Tokens:
             x, y, w, h = box_senspark_positions[0]
             screenshot = self.desktop.printScreen()
             cropped = screenshot[y: y + h + 50, x: x + (w + 250)]
-            cv2.imwrite(self.TOKEN_BOX_IMAGE, cropped)
+            cv2.imwrite(self.TOKENS_BOX_IMAGE, cropped)
             self.log.console('Your Chest image created',
                              services=False, emoji='🪟')
 

@@ -172,7 +172,7 @@ class Telegram:
             self.tokens.openYourChestWindow()
 
         try:
-            image = self.tokens.TOKEN_BOX_IMAGE
+            image = self.tokens.TOKENS_BOX_IMAGE
             for chat_id in self.telegramConfig['chat_ids']:
                 self.TelegramBot.send_photo(
                     chat_id=chat_id, photo=open(image, 'rb'))
