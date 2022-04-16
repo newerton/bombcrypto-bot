@@ -123,7 +123,7 @@ class Actions:
         self.treasure_hunt.chestEstimate()
 
         self.tokens.openYourChestWindow()
-        self.telegram.sendBCoinReport(callTreasureHuntMethods=False)
+        self.telegram.sendTokenReport(callTreasureHuntMethods=False)
         self.tokens.getSens()
         self.tokens.getBcoins()
 
