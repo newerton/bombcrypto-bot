@@ -21,6 +21,7 @@ time_intervals:
 
 chests:
   values:
+    divide: 2
     chest_01: 0.01425
     chest_02: 0.03250
     chest_03: 0.16250

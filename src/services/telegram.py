@@ -42,7 +42,7 @@ class Telegram:
 
     def importLibs(self):
         from src.actions import Actions
-        from src.bcoins import Bcoins
+        from src.tokens import Tokens
         from src.config import Config
         from src.desktop import Desktop
         from src.heroes import Heroes
@@ -51,7 +51,7 @@ class Telegram:
         from src.recognition import Recognition
         from src.treasure_hunt import TreasureHunt
         self.actions = Actions()
-        self.bcoins = Bcoins()
+        self.tokens = Tokens()
         self.config = Config().read()
         self.desktop = Desktop()
         self.heroes = Heroes()
@@ -169,10 +169,10 @@ class Telegram:
             return
 
         if callTreasureHuntMethods == True:
-            self.bcoins.openYourChestWindow()
+            self.tokens.openYourChestWindow()
 
         try:
-            image = self.bcoins.BCOIN_BOX_IMAGE
+            image = self.tokens.TOKEN_BOX_IMAGE
             for chat_id in self.telegramConfig['chat_ids']:
                 self.TelegramBot.send_photo(
                     chat_id=chat_id, photo=open(image, 'rb'))

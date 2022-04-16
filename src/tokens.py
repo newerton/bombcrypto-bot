@@ -2,8 +2,8 @@ from cv2 import cv2
 from os import listdir
 
 
-class Bcoins:
-    BCOIN_BOX_IMAGE = './temp/bcoin-box.png'
+class Tokens:
+    TOKEN_BOX_IMAGE = './temp/bcoin-box.png'
 
     def importLibs(self):
         from src.actions import Actions
@@ -21,11 +21,26 @@ class Bcoins:
         self.recognition = Recognition()
         self.report = Report()
 
+    def getSens(self):
+        self.importLibs()
+        image = cv2.imread(self.TOKEN_BOX_IMAGE)
+        y = 5
+        x = 170
+        h = 30
+        w = 150
+        cropped = image[y:y+h, x:x+w]
+        digits = self.getDigits(cropped)
+        headers = ['date', 'senspark']
+        content = [self.date.dateFormatted(), digits.replace('.', ',')]
+        self.report.writeCsv('senspark-report', headers, content)
+        self.log.console('Senspark: {}'.format(digits), services=True, emoji='🤑')
+        return digits
+
     def getBcoins(self):
         self.importLibs()
-        image = cv2.imread(self.BCOIN_BOX_IMAGE)
-        y = 5
-        x = 230
+        image = cv2.imread(self.TOKEN_BOX_IMAGE)
+        y = 52
+        x = 170
         h = 30
         w = 150
         cropped = image[y:y+h, x:x+w]
@@ -40,16 +55,16 @@ class Bcoins:
         self.importLibs()
         self.actionToOpenYourChestWindow()
 
-        box_bcoins = self.images.image('box_bcoins')
+        box_senspark = self.images.image('box_senspark')
         close_button = self.images.image('close_button')
 
-        box_bcoins_positions = self.recognition.positions(
-            box_bcoins, returnArray=True)
-        if len(box_bcoins_positions) > 0:
-            x, y, w, h = box_bcoins_positions[0]
+        box_senspark_positions = self.recognition.positions(
+            box_senspark, returnArray=True)
+        if len(box_senspark_positions) > 0:
+            x, y, w, h = box_senspark_positions[0]
             screenshot = self.desktop.printScreen()
-            cropped = screenshot[y: y + h, x: x + (w + 250)]
-            cv2.imwrite(self.BCOIN_BOX_IMAGE, cropped)
+            cropped = screenshot[y: y + h + 50, x: x + (w + 250)]
+            cv2.imwrite(self.TOKEN_BOX_IMAGE, cropped)
             self.log.console('Your Chest image created',
                              services=False, emoji='🪟')
 
@@ -78,7 +93,7 @@ class Bcoins:
         self.log.console('Opening modal Your Chest', services=False, emoji='🪟')
         self.actions.clickButton(treasure_chest_button)
         seconds = 5
-        message = 'Wait for {} seconds, to show your BCOIN'.format(seconds)
+        message = 'Wait for {} seconds, to show your TOKENS'.format(seconds)
         self.log.console(message, services=False, emoji='⏳')
         self.actions.sleep(seconds, seconds, forceTime=True)
 

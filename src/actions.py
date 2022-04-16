@@ -15,14 +15,14 @@ humanClicker = HumanClicker()
 class Actions:
     def importLibs(self):
         from src.actions import Actions
-        from src.bcoins import Bcoins
+        from src.tokens import Tokens
         from src.config import Config
         from src.log import Log
         from src.recognition import Recognition
         from src.treasure_hunt import TreasureHunt
         from src.services.telegram import Telegram
         self.actions = Actions()
-        self.bcoins = Bcoins()
+        self.tokens = Tokens()
         self.config = Config().read()
         self.log = Log()
         self.recognition = Recognition()
@@ -113,6 +113,7 @@ class Actions:
         return time.sleep(sleep)
 
     def clickNewMap(self):
+        self.importLibs()
         self.log.console('New map', emoji='🗺️', color='magenta')
         self.actions.sleep(2, 2, forceTime=True)
         # checkCaptcha()
@@ -121,9 +122,10 @@ class Actions:
         self.telegram.sendMapReport(callTreasureHuntMethods=False)
         self.treasure_hunt.chestEstimate()
 
-        self.bcoins.openYourChestWindow()
+        self.tokens.openYourChestWindow()
         self.telegram.sendBCoinReport(callTreasureHuntMethods=False)
-        self.bcoins.getBcoins()
+        self.tokens.getSens()
+        self.tokens.getBcoins()
 
     def refreshPage(self):
         self.importLibs()
