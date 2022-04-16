@@ -57,6 +57,7 @@ Recursos:
 
 ## 🎁 <a id="donation"></a>Doação
 BCOIN: 0x4847C29561B6682154E25c334E12d156e19F613a  
+SEN: 0x4847C29561B6682154E25c334E12d156e19F613a  
 PIX: 08912d17-47a6-411e-b7ec-ef793203f836  
 
 ## 🤖 <a id="robot-preview"></a>Robô - Previsualização
@@ -169,7 +170,7 @@ Python 3.8.10
 energia do herói |
 | heroes_send_all | decimal | Valor de confiança do botão de enviar todos para trabalhar |
 | heroes_rest_all | decimal | Valor de confiança do botão de enviar todos para descansar |
-| chest | decimal | Valor de confiança dos baús, para calcular o total de BCOINS do mapa |
+| chest | decimal | Valor de confiança dos baús, para calcular o total de tokens do mapa |
 | jail | decimal | Valor de confiança dos baús, para calcular o total de jaula do mapa |
 | auth_input | decimal | Valor de confiança do campo de login |
 | heroes.common | decimal | Valor de confiança da tag de raridade - common |

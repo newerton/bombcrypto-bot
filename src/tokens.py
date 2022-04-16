@@ -63,7 +63,7 @@ class Tokens:
         if len(box_senspark_positions) > 0:
             x, y, w, h = box_senspark_positions[0]
             screenshot = self.desktop.printScreen()
-            cropped = screenshot[y: y + h + 50, x: x + (w + 250)]
+            cropped = screenshot[y: y + h + 240, x: x + (w + 250)]
             cv2.imwrite(self.TOKENS_BOX_IMAGE, cropped)
             self.log.console('Your Chest image created',
                              services=False, emoji='🪟')

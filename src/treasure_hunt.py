@@ -94,7 +94,7 @@ Possible quantity chest per type:
 🏛️ - {totalChestJail}
 🗝️ - {totalChestKey}
 
-🤑 Possible amount: {total:.3f} BCoin
+🤑 Possible amount: {total:.3f} SEN
 """
         reportWithoutEmoji = f"""
 Possible quantity chest per type:
@@ -105,7 +105,7 @@ Blue - {totalChest04}
 Jail - {totalChestJail}
 Key - {totalChestKey}
 
-Possible amount: {total:.3f} BCoin
+Possible amount: {total:.3f} SEN
 """
         try:
             self.log.console(report, services=True)
