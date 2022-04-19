@@ -31,7 +31,6 @@ class Auth:
         account_active = int(os.environ['ACTIVE_BROWSER'])
 
         self.actions.randomMouseMovement()
-        threshold = self.config['threshold']
         metamaskData = self.config['metamask']
         authenticate = self.config['app']['authenticate']
 
