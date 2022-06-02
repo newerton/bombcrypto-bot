@@ -158,18 +158,18 @@ class Heroes:
 
         if currentScreen == "map":
             if self.actions.clickButton(back_button):
-                self.actions.sleep(1, 1)
+                self.actions.sleep(1, 1, forceTime=True)
                 if self.actions.clickButton(menu_heroe_icon):
-                    self.actions.sleep(1, 1)
+                    self.actions.sleep(1, 1, forceTime=True)
                     # checkCaptcha()
                     self.recognition.waitForImage(
-                        wait_for_this_hero_list_object, threshold=0.95)
+                        wait_for_this_hero_list_object, threshold=0.9)
         if currentScreen == "main":
             if self.actions.clickButton(menu_heroe_icon):
-                self.actions.sleep(1, 1)
+                self.actions.sleep(1, 1, forceTime=True)
                 # checkCaptcha()
                 self.recognition.waitForImage(
-                    wait_for_this_hero_list_object, threshold=0.95)
+                    wait_for_this_hero_list_object, threshold=0.9)
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
 
