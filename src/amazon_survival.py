@@ -7,7 +7,6 @@ class AmazonSurvival:
         from src.log import Log
         from src.recognition import Recognition
 
-
         self.actions = Actions()
         self.auth = Auth()
         self.images = Images()
