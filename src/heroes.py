@@ -186,7 +186,9 @@ class Heroes:
         )
 
         back_button = self.images.image('back_button')
-        self.actions.clickButton(back_button)
+        if self.actions.clickButton(back_button):
+            self.actions.sleep(1, 1, forceTime=True)
+            self.game.goToMap()
         return True
 
     def sendToWorking(self, bar, buttons):
@@ -338,7 +340,7 @@ class Heroes:
         for (x, y, w, h) in working_bars:
             offset_random = random.uniform(offset[0], offset[1])
             self.actions.move(
-                (int(x+offset_random+(w/2)), int(y+(h/2))),
+                (int(x+offset_random+(w/2)), int(y+12+(h/2))),
                 np.random.randint(1, 2)
             )
             humanClicker.click()
