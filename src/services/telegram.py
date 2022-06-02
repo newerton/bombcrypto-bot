@@ -45,20 +45,20 @@ class Telegram:
         from src.tokens import Tokens
         from src.config import Config
         from src.desktop import Desktop
+        from src.game import Game
         from src.heroes import Heroes
         from src.images import Images
         from src.log import Log
         from src.recognition import Recognition
-        from src.treasure_hunt import TreasureHunt
         self.actions = Actions()
         self.tokens = Tokens()
         self.config = Config().read()
         self.desktop = Desktop()
+        self.game = Game()
         self.heroes = Heroes()
         self.images = Images()
         self.log = Log()
         self.recognition = Recognition()
-        self.treasure_hunt = TreasureHunt()
 
     def telegramConfig(self):
         try:
@@ -138,19 +138,19 @@ class Telegram:
         if self.updater:
             self.updater.stop()
 
-    def sendMapReport(self, callTreasureHuntMethods=True):
+    def sendMapReport(self, callMapMethods=True):
         self.importLibs()
         if self.enableTelegram == False:
             return
         if(len(self.telegramConfig['chat_ids']) <= 0 or self.telegramConfig['enable_map_report'] is False):
             return
 
-        if callTreasureHuntMethods == True:
-            self.treasure_hunt.goToMap()
-            self.treasure_hunt.generateMapImage()
+        if callMapMethods == True:
+            self.game.goToMap()
+            self.game.generateMapImage()
 
         try:
-            image = self.treasure_hunt.MAP_IMAGE
+            image = self.game.MAP_IMAGE
             for chat_id in self.telegramConfig['chat_ids']:
                 self.TelegramBot.send_photo(
                     chat_id=chat_id, photo=open(image, 'rb'))
@@ -161,14 +161,14 @@ class Telegram:
                          services=False, emoji='📄')
         return True
 
-    def sendTokenReport(self, callTreasureHuntMethods=True):
+    def sendTokenReport(self, callMapMethods=True):
         self.importLibs()
         if self.enableTelegram == False:
             return
         if(len(self.telegramConfig['chat_ids']) <= 0 or self.telegramConfig['enable_coin_report'] is False):
             return
 
-        if callTreasureHuntMethods == True:
+        if callMapMethods == True:
             self.tokens.openYourChestWindow()
 
         try:

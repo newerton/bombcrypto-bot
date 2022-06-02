@@ -66,7 +66,7 @@ class PuzzleCaptcha:
 
     def getPiecesPosition(self, t=150):
         title_robot = self.images.image('title_robot')
-        piece = self.images.image('piece', newPath='./captchas/puzzle/images/')
+        piece = self.images.image('piece', path='./captchas/puzzle/images/')
 
         popup_pos = self.recognition.positions(title_robot)
         if popup_pos is False:
@@ -129,7 +129,7 @@ class PuzzleCaptcha:
             return r
 
     def getSliderPosition(self):
-        slider = self.images.image('slider', newPath='./captchas/puzzle/images/')
+        slider = self.images.image('slider', path='./captchas/puzzle/images/')
         slider_pos = self.recognition.positions(slider)
         if slider_pos is False:
             return False
