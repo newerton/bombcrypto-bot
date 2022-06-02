@@ -11,12 +11,12 @@ class Images:
         else:
             self.theme = theme
 
-    def image(self, image, theme=False, newPath=None):
-        path = './images/themes/default/'
+    def image(self, image, theme=False, path=None):
+        themePath = './images/themes/default/'
         if theme == True:
-            path = './images/themes/' + self.theme + '/'
+            themePath = './images/themes/' + self.theme + '/'
 
-        if newPath != None:
-            path = newPath
+        if path != None:
+            themePath = path
 
-        return cv2.imread(path + image + '.png')
+        return cv2.imread(themePath + image + '.png')

@@ -19,14 +19,12 @@ class Actions:
         from src.config import Config
         from src.log import Log
         from src.recognition import Recognition
-        from src.treasure_hunt import TreasureHunt
         from src.services.telegram import Telegram
         self.actions = Actions()
         self.tokens = Tokens()
         self.config = Config().read()
         self.log = Log()
         self.recognition = Recognition()
-        self.treasure_hunt = TreasureHunt()
         self.telegram = Telegram()
 
     def click(self):
@@ -111,21 +109,6 @@ class Actions:
         if speed == 'fast' and forceTime == False:
             sleep = 0
         return time.sleep(sleep)
-
-    def clickNewMap(self):
-        self.importLibs()
-        self.log.console('New map', emoji='🗺️', color='magenta')
-        self.actions.sleep(2, 2, forceTime=True)
-        # checkCaptcha()
-        self.treasure_hunt.goToMap()
-        self.treasure_hunt.generateMapImage()
-        self.telegram.sendMapReport(callTreasureHuntMethods=False)
-        self.treasure_hunt.chestEstimate()
-
-        self.tokens.openYourChestWindow()
-        self.telegram.sendTokenReport(callTreasureHuntMethods=False)
-        self.tokens.getSens()
-        self.tokens.getBcoins()
 
     def refreshPage(self):
         self.importLibs()

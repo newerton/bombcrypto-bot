@@ -28,22 +28,23 @@ class MultiAccount:
         from src.auth import Auth
         from src.captcha import Captcha
         from src.error import Errors
+        from src.game import Game
         from src.heroes import Heroes
         from src.images import Images
         from src.recognition import Recognition
-        from src.treasure_hunt import TreasureHunt
         self.actions = Actions()
         self.application = Application()
         self.auth = Auth()
         self.captcha = Captcha()
         self.errors = Errors()
+        self.game = Game()
         self.heroes = Heroes()
         self.images = Images()
         self.recognition = Recognition()
-        self.treasure_hunt = TreasureHunt()
 
     def start(self):
         self.importLibs()
+        self.game.active()
         multiAccount = self.config['app']['multi_account']['enable']
         if multiAccount != True:
             self.log.console('Multi account disabled', emoji='🧾', color='cyan')
@@ -137,13 +138,15 @@ class MultiAccount:
             last["refresh_heroes"] = now
             self.heroes.getMoreHeroes()
 
-        if currentScreen == "main":
-            self.treasure_hunt.goToMap()
+        currentScreen = self.recognition.currentScreen()
 
-        if currentScreen == "treasure_hunt":
+        if currentScreen == "main":
+            self.game.goToMap()
+
+        if currentScreen == "map":
             if self.actions.clickButton(new_map_button):
                 last["new_map"] = now
-                self.actions.clickNewMap()
+                self.game.clickNewMap()
 
         if now - last["refresh_heroes"] > self.next_refresh_heroes_positions * 60:
             last["refresh_heroes"] = now
@@ -169,10 +172,10 @@ class MultiAccount:
 
         now = time.time()
 
-        if currentScreen == "treasure_hunt":
+        if currentScreen == "map":
             if self.actions.clickButton(new_map_button):
                 last["new_map"] = now
-                self.actions.clickNewMap()
+                self.game.clickNewMap()
 
         sys.stdout.flush()
         self.actions.sleep(run_time_app, run_time_app,

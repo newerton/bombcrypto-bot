@@ -9,6 +9,7 @@ class Tokens:
         from src.actions import Actions
         from src.date import Date
         from src.desktop import Desktop
+        from src.game import Game
         from src.images import Images
         from src.log import Log
         from src.recognition import Recognition
@@ -16,6 +17,7 @@ class Tokens:
         self.actions = Actions()
         self.date = Date()
         self.desktop = Desktop()
+        self.game = Game()
         self.images = Images()
         self.log = Log()
         self.recognition = Recognition()
@@ -72,23 +74,10 @@ class Tokens:
         return True
 
     def actionToOpenYourChestWindow(self):
-        treasure_hunt_banner = self.images.image('treasure_hunt_banner')
-        close_button = self.images.image('close_button')
         treasure_chest_button = self.images.image('treasure_chest_button')
 
-        currentScreen = self.recognition.currentScreen()
-        if currentScreen == "main":
-            if self.actions.clickButton(treasure_hunt_banner):
-                self.actions.sleep(2, 2)
-        elif currentScreen == "character":
-            if self.actions.clickButton(close_button):
-                self.actions.sleep(2, 2)
-                if self.actions.clickButton(treasure_hunt_banner):
-                    self.actions.sleep(2, 2)
-        elif currentScreen == "treasure_hunt":
-            self.actions.sleep(2, 2)
-        else:
-            return
+        self.game.goToMap()
+        self.actions.sleep(2, 2)
 
         self.log.console('Opening modal Your Chest', services=False, emoji='🪟')
         self.actions.clickButton(treasure_chest_button)

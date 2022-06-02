@@ -26,18 +26,19 @@ class Heroes:
         from src.auth import Auth
         from src.config import Config
         from src.error import Errors
+        from src.game import Game
         from src.images import Images
         from src.recognition import Recognition
         from src.log import Log
-        from src.treasure_hunt import TreasureHunt
         self.accounts = Config().accounts()
         self.actions = Actions()
         self.auth = Auth()
+        self.config = Config().read()
         self.errors = Errors()
+        self.game = Game()
         self.images = Images()
         self.recognition = Recognition()
         self.log = Log()
-        self.treasureHunt = TreasureHunt()
 
     def getMoreHeroes(self, heroesMode=None):
 
@@ -85,12 +86,12 @@ class Heroes:
 
         if mode == 'all' or mode == 'workall':
             self.clickSendAllButton()
-            self.treasureHunt.goToMap()
+            self.game.goToMap()
             return
 
         if mode == 'restall':
             self.clickRestAllButton()
-            self.treasureHunt.goToMap()
+            self.game.goToMap()
             return
 
         scrolls_attempts = self.config['heroes']['list']['scroll_attempts']
@@ -144,8 +145,7 @@ class Heroes:
         self.log.console('{} total heroes sent to work since the bot started'.format(
             heroes_work_clicked_total), services=True, emoji='🦸', color='yellow')
 
-        self.treasureHunt.goToMap()
-        # pyautogui.hotkey('ctrl', 'shift', 'r') # bug - no broken last item
+        self.game.goToMap()
 
     def goToHeroes(self):
         self.importLibs()
@@ -156,7 +156,7 @@ class Heroes:
         wait_for_this_hero_list_object = self.images.image(
             'wait_for_this_hero_list_object')
 
-        if currentScreen == "treasure_hunt":
+        if currentScreen == "map":
             if self.actions.clickButton(back_button):
                 self.actions.sleep(1, 1)
                 if self.actions.clickButton(menu_heroe_icon):
@@ -174,6 +174,7 @@ class Heroes:
             self.auth.checkLogout()
 
     def refreshHeroesPositions(self):
+        self.importLibs()
         self.log.console('Refreshing heroes positions',
                          emoji='🔃', color='yellow')
 
@@ -184,22 +185,9 @@ class Heroes:
             self.config['time_intervals']['refresh_heroes_positions'][1]
         )
 
-        currentScreen = self.recognition.currentScreen()
-
         back_button = self.images.image('back_button')
-        treasure_hunt_banner = self.images.image('treasure_hunt_banner')
-
-        if currentScreen == "treasure_hunt":
-            if self.actions.clickButton(back_button):
-                self.actions.clickButton(treasure_hunt_banner)
-                return True
-        if currentScreen == "main":
-            if self.actions.clickButton(treasure_hunt_banner):
-                return True
-            else:
-                return False
-        else:
-            return False
+        self.actions.clickButton(back_button)
+        return True
 
     def sendToWorking(self, bar, buttons):
         y = bar[1]

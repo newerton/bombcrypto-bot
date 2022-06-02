@@ -95,7 +95,7 @@ class Recognition:
         title_login = self.images.image('title_login', theme=True)
 
         if self.recognition.positions(back_button) is not False:
-            return "treasure_hunt"
+            return "map"
         elif self.recognition.positions(treasure_hunt_banner) is not False:
             return "main"
         elif self.recognition.positions(connect_wallet_button) is not False:

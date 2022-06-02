@@ -1,5 +1,6 @@
 app:
   theme: "default"
+  game: 'treasure_hunt' # 'treasure_hunt' or 'amazon_survival'
   verify_version: true
   emoji: false
   terminal_colorful: false
@@ -29,14 +30,14 @@ threshold:
   default: 0.7
   error_message: 0.7
   back_button: 0.9
-  work_button: 0.9
+  work_button: 0.95
   home_enable_button: 0.98
   heroes_green_bar: 0.9
   heroes_red_bar: 0.9
   heroes_full_bar: 0.9
   heroes_send_all: 0.9
   heroes_rest_all: 0.9
-  chest: 0.65
+  chest: 0.70
   jail: 0.8
   auth_input: 0.9
   heroes:

@@ -1,4 +1,5 @@
-class TreasureHunt:
+class AmazonSurvival:
+
     def importLibs(self):
         from src.actions import Actions
         from src.auth import Auth
@@ -12,12 +13,13 @@ class TreasureHunt:
         self.recognition = Recognition()
         self.log = Log()
 
+
     def goToMap(self):
         self.importLibs()
         currentScreen = self.recognition.currentScreen()
 
-        banner = self.images.image('treasure_hunt_banner')
-        self.log.console('Entering treasure hunt', emoji='🎮', color='yellow')
+        banner = self.images.image('amazon_survival_banner')
+        self.log.console('Entering treasure hunt', emoji='▶', color='yellow')
 
         if currentScreen == "main":
             self.actions.clickButton(banner)
