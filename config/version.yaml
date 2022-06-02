@@ -1,5 +1,5 @@
   version:
-    app: "1.9.8"
-    config_file: "1.9.8"
+    app: "2.0.0"
+    config_file: "2.0.0"
     emergency: "false"
 
