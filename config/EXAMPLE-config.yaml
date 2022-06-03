@@ -31,10 +31,10 @@ threshold:
   error_message: 0.7
   back_button: 0.9
   work_button: 0.95
-  home_enable_button: 0.98
-  heroes_green_bar: 0.9
-  heroes_red_bar: 0.9
-  heroes_full_bar: 0.9
+  home_enable_button: 0.95
+  heroes_green_bar: 0.95
+  heroes_red_bar: 0.98
+  heroes_full_bar: 0.8
   heroes_send_all: 0.9
   heroes_rest_all: 0.9
   chest: 0.70
