@@ -128,6 +128,7 @@ class MultiAccount:
 
         if currentScreen == "login":
             self.auth.login()
+            currentScreen = self.recognition.currentScreen()
 
         self.errors.verify()
 
@@ -137,8 +138,6 @@ class MultiAccount:
             last["heroes"] = now
             last["refresh_heroes"] = now
             self.heroes.getMoreHeroes()
-
-        currentScreen = self.recognition.currentScreen()
 
         if currentScreen == "main":
             self.game.goToMap()
