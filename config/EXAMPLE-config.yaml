@@ -54,9 +54,9 @@ heroes:
     scroll_attempts: 3
 
 offsets:
-  work_button_green: [120, 140]
-  work_button_full: [90, 110]
-  house_button: [260, 280]
+  work_button_green: [160, 190]
+  work_button_full: [90, 120]
+  house_button: [280, 310]
 
 metamask:
   enable: false
