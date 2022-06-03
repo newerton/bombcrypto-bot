@@ -19,7 +19,7 @@ class AmazonSurvival:
         currentScreen = self.recognition.currentScreen()
 
         banner = self.images.image('amazon_survival_banner')
-        self.log.console('Entering treasure hunt', emoji='▶', color='yellow')
+        self.log.console('Entering amazon survival', emoji='▶', color='yellow')
 
         if currentScreen == "main":
             self.actions.clickButton(banner)

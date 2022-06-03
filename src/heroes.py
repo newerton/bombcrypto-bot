@@ -201,14 +201,14 @@ class Heroes:
         return False
 
     def sendToHome(self, rarities, bar, buttons):
-        y = bar[1]
+        bar_axis_y = bar[1]
         for (_, rarity_y, _, rarity_h) in reversed(rarities):
-            isRariryBelow = y < (rarity_y + rarity_h)
-            isRarityAbove = y > (rarity_y - rarity_h)
+            isRariryBelow = bar_axis_y < (rarity_y + rarity_h)
+            isRarityAbove = (bar_axis_y+rarity_h) > (rarity_y - rarity_h)
             if isRariryBelow and isRarityAbove:
                 for (_, button_y, _, button_h) in reversed(buttons):
-                    isBelow = y < (button_y + button_h)
-                    isAbove = y > (button_y - button_h)
+                    isBelow = bar_axis_y < (button_y + button_h)
+                    isAbove = bar_axis_y > (button_y - button_h)
                     if isBelow and isAbove:
                         return True
 
