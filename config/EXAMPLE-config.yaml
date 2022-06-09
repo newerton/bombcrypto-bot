@@ -1,6 +1,5 @@
 app:
   theme: "default"
-  game: 'treasure_hunt' # 'treasure_hunt' or 'amazon_survival'
   verify_version: true
   emoji: false
   terminal_colorful: false

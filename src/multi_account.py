@@ -44,7 +44,6 @@ class MultiAccount:
 
     def start(self):
         self.importLibs()
-        self.game.active()
         multiAccount = self.config['app']['multi_account']['enable']
         if multiAccount != True:
             self.log.console('Multi account disabled', emoji='🧾', color='cyan')

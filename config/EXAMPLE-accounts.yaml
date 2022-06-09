@@ -1,4 +1,10 @@
 # Rarity for House - Raridade para Casa
 # rarity: ["common", "rare", "super_rare", "epic", "legend", "super_legend"]
 
-1: { username: "", password: "", house: false, rarity: [] }
+1: {
+    mode: "treasure_hunt", # 'treasure_hunt' or 'amazon_survival'
+    username: "",
+    password: "",
+    house: false,
+    rarity: [],
+  }

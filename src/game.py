@@ -1,4 +1,4 @@
-from email.mime import base
+import os
 import cv2
 
 
@@ -17,6 +17,7 @@ class Game:
         from src.treasure_hunt import TreasureHunt
         from src.services.telegram import Telegram
 
+        self.accounts = Config().accounts()
         self.actions = Actions()
         self.amazon_survival = AmazonSurvival()
         self.config = Config().read()
@@ -30,23 +31,13 @@ class Game:
 
     def goToMap(self):
         self.importLibs()
-        game = self.config['app']['game']
+        account_active = int(os.environ['ACTIVE_BROWSER'])
+        mode = self.accounts[account_active]['mode']
 
-        if game == "treasure_hunt":
+        if mode == "treasure_hunt":
             self.treasure_hunt.goToMap()
-        elif game == "amazon_survival":
+        elif mode == "amazon_survival":
             self.amazon_survival.goToMap()
-
-    def active(self):
-        self.importLibs()
-        game = self.config['app']['game']
-
-        if game == "treasure_hunt":
-            self.log.console('Active game: Treasure Hunt',
-                             emoji='🎁', color='green')
-        elif game == "amazon_survival":
-            self.log.console('Active game: Amazon Survival',
-                             emoji='🌍', color='green')
 
     def clickNewMap(self):
         self.importLibs()
@@ -135,10 +126,11 @@ Possible amount: {total:.3f} SEN
             self.log.console(reportWithoutEmoji, services=True)
 
     def totalChestsByMap(self, baseImage):
-        game = self.config['app']['game']
+        account_active = int(os.environ['ACTIVE_BROWSER'])
+        mode = self.accounts[account_active]['mode']
         threshold = self.config['threshold']['chest']
         thresholdJail = self.config['threshold']['jail']
-        path = './images/themes/default/chests/{}/'.format(game)
+        path = './images/themes/default/chests/{}/'.format(mode)
 
         chest_01_closed = self.images.image('chest_01_closed', path=path)
         chest_02_closed = self.images.image('chest_02_closed', path=path)
