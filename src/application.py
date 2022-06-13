@@ -57,30 +57,31 @@ Versions
 
     def checkUpdate(self):
 
-        gitHubVersion = self.gitHubVersion()
-        localVersion = self.localVersion()
+        if self.config['app']['verify_version'] == True:
+            gitHubVersion = self.gitHubVersion()
+            localVersion = self.localVersion()
 
-        versionGithubApp = gitHubVersion[0]
-        versionGithubConfigFile = gitHubVersion[1]
-        emergencyGithubApp = gitHubVersion[2]
+            versionGithubApp = gitHubVersion[0]
+            versionGithubConfigFile = gitHubVersion[1]
+            emergencyGithubApp = gitHubVersion[2]
 
-        versionLocalApp = localVersion[0]
-        versionLocalConfigFile = localVersion[1]
+            versionLocalApp = localVersion[0]
+            versionLocalConfigFile = localVersion[1]
 
-        if (emergencyGithubApp == 'true' and versionGithubApp > versionLocalApp):
-            self.log.console(
-                'Update is required for your security', services=True, emoji='🆘', color='red')
-
-        if versionLocalApp is not None:
-            if versionGithubApp > versionLocalApp:
+            if (emergencyGithubApp == 'true' and versionGithubApp > versionLocalApp):
                 self.log.console(
-                    f'New app version {versionGithubApp} available, please update!', services=True, emoji='🎉', color='red'),
-            # if versionGithubConfigFile > versionLocalConfigFile:
-            #     self.log.console(
-            #         f'New config file version {versionGithubConfigFile} available, please update!', services=True, emoji='🎉', color='red'),
-        else:
-            self.log.console(
-                'Version file not found, update is required', services=True, emoji='💥', color='red')
+                    'Update is required for your security', services=True, emoji='🆘', color='red')
+
+            if versionLocalApp is not None:
+                if versionGithubApp > versionLocalApp:
+                    self.log.console(
+                        f'New app version {versionGithubApp} available, please update!', services=True, emoji='🎉', color='red'),
+                # if versionGithubConfigFile > versionLocalConfigFile:
+                #     self.log.console(
+                #         f'New config file version {versionGithubConfigFile} available, please update!', services=True, emoji='🎉', color='red'),
+            else:
+                self.log.console(
+                    'Version file not found, update is required', services=True, emoji='💥', color='red')
 
     def gitHubVersion(self):
         self.importLibs()
