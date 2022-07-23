@@ -439,6 +439,9 @@ class Heroes:
         positions = []
         screenshot = self.desktop.printScreen()
         for rarity in rarities:
+            if self.config['log']['console'] is not False:
+                print('Checking rarity: {}'.format(rarity))
+
             label_rarity = self.images.image(
                 '/heroes_types/diamonds/'+rarity, extension='.gif')
 
@@ -449,6 +452,8 @@ class Heroes:
                 position = self.recognition.positions(
                     opencvImage, baseImage=screenshot, threshold=threshold['heroes'][rarity])
                 if position is not False:
+                    if self.config['log']['console'] is not False:
+                        print('Found {}'.format(rarity))
                     positions.append(position[0])
 
             # position = self.recognition.positions(
