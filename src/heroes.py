@@ -1,9 +1,12 @@
 from pyclick import HumanClicker
+from PIL import Image, ImageSequence
+from cv2 import cv2
 
 import numpy as np
 import os
 import pyautogui
 import random
+
 
 humanClicker = HumanClicker()
 
@@ -25,6 +28,7 @@ class Heroes:
         from src.actions import Actions
         from src.auth import Auth
         from src.config import Config
+        from src.desktop import Desktop
         from src.error import Errors
         from src.game import Game
         from src.images import Images
@@ -34,6 +38,7 @@ class Heroes:
         self.actions = Actions()
         self.auth = Auth()
         self.config = Config().read()
+        self.desktop = Desktop()
         self.errors = Errors()
         self.game = Game()
         self.images = Images()
@@ -263,9 +268,27 @@ class Heroes:
         if homeButtons is False:
             return
 
-        bar_red_stamina = self.images.image('bar_red_stamina')
-        red_bars = self.recognition.positions(
-            bar_red_stamina, threshold=threshold['heroes_red_bar'])
+        red_bars = []
+        bar_empty_stamina = self.images.image('bar_empty_stamina')
+        bars_empty = self.recognition.positions(
+            bar_empty_stamina, threshold=threshold['heroes_red_bar'])
+
+        if bars_empty is not False:
+            red_bars.extend(bars_empty)
+
+        bar_red_stamina_1 = self.images.image('bar_red_stamina_1')
+        red_bars_1 = self.recognition.positions(
+            bar_red_stamina_1, threshold=threshold['heroes_red_bar'])
+
+        if red_bars_1 is not False:
+            red_bars.extend(red_bars_1)
+
+        bar_red_stamina_2 = self.images.image('bar_red_stamina_2')
+        red_bars_2 = self.recognition.positions(
+            bar_red_stamina_2, threshold=threshold['heroes_red_bar'])
+
+        if red_bars_2 is not False:
+            red_bars.extend(red_bars_2)
 
         return self.sendingToHouse(rarities, red_bars, homeButtons, offset, 'red')
 
@@ -357,7 +380,7 @@ class Heroes:
         return len(working_bars)
 
     def sendingToHouse(self, rarities, bar_red_elements, homeButtons, offset, type):
-        if bar_red_elements is False:
+        if len(bar_red_elements) == 0:
             return
 
         if self.config['log']['console'] is not False:
@@ -414,11 +437,24 @@ class Heroes:
         rarities = self.accounts[account_active]['rarity']
 
         positions = []
+        screenshot = self.desktop.printScreen()
         for rarity in rarities:
-            label_rarity = self.images.image('/heroes_types/'+rarity)
-            position = self.recognition.positions(
-                label_rarity, threshold=threshold['heroes'][rarity])
-            if position is not False:
-                positions.append(position[0])
+            label_rarity = self.images.image(
+                '/heroes_types/diamonds/'+rarity, extension='.gif')
+
+            for frame in ImageSequence.Iterator(label_rarity):
+                frame = frame.convert('RGBA').copy()
+                opencvImage = cv2.cvtColor(
+                    np.array(frame), cv2.COLOR_RGB2BGR)
+                position = self.recognition.positions(
+                    opencvImage, baseImage=screenshot, threshold=threshold['heroes'][rarity])
+                if position is not False:
+                    positions.append(position[0])
+
+            # position = self.recognition.positions(
+            #     label_rarity, threshold=threshold['heroes'][rarity])
+            # print('position_rarity', position)
+            # if position is not False:
+            #     positions.append(position[0])
 
         return positions
