@@ -22,18 +22,18 @@ chests:
     divide: 2
     chest_01: 0.01425
     chest_02: 0.03250
-    chest_03: 0.16250
-    chest_04: 0.32500
+    chest_03: 0.11250
+    chest_04: 0.27625
 
 threshold:
   default: 0.7
   error_message: 0.7
   back_button: 0.9
   work_button: 0.95
-  home_enable_button: 0.95
-  heroes_green_bar: 0.95
-  heroes_red_bar: 0.98
-  heroes_full_bar: 0.8
+  home_enable_button: 0.9
+  heroes_green_bar: 0.9
+  heroes_red_bar: 0.9
+  heroes_full_bar: 0.9
   heroes_send_all: 0.9
   heroes_rest_all: 0.9
   chest: 0.70
@@ -53,9 +53,9 @@ heroes:
     scroll_attempts: 3
 
 offsets:
-  work_button_green: [160, 190]
-  work_button_full: [90, 120]
-  house_button: [280, 310]
+  work_button_green: [200, 230]
+  work_button_full: [140, 170]
+  house_button: [340, 370]
 
 metamask:
   enable: false
