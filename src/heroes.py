@@ -395,6 +395,10 @@ class Heroes:
             if sendHome is True:
                 red_bars.append(bar)
 
+        if self.config['log']['console'] is not False:
+            self.log.console('%d RED STAMINA bars detected to send Home' %
+                             len(bar_red_elements), emoji='🥵', color='red')
+
         if len(red_bars) > 0:
             message = 'Sending {} heroes to house.'.format(
                 len(red_bars), type)
