@@ -157,7 +157,7 @@ class MultiAccount:
 
         self.auth.checkLogout()
         sys.stdout.flush()
-        self.actions.sleep(run_time_app, run_time_app,
+        self.actions.sleep(run_time_app, run_time_app, forceTime=True,
                            randomMouseMovement=False)
         self.application.checkThreshold()
 

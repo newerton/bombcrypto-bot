@@ -167,14 +167,14 @@ class Heroes:
                 if self.actions.clickButton(menu_heroe_icon):
                     self.actions.sleep(1, 1, forceTime=True)
                     # checkCaptcha()
-                    self.recognition.waitForImage(
-                        wait_for_this_hero_list_object, threshold=0.9)
+                    if self.recognition.waitForImage(wait_for_this_hero_list_object, threshold=0.8) is False:
+                        self.actions.refreshPage()
         if currentScreen == "main":
             if self.actions.clickButton(menu_heroe_icon):
                 self.actions.sleep(1, 1, forceTime=True)
                 # checkCaptcha()
-                self.recognition.waitForImage(
-                    wait_for_this_hero_list_object, threshold=0.9)
+                if self.recognition.waitForImage(wait_for_this_hero_list_object, threshold=0.9) is False:
+                    self.actions.refreshPage()
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
 
