@@ -57,7 +57,8 @@ class Heroes:
             self.log.console('Search for heroes to work',
                              emoji='🏢', color='green')
 
-        self.goToHeroes()
+        if self.goToHeroes() is False:
+            return False
 
         if heroesMode is not None:
             mode = heroesMode
@@ -169,12 +170,14 @@ class Heroes:
                     # checkCaptcha()
                     if self.recognition.waitForImage(wait_for_this_hero_list_object, threshold=0.8) is False:
                         self.actions.refreshPage()
+                        return False
         if currentScreen == "main":
             if self.actions.clickButton(menu_heroe_icon):
                 self.actions.sleep(1, 1, forceTime=True)
                 # checkCaptcha()
                 if self.recognition.waitForImage(wait_for_this_hero_list_object, threshold=0.9) is False:
                     self.actions.refreshPage()
+                    return False
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
 
