@@ -78,6 +78,7 @@ class Auth:
 
                 self.actions.sleep(1, 3, forceTime=True)
                 self.application.loggingWithUsernameAndPasswordNotAllowTransactions()
+                self.application.advertisingBanner()
 
                 self.recognition.waitForImage(treasure_hunt_banner, timeout=30)
                 self.errors.verify()

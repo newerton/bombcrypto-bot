@@ -210,3 +210,19 @@ Versions
                 self.log.console(
                     'Logging with username and password does not allow transactions in game accepted', emoji='✅', color='green')
                 return True
+
+    def advertisingBanner(self):
+        self.importLibs()
+
+        from src.actions import Actions
+        from src.recognition import Recognition
+        self.actions = Actions()
+        self.recognition = Recognition()
+
+        close_button = self.images.image('close_button')
+
+        if self.recognition.waitForImage(close_button, timeout=3, threshold=0.8) == True:
+            if self.actions.clickButton(close_button):
+                self.log.console('Closed advertising banner',
+                                 emoji='✅', color='green')
+                return True
