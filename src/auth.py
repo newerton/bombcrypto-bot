@@ -56,20 +56,15 @@ class Auth:
 
             if username_icon_position is not False:
                 username = self.accounts[account_active]['username']
+                password = self.accounts[account_active]['password']
+
                 x, y, _, _ = username_icon_position[0]
                 self.actions.move((int(x+100), int(y+10)), 1)
                 if(self.actions.click()):
                     self.actions.sleep(1, 1, forceTime=True)
                     pyautogui.hotkey('del')
                     pyautogui.typewrite(username, interval=0.1)
-
-            if password_icon_position is not False:
-                password = self.accounts[account_active]['password']
-                x, y, _, _ = password_icon_position[0]
-                self.actions.move((int(x+100), int(y+20)), 1)
-                if(self.actions.click()):
-                    self.actions.sleep(1, 1, forceTime=True)
-                    pyautogui.hotkey('del')
+                    pyautogui.hotkey('tab')
                     pyautogui.typewrite(password, interval=0.1)
 
             if self.actions.clickButton(login_button):
