@@ -65,6 +65,7 @@ class Auth:
                     pyautogui.hotkey('del')
                     pyautogui.typewrite(username, interval=0.1)
                     pyautogui.hotkey('tab')
+                    self.actions.sleep(2, 2, forceTime=True)
                     pyautogui.typewrite(password, interval=0.1)
 
             if self.actions.clickButton(login_button):
