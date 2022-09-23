@@ -195,7 +195,7 @@ Python 3.8.10
 |:-------------: |:-----: |:-----: |
 | **app** | - | - |
 | theme | string | Current game theme, to recognize bug titles and hero list. Values in the [Themes](#themes) table |
-| game | string | treasure_hunt or amazon_survival |
+| game | string | amazon_survival |
 | verify_version | boolean - true/false | Check app version every 1h, recommended to keep up to date |
 | emoji | boolean - true/false | Enable/Disable show emoji in console messages |
 | terminal_colorful | boolean - true/false | Enable/Disable show colored messages on terminal |

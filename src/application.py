@@ -221,7 +221,7 @@ Versions
 
         close_button = self.images.image('close_button')
 
-        if self.recognition.waitForImage(close_button, timeout=5, threshold=0.8) == True:
+        if self.recognition.waitForImage(close_button, timeout=30, threshold=0.8) == True:
             if self.actions.clickButton(close_button):
                 self.log.console('Closed advertising banner',
                                  emoji='✅', color='green')

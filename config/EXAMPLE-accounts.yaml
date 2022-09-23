@@ -2,7 +2,7 @@
 # rarity: ["common", "rare", "super_rare", "epic", "legend", "super_legend"]
 
 1: {
-    mode: "treasure_hunt", # 'treasure_hunt' or 'amazon_survival'
+    mode: "amazon_survival", # amazon_survival
     username: "",
     password: "",
     house: false,

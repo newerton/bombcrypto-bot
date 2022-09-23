@@ -16,16 +16,16 @@ class TreasureHunt:
         self.importLibs()
         currentScreen = self.recognition.currentScreen()
 
-        banner = self.images.image('treasure_hunt_banner')
+        adventure = self.images.image('adventure')
         self.log.console('Entering treasure hunt', emoji='🎮', color='yellow')
 
         if currentScreen == "main":
-            self.actions.clickButton(banner)
+            self.actions.clickButton(adventure)
         if currentScreen == "character":
             close_button = self.images.image('close_button')
             if self.actions.clickButton(close_button):
                 self.actions.sleep(2, 2, forceTime=True, randomMouseMovement=False)
-                self.actions.clickButton(banner)
+                self.actions.clickButton(adventure)
         if currentScreen == "unknown" or currentScreen == "login":
             self.auth.checkLogout()
         self.actions.sleep(2, 2, forceTime=True, randomMouseMovement=False)

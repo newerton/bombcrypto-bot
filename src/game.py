@@ -14,7 +14,6 @@ class Game:
         from src.log import Log
         from src.recognition import Recognition
         from src.tokens import Tokens
-        from src.treasure_hunt import TreasureHunt
         from src.services.telegram import Telegram
 
         self.accounts = Config().accounts()
@@ -26,18 +25,11 @@ class Game:
         self.log = Log()
         self.recognition = Recognition()
         self.tokens = Tokens()
-        self.treasure_hunt = TreasureHunt()
         self.telegram = Telegram()
 
     def goToMap(self):
         self.importLibs()
-        account_active = int(os.environ['ACTIVE_BROWSER'])
-        mode = self.accounts[account_active]['mode']
-
-        if mode == "treasure_hunt":
-            self.treasure_hunt.goToMap()
-        elif mode == "amazon_survival":
-            self.amazon_survival.goToMap()
+        self.amazon_survival.goToMap()
 
     def clickNewMap(self):
         self.importLibs()

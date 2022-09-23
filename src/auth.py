@@ -38,7 +38,7 @@ class Auth:
         connect_metamask_button = self.images.image('connect_metamask_button')
         metamask_sign_button = self.images.image('metamask_sign_button')
         metamask_unlock_button = self.images.image('metamask_unlock_button')
-        treasure_hunt_banner = self.images.image('treasure_hunt_banner')
+        adventure = self.images.image('adventure')
         username_icon = self.images.image('username_icon')
         password_icon = self.images.image('password_icon')
         login_button = self.images.image('login_button')
@@ -76,7 +76,7 @@ class Auth:
                 self.application.loggingWithUsernameAndPasswordNotAllowTransactions()
                 self.application.advertisingBanner()
 
-                self.recognition.waitForImage(treasure_hunt_banner, timeout=30)
+                self.recognition.waitForImage(adventure, timeout=30)
                 self.errors.verify()
         else:
             if self.actions.clickButton(connect_metamask_button):
@@ -110,7 +110,7 @@ class Auth:
                 if self.actions.clickButton(metamask_sign_button):
                     self.log.console(
                         'Found glitched sign button. Waiting to check if logged in', emoji='✔️', color='yellow')
-                self.recognition.waitForImage(treasure_hunt_banner, timeout=30)
+                self.recognition.waitForImage(adventure, timeout=30)
                 self.errors.verify()
 
         if self.recognition.currentScreen() == "main":
